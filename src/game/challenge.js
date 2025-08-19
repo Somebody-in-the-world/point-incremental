@@ -1,4 +1,5 @@
 import { spacetimeReset } from "./resets";
+import { canSpacetime, spacetimePrestige } from "./spacetime";
 
 export class Challenge {
     constructor(id, desc, goal, reward, unlockPointReq, unlockedGetter, unlockedSetter){
@@ -18,12 +19,16 @@ export class Challenge {
 
     complete(){
         player.challengeCompletions[this.id - 1] = true;
+        player.currentChallenge = 0;
         this.exit();
     }
 
     exit(){
-        spacetimeReset();
-        player.currentChallenge = 0;
+        if(canSpacetime()){
+            spacetimePrestige();
+        } else {
+            spacetimeReset();
+        }
     }
 
     get canComplete(){

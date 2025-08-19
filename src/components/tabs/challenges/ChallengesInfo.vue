@@ -6,13 +6,17 @@
         data(){
             return {
                 currentChallenge: 0,
-                nextChallengeUnlockReq: new Decimal()
+                nextChallengeUnlockReq: new Decimal(),
+                unlockedAllChallenges: false
             }
         },
         methods: {
             update(){
                 this.currentChallenge = player.currentChallenge;
-                this.nextChallengeUnlockReq = unlockPointReq[player.latestUnlockedChallenge];
+                this.unlockedAllChallenges = player.latestUnlockedChallenge == unlockPointReq.length;
+                if(this.unlockedAllChallenges){
+                    this.nextChallengeUnlockReq = unlockPointReq[player.latestUnlockedChallenge];
+                }
             }
         }
     };
@@ -23,5 +27,8 @@
         <span v-show="currentChallenge > 0">in challenge {{ currentChallenge }}</span>
         <span v-show="currentChallenge == 0">not in a challenge</span>
         <br>
-        Next challenge unlocks at {{ format(nextChallengeUnlockReq) }} points</h3>
+        <span v-if="!unlockedAllChallenges">
+            Next challenge unlocks at {{ format(nextChallengeUnlockReq) }} points
+        </span>
+    </h3>
 </template>

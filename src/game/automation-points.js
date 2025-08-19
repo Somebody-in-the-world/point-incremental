@@ -1,4 +1,3 @@
-import { achievements } from "./achievements";
 import {challenges} from "./challenges";
 import { calcPointGain } from "./points";
 import { Purchasable } from "./purchasable";
@@ -29,7 +28,6 @@ export function automaticPointGainTick(){
 export function automationPointsSacrifice(){
     player.automationPoints = player.automationPoints.add(player.compressedPoints);
     player.compressedPoints = new Decimal(0);
-    achievements[3].unlock();
 }
 
 export function automaticAPGainTick(){

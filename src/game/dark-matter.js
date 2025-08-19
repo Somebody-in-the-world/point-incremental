@@ -78,6 +78,9 @@ export const darkGenerators = (function(){
                     if(tearSpacetimeUpgrades[11].boughtAmount){
                         effect = effect.mul(tearSpacetimeUpgrades[11].effect);
                     }
+                    if(achievements[29].unlocked){
+                        effect = effect.mul(2);
+                    }
                 }
                 if(challenges[5].completed && boughtAmount > 0){
                     effect = effect.mul(player.spacetimePoints.add(1).log(10).div(10).add(1));

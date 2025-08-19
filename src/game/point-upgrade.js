@@ -1,4 +1,3 @@
-import { achievements } from "./achievements";
 import { calcChall2FreePointUpgrades, calcDimensionalPowerBoost } from "./dimensional";
 import { Purchasable } from "./purchasable";
 import { Effect } from "./effect";
@@ -37,7 +36,6 @@ export const pointUpgrade =
         }, "mult"),
         function(cost){
             player.points = player.points.sub(cost);
-            achievements[1].unlock();
         }
     );
 

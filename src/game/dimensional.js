@@ -31,7 +31,6 @@ export function dimensionalPointsPrestige(){
         player.dimensionalPoints.add(calcDimensionalPointsGain());
     dimensionalReset();
     player.records.dimensionalAmount++;
-    achievements[8].unlock();
 }
 
 export const dimensionBaseCost = [

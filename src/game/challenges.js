@@ -7,18 +7,16 @@ const challengeDescriptions = [
     "Point gain ^0.65",
     "Dimensions are disabled",
     "Point upgrades have no effect",
-    "There is an exponententially rising anti-points that resets on dimensional dividing points",
-    "Placeholder"
+    "There is an exponententially rising anti-points that resets on dimensional dividing points"
 ];
 
 const challengeGoals = [
     new Decimal("1e350"),
+    new Decimal("1e625"),
     new Decimal("1e600"),
-    new Decimal("1e555"),
     new Decimal("1e3000"),
     new Decimal("1e3750"),
-    new Decimal("1e10000"),
-    new Decimal("1e1e10")
+    new Decimal("1e10000")
 ];
 
 const challengeRewards = [
@@ -27,18 +25,16 @@ const challengeRewards = [
     "Point gain ^1.05",
     "Dimension per purchase multiplier is increased (2x -> 2.5x)",
     "Divide point upgrade costs based on dark matter",
-    "All dark generators are more powerful based on SP",
-    "Placeholder"
+    "All dark generators are more powerful based on SP"
 ];
 
 export const unlockPointReq = [
     new Decimal("1e1000"),
-    new Decimal("1e1400"),
-    new Decimal("1e1700"),
+    new Decimal("1e1250"),
+    new Decimal("1e1800"),
     new Decimal("1e6000"),
     new Decimal("1e8000"),
-    new Decimal("1e11111"),
-    new Decimal("1e1e10")
+    new Decimal("1e11111")
 ];
 
 export const challenges = (function(){

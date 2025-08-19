@@ -34,16 +34,13 @@
                 this.spacetimeReq = calcSpacetimeReq();
                 this.inChallenge = player.currentChallenge != 0;
             },
-            spacetime(){
-                if(this.inChallenge) challenges[player.currentChallenge-1].complete();
-                spacetimePrestige();
-            }
+            spacetimePrestige
         }
     };
 </script>
 
 <template>
-    <button class="spacetime" id="spacetime-button" :disabled="!canSpacetime" @click="spacetime">
+    <button class="spacetime" id="spacetime-button" :disabled="!canSpacetime" @click="spacetimePrestige">
         <span :hidden="!canSpacetime">
             Spacetime to 
             <span :hidden="inChallenge">

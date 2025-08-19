@@ -25,6 +25,7 @@ export function spacetimeReset(){
     player.dimensionalPoints = new Decimal(0);
     player.records.timeInCurrentSpacetime = 0;
     player.peakSPPerMin = new Decimal(0);
+    player.currentChallenge = 0;
     if(spacetimeUpgrades[7].boughtAmount) player.dimensionalPoints = spacetimeUpgrades[7].effect;
     for(let i = 0; i < 8; i++){
         dimensions[i].boughtAmount = 0;

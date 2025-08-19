@@ -51,7 +51,6 @@ export function calcSpacetimePointsGain(){
 }
 
 export function spacetimePrestige(){
-    achievements[16].unlock();
     if(dimensions[7].boughtAmount <= 1) achievements[17].unlock();
     if(calcSpacetimePointsPerMinute().gt(player.records.highestSPPerMin)){
         player.records.highestSPPerMin = calcSpacetimePointsPerMinute();
@@ -61,6 +60,7 @@ export function spacetimePrestige(){
     if(player.records.timeInCurrentSpacetime < player.records.fastestSpacetime){
         player.records.fastestSpacetime = player.records.timeInCurrentSpacetime;
     }
+    if(player.currentChallenge > 0) challenges[player.currentChallenge-1].complete();
     spacetimeReset();
 }
 

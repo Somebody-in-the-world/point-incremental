@@ -14,7 +14,6 @@
             },
             getPoint(){
                 player.points = player.points.add(this.pointGain);
-                achievements[0].unlock();
             }
         }
     };

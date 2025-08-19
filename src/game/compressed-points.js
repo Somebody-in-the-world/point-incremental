@@ -1,4 +1,3 @@
-import { achievements } from "./achievements";
 import { challenges } from "./challenges";
 import { pointCompressionReset } from "./resets";
 import { spacetimeMilestones } from "./spacetime";
@@ -23,7 +22,6 @@ export function compressedPointsPrestige(){
         player.compressedPoints.add(calcCompressedPointsGain());
     pointCompressionReset();
     player.records.pointCompressionAmount++;
-    achievements[2].unlock();
 }
 
 export function automaticCPGainTick(){

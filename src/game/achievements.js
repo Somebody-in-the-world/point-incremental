@@ -1,11 +1,19 @@
+import { calcSingleEffect, pointUpgrade } from "./point-upgrade";
+import { dimensions } from "./dimensional";
+import { spacetimeMilestones, spacetimeUpgrades } from "./spacetime";
+import { calcTotalChallsCompleted, challenges } from "./challenges";
+import { darkGenerators } from "./dark-matter";
+
 export class Achievement {
-    constructor(id, title, requirements, reward, unlockGetter, unlockSetter){
+    constructor(id, title, requirements, reward, 
+        unlockGetter, unlockSetter, unlockReqFunc){
         this.id = id;
         this.title = title;
         this.requirements = requirements;
         this.reward = reward;
         this.unlockGetter = unlockGetter;
         this.unlockSetter = unlockSetter;
+        this.unlockReqFunc = unlockReqFunc;
     }
 
     unlock(){
@@ -18,6 +26,18 @@ export class Achievement {
 
     set unlocked(val){
         this.unlockSetter(val);
+    }
+
+    get canUnlock(){
+        return this.unlockReqFunc();
+    }
+}
+
+export function unlockAchivements(){
+    for(const ach of achievements){
+        if((!ach.unlocked) && ach.unlockReqFunc){
+            if(ach.canUnlock) ach.unlock();
+        }
     }
 }
 
@@ -46,7 +66,14 @@ export const achievementsTitle = [
     "I am rich",
     "Impossible, or is it?",
     "Collapser of spacetimes",
-    "I'm free!"
+    "I'm free!",
+    "This achievement exists",
+    "Easy or Hard?",
+    "A new beginning.",
+    "NEW CHALLENGES???",
+    "Anti-anti-anti-challenged",
+    "Googol (spacetime points)",
+    "We couldn't afford 9"
 ];
 
 export const achievementsRequirements = [
@@ -74,7 +101,53 @@ export const achievementsRequirements = [
     "Buy all spacetime upgrades",
     "Spacetime in under 20 seconds",
     "Have 1000 spacetime points",
-    "Tear spacetime"
+    "Tear spacetime",
+    "Get 1e1000 points",
+    "Complete a challenge",
+    "Start generating dark matter",
+    "Complete challenge 4",
+    "Complete all challenges",
+    "Get 1e100 spacetime points",
+    "Buy a tier 6 dark generator"
+];
+
+export const achievementReqFuncs = [
+    () => player.points.gt(0),
+    () => pointUpgrade.boughtAmount > 0,
+    () => player.compressedPoints.gt(0),
+    () => player.automationPoints.gt(0),
+    () => player.automationPoints.gte(1e3),
+    () => player.points.gte(1e10),
+    () => pointUpgrade.boughtAmount >= 40,
+    () => player.points.gte(1e30),
+    () => player.records.dimensionalAmount > 0,
+    () => dimensions[0].boughtAmount > 0,
+    () => dimensions[1].boughtAmount > 0,
+    () => player.dimensionalPower.gte(1e6),
+    () => pointUpgrade.boughtAmount == 0 && player.points.gte(1e30),
+    () => pointUpgrade.boughtAmount >= 100,
+    () => player.points.gte(1e100),
+    () => calcSingleEffect().gte(3),
+    () => player.records.spacetimeAmount > 0,
+    null, null,
+    () => player.records.fastestSpacetime < 180,
+    () => spacetimeMilestones[7].unlocked,
+    function(){
+        for(let i = 0; i < 8; i++){
+            if(!spacetimeUpgrades[i].boughtAmount) return false;
+        }
+        return true;
+    },
+    () => player.records.fastestSpacetime < 20,
+    () => player.spacetimePoints.gte(1000),
+    () => player.spacetimeTore,
+    () => player.points.gte("1e1000"),
+    () => calcTotalChallsCompleted() > 0,
+    () => darkGenerators[0].boughtAmount > 0,
+    () => challenges[3].completed,
+    () => calcTotalChallsCompleted() == challenges.length,
+    () => player.spacetimePoints.gte(1e100),
+    () => darkGenerators[5].boughtAmount > 0
 ];
 
 export const achievementsRewards = [
@@ -87,8 +160,11 @@ export const achievementsRewards = [
     "8th dimensions are 10% more powerful",
     "Gain 3x more DP",
     null, null, null,
-    "The point upgrade autobuyer bulks buy upgrades",
-    null, null
+    "The point upgrade autobuyer bulk buys upgrades",
+    null, null, null, null, null, null,
+    "Gain 2x more dark matter",
+    "Gain 1e100x more points",
+    null
 ];
 
 export const achievements = (function(){
@@ -97,7 +173,7 @@ export const achievements = (function(){
         ach.push(new Achievement(
             id, achievementsTitle[id], achievementsRequirements[id], 
             achievementsRewards[id], () => player.achievements[id],
-            (val) => {player.achievements[id] = val;}
+            (val) => {player.achievements[id] = val;}, achievementReqFuncs[id]
         ));
     }
     return ach;
