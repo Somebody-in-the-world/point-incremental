@@ -1,0 +1,41 @@
+import { achievements } from "./achievements";
+import {challenges} from "./challenges";
+import { calcPointGain } from "./points";
+import { Purchasable } from "./purchasable";
+import { spacetimeMilestones } from "./spacetime";
+
+export const automationPointsUnlock = new Purchasable(false, 
+    () => player.automationPointsUnlocked,
+    (val) => {player.automationPointsUnlocked = val;},
+    () => new Decimal(250),
+    (cost) => player.compressedPoints.gte(cost),
+    null,
+    null
+);
+
+export function calcAutomaticPointGainPercent(){
+    if(player.currentChallenge == 1) return new Decimal(1);
+    let power = 0.6;
+    if(challenges[0].completed) power += 0.1;
+    return player.automationPoints.pow(power).div(10);
+};
+
+export function automaticPointGainTick(){
+    player.points = player.points.add(calcPointGain().mul(
+        calcAutomaticPointGainPercent())
+        .mul(player.settings.updateRate / 1000));
+};
+
+export function automationPointsSacrifice(){
+    player.automationPoints = player.automationPoints.add(player.compressedPoints);
+    player.compressedPoints = new Decimal(0);
+    achievements[3].unlock();
+}
+
+export function automaticAPGainTick(){
+    if(spacetimeMilestones[2].unlocked){
+        player.automationPoints = player.automationPoints.add(
+            player.compressedPoints.div(10).mul(player.settings.updateRate / 1000)
+        );
+    }
+}
