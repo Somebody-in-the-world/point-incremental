@@ -19,7 +19,7 @@ const upgradeDescriptions = [
     "Passively gain 1% of DP gained on dimensional per second",
     "Dimension autobuyers bulk buys dimensions",
     "Increase dark matter production based on points",
-    "Dark matter boosts itself",
+    "Dark matter boost dark generators",
     "Reduce the point upgrade cost multiplier increase",
     "Gain a percentage of best SP per minute passively"
 ];
@@ -35,7 +35,7 @@ const upgradeEffects = [
     new Effect(() => Decimal.min(player.dimensionalPoints.add(1).log(10).pow(0.5).div(20).add(1), new Decimal(2.5)), "mult"),
     null, null,
     new Effect(() => player.points.add(1).log(10).div(2000).add(1), "mult"),
-    new Effect(() => player.darkMatter.pow(0.025).add(1), "mult"),
+    new Effect(() => player.darkMatter.add(1).log(10).div(5).add(1), "mult"),
     new Effect((boughtAmount) => new Decimal(boughtAmount), "sub"),
     new Effect((boughtAmount) => new Decimal(boughtAmount).div(20), "percentage")
 ]
@@ -52,7 +52,7 @@ const upgradeCosts = [
     new Decimal(1e8),
     new Decimal(4e8),
     new Decimal(1e40),
-    new Decimal("1e800"),
+    new Decimal(1e100),
     (boughtAmount) => boughtAmount >= 8 ? new Decimal("1e1e15") : new Decimal(5).pow(boughtAmount).mul(1e6),
     (boughtAmount) => boughtAmount >= 10 ? new Decimal("1e1e15") : new Decimal(3).pow(boughtAmount).mul(1e6)
 ];

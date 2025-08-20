@@ -14,7 +14,7 @@
             update(){
                 this.currentChallenge = player.currentChallenge;
                 this.unlockedAllChallenges = player.latestUnlockedChallenge == unlockPointReq.length;
-                if(this.unlockedAllChallenges){
+                if(!this.unlockedAllChallenges){
                     this.nextChallengeUnlockReq = unlockPointReq[player.latestUnlockedChallenge];
                 }
             }

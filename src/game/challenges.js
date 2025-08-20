@@ -25,7 +25,7 @@ const challengeRewards = [
     "Point gain ^1.05",
     "Dimension per purchase multiplier is increased (2x -> 2.5x)",
     "Divide point upgrade costs based on dark matter",
-    "All dark generators are more powerful based on SP"
+    "Dark matter multiplier based on SP"
 ];
 
 export const unlockPointReq = [

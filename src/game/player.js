@@ -24,10 +24,10 @@ window.player = {
     SPAtPeakSPPerMin: new Decimal(0),
     currentChallenge: 0,
     latestUnlockedChallenge: 0,
-    challengeCompletions: new Array(10).fill(false),
+    challengeCompletions: new Array(6).fill(false),
     darkMatter: new Decimal(0),
     darkGeneratorsUnlocked: 0,
-    darkGenerators: new Array(10).fill(0),
+    darkGenerators: new Array(6).fill(0),
     antiPoints: new Decimal(1),
     autobuyers: (function(){
         const autobuyersObject = Array.from({length: autobuyers.length}, () => ({

@@ -8,9 +8,9 @@ export const darkMatterUnlockRequirements = [
     new Decimal("1e2500"),
     new Decimal("1e9500"),
     new Decimal("1e16800"),
-    new Decimal("1e31000"),
-    new Decimal("1e123456"),
-    new Decimal("1e200000")
+    new Decimal("1e30000"),
+    new Decimal("1e100000"),
+    new Decimal("1e150000")
 ];
 
 export const darkMatterBoostExponent = 120;
@@ -33,8 +33,8 @@ const darkGeneratorBaseCosts = [
     new Decimal(1e45),
     new Decimal(1e80),
     new Decimal(1e150),
-    new Decimal("1e600"),
-    new Decimal("1e1000")
+    new Decimal("1e500"),
+    new Decimal("1e750")
 ];
 
 const darkGeneratorCostMultipliers = [
@@ -75,15 +75,15 @@ export const darkGenerators = (function(){
                     if(tearSpacetimeUpgrades[10].boughtAmount){
                         effect = effect.mul(tearSpacetimeUpgrades[10].effect);
                     }
-                    if(tearSpacetimeUpgrades[11].boughtAmount){
-                        effect = effect.mul(tearSpacetimeUpgrades[11].effect);
-                    }
                     if(achievements[29].unlocked){
                         effect = effect.mul(2);
                     }
+                    if(challenges[5].completed){
+                        effect = effect.mul(player.spacetimePoints.add(1).log(10).add(1).pow(1.25));
+                    }
                 }
-                if(challenges[5].completed && boughtAmount > 0){
-                    effect = effect.mul(player.spacetimePoints.add(1).log(10).div(10).add(1));
+                if(tearSpacetimeUpgrades[11].boughtAmount && boughtAmount > 0){
+                    effect = effect.mul(tearSpacetimeUpgrades[11].effect);
                 }
                 return effect;
             }, "mult"),
