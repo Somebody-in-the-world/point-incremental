@@ -1,6 +1,6 @@
 <script>
     import Upgrade from "@/components/reusable/Upgrade.vue";
-    import { spacetimeUpgrades, spacetimePointMultiplier } from "@/game/spacetime";
+    import { spacetimeUpgrades, spacetimePointMultiplier, bulkBuySPMult } from "@/game/spacetime";
     export default {
         name: "SpacetimeUpgradesTab",
         components: { Upgrade },
@@ -9,12 +9,16 @@
                 spacetimeUpgrades,
                 spacetimePointMultiplier
             };
+        },
+        methods: {
+            bulkBuySPMult
         }
     };
 </script>
 
 <template>
-    <Upgrade :purchasable="spacetimePointMultiplier" currency="SP" id="sp-mult-upgrade"/>
+    <button class="sp-mult-upgrade" @click="bulkBuySPMult">Max SP Multiplier</button>
+    <Upgrade :purchasable="spacetimePointMultiplier" currency="SP" class="sp-mult-upgrade"/>
     <div id="upgrade-container">
         <Upgrade v-for="(_, idx) in spacetimeUpgrades" :purchasable="spacetimeUpgrades[idx]" currency="SP" :key="idx"/>
     </div>
@@ -23,10 +27,10 @@
 <style scoped>
     #upgrade-container {
         display: grid;
-        grid-template-columns: auto auto;
+        grid-template-columns: 50% 50%;
     }
 
-    #sp-mult-upgrade {
+    .sp-mult-upgrade {
         width: 100%;
         padding: 10px 0;
     }

@@ -57,12 +57,11 @@
 
 <style scoped>
     #challenge {
-        width: 95%;
+        width: 100%;
         border-style: solid;
         border-width: 2px;
         border-radius: 5px;
         text-align: center;
-        padding: 0px 10px 10px;
-        margin: 10px 0px;
+        padding: 5px 10px;
     }
 </style>

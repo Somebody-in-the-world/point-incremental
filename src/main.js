@@ -1,5 +1,6 @@
 import "./assets/main.css";
-import { init, startGameLoop } from "./game";
+import { init, startGameLoop, startUpdateUI } from "./game";
 
 init();
 startGameLoop();
+startUpdateUI();

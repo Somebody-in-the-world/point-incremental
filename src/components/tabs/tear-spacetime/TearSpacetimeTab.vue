@@ -11,15 +11,21 @@
         },
         data(){
             return {
-                tearSpacetimeUpgrades
+                tearSpacetimeUpgrades,
+                displayUpgrades: false
             };
+        },
+        methods: {
+            update(){
+                this.displayUpgrades = player.spacetimeTore;
+            }
         }
     };
 </script>
 
 <template>
     <TearSpacetimeButton />
-    <div id="upgrade-container">
+    <div id="upgrade-container" v-show="displayUpgrades">
         <Upgrade v-for="(_, idx) in tearSpacetimeUpgrades" :purchasable="tearSpacetimeUpgrades[idx]" currency="SP" :key="idx"/>
     </div>
 </template>

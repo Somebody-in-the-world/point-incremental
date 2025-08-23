@@ -24,10 +24,10 @@ export function compressedPointsPrestige(){
     player.records.pointCompressionAmount++;
 }
 
-export function automaticCPGainTick(){
+export function automaticCPGainTick(deltaTime){
     if(spacetimeMilestones[3].unlocked){
         player.compressedPoints = player.compressedPoints.add(
-            calcCompressedPointsGain().div(10).mul(player.settings.updateRate / 1000)
+            calcCompressedPointsGain().div(10).mul(deltaTime)
         );
     }
 }

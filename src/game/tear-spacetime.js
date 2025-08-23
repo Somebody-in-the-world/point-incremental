@@ -53,14 +53,20 @@ const upgradeCosts = [
     new Decimal(4e8),
     new Decimal(1e40),
     new Decimal(1e100),
-    (boughtAmount) => boughtAmount >= 8 ? new Decimal("1e1e15") : new Decimal(5).pow(boughtAmount).mul(1e6),
-    (boughtAmount) => boughtAmount >= 10 ? new Decimal("1e1e15") : new Decimal(3).pow(boughtAmount).mul(1e6)
+    (boughtAmount) => new Decimal(5).pow(boughtAmount).mul(1e6),
+    (boughtAmount) => new Decimal(3).pow(boughtAmount).mul(1e6)
 ];
 
 const upgradeRepeatable = [
     false, false, false, false, false, false,
     false, false, false, false, false, false,
     true, true
+];
+
+const upgradeCaps = [
+    null, null, null, null, null, null,
+    null, null, null, null, null, null,
+    8, 10
 ];
 
 export const tearSpacetimeUpgrades = (function(){
@@ -73,7 +79,7 @@ export const tearSpacetimeUpgrades = (function(){
             (cost) => player.spacetimePoints.gte(cost),
             upgradeEffects[i],
             (cost) => {player.spacetimePoints = player.spacetimePoints.sub(cost);},
-            upgradeDescriptions[i]
+            upgradeCaps[i], upgradeDescriptions[i]
         ));
     }
     return upgrades;

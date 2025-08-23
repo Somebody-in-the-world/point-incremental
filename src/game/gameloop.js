@@ -7,10 +7,16 @@ import { runAutobuyers } from "./autobuyers";
 import { challenges, unlockPointReq } from "./challenges";
 import { darkMatterGainTick } from "./dark-matter";
 import { unlockAchivements } from "./achievements";
+import { forceGainTick } from "./atomic";
+
+let lastTick = performance.now();
 
 export function gameLoop(){
+    const now = performance.now();
+    let deltaTime = (now - lastTick) / 1000;
+
     if((!canSpacetime()) || player.spacetimeTore){
-        automaticPointGainTick();
+        automaticPointGainTick(deltaTime);
     }
 
     if(player.points.gte(player.records.highestPoints)){
@@ -18,36 +24,39 @@ export function gameLoop(){
     }
 
     if(player.currentChallenge == 6){
-        player.antiPoints = player.antiPoints.mul(new Decimal(1e300)
-            .pow(player.settings.updateRate / 1000));
+        player.antiPoints = player.antiPoints.mul(new Decimal(1e300).pow(deltaTime));
     }
 
-    automaticCPGainTick();
-    automaticAPGainTick();
-    dimensionalPowerGainTick();
-    automaticDPGainTick();
-    darkMatterGainTick();
+    automaticCPGainTick(deltaTime);
+    automaticAPGainTick(deltaTime);
+    dimensionalPowerGainTick(deltaTime);
+    automaticDPGainTick(deltaTime);
+    darkMatterGainTick(deltaTime);
+    forceGainTick(deltaTime);
 
     runAutobuyers();
 
-    passiveGenerateSP();
+    passiveGenerateSP(deltaTime);
 
     // Achievements stuff
     unlockAchivements();
     
     // Tabs
-    tabUnlocked[1] = spacetimeMilestones[0].unlocked;
-    tabUnlocked[2] = challenges[0].unlocked;
+    tabUnlocked[1] = spacetimeMilestones[0].unlocked || player.records.atomicAmount > 0;
+    tabUnlocked[2] = challenges[0].unlocked || player.records.atomicAmount > 0;
     tabUnlocked[3] = player.automationPointsUnlocked || player.records.dimensionalAmount > 0;
-    tabUnlocked[4] = player.records.spacetimeAmount > 0;
-    tabUnlocked[5] = player.darkGeneratorsUnlocked > 0;
+    tabUnlocked[4] = player.records.totalSpacetimeAmount > 0;
+    tabUnlocked[5] = player.darkGeneratorsUnlocked > 0 || player.records.atomicAmount > 0;
+    tabUnlocked[6] = player.records.atomicAmount > 0;
 
     if(player.points.gte(unlockPointReq[player.latestUnlockedChallenge]) &&
         player.latestUnlockedChallenge != challenges.length){
         challenges[player.latestUnlockedChallenge].unlock();
     }
 
-    Events.UI.dispatch(GAME_EVENTS.GAME_TICK);
-    player.records.timePlayed += player.settings.updateRate / 1000;
-    player.records.timeInCurrentSpacetime += player.settings.updateRate / 1000;
+    player.records.timePlayed += deltaTime;
+    player.records.timeInCurrentSpacetime += deltaTime;
+
+    lastTick = now;
+    requestAnimationFrame(gameLoop);
 }

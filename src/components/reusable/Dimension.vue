@@ -16,7 +16,8 @@
             return {
                 dimAmount: new Decimal(),
                 dimBoughtAmount: 0,
-                dimCost: new Decimal()
+                dimCost: new Decimal(),
+                capped: false
             };
         },
         methods: {
@@ -24,6 +25,7 @@
                 this.dimBoughtAmount = this.dimension.boughtAmount;
                 this.dimAmount = this.dimension.totalAmount;
                 this.dimCost = this.dimension.cost;
+                this.capped = this.dimension.reachedCap;
             }
         }
     };
@@ -37,7 +39,8 @@
         <div>{{ format(dimAmount) }}</div>
         <div>
             <Purchasable :purchasable="dimension">
-                Cost: {{ format(dimCost) }} DP
+                <span v-if="!capped">Cost: {{ format(dimCost) }} DP</span>
+                <span v-if="capped">Capped</span>
             </Purchasable>
         </div>
     </div>

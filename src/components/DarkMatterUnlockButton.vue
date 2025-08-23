@@ -21,6 +21,17 @@
             unlockDarkGenerator(){
                 player.darkGeneratorsUnlocked += 1;
             }
+        },
+        computed: {
+            darkMatterUnlockGoal(){
+                this._tickUpdate; // Vue reactivity stuff
+                if(this.allGeneratorsUnlocked){
+                    return "All dark generators unlocked!";
+                }
+                const nextUnlockReq = this.unlockReq;
+                const unlockType = this.hasUnlockedGenerators ? "a new dark generator" : "dark matter";
+                return `Reach ${this.format(nextUnlockReq)} points to unlock ${unlockType}`
+            }
         }
     };
 </script>
@@ -30,8 +41,9 @@
         <span v-if="canUnlockDarkMatter">
             Unlock {{ hasUnlockedGenerators ? "a new dark generator" : "dark matter" }}
         </span>
-        <span v-if="(!canUnlockDarkMatter) && (!allGeneratorsUnlocked)">Reach {{ format(unlockReq) }} points to unlock {{ hasUnlockedGenerators ? "a new dark generator" : "dark matter" }}</span>
-        <span v-if="allGeneratorsUnlocked">All dark generators unlocked!</span>
+        <span v-if="!canUnlockDarkMatter">
+            {{ darkMatterUnlockGoal }}
+        </span>
     </button>
 </template>
 

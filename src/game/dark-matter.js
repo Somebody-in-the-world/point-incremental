@@ -3,6 +3,7 @@ import { Purchasable } from "./purchasable";
 import { Effect } from "./effect";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { challenges } from "./challenges";
+import { calcWeakForceBoost } from "./atomic";
 
 export const darkMatterUnlockRequirements = [
     new Decimal("1e2500"),
@@ -23,9 +24,9 @@ export function calcDarkMatterGain(){
     return darkGenerators[0].effect;
 }
 
-export function darkMatterGainTick(){
+export function darkMatterGainTick(deltaTime){
     player.darkMatter = player.darkMatter.add(calcDarkMatterGain()
-        .mul(player.settings.updateRate / 1000));
+        .mul(deltaTime));
 }
 
 const darkGeneratorBaseCosts = [
@@ -55,6 +56,18 @@ const darkGeneratorMultiplierPerPurchases = [
     new Decimal(2)
 ];
 
+export function bulkBuyDarkGenerator(idx){
+    if(player.spacetimePoints.lt(1)) return;
+    const amount = Math.floor(Math.max(player.spacetimePoints.div(darkGenerators[idx].cost)
+        .log(darkGeneratorCostMultipliers[idx]).add(1).toNumber(), 0));
+    darkGenerators[idx].boughtAmount += amount;
+    const cost = darkGenerators[idx].formula(darkGenerators[idx].boughtAmount-1);
+
+    if(player.spacetimePoints.gte(cost)){
+        player.spacetimePoints = player.spacetimePoints.sub(cost);
+    }
+}
+
 export const darkGenerators = (function(){
     const generators = [];
     for(const idx in darkGeneratorBaseCosts){
@@ -82,8 +95,11 @@ export const darkGenerators = (function(){
                         effect = effect.mul(player.spacetimePoints.add(1).log(10).add(1).pow(1.25));
                     }
                 }
-                if(tearSpacetimeUpgrades[11].boughtAmount && boughtAmount > 0){
-                    effect = effect.mul(tearSpacetimeUpgrades[11].effect);
+                if(boughtAmount > 0){
+                    if(tearSpacetimeUpgrades[11].boughtAmount){
+                        effect = effect.mul(tearSpacetimeUpgrades[11].effect);
+                    }
+                    effect = effect.mul(calcWeakForceBoost());
                 }
                 return effect;
             }, "mult"),

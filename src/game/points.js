@@ -4,6 +4,7 @@ import { spacetimeUpgrades } from "./spacetime";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { challenges } from "./challenges";
 import { calcDarkMatterBoost } from "./dark-matter";
+import { calcElectromagneticForceBoost } from "./atomic";
 
 export function calcPointGain(){
     let basePoints = pointUpgrade.effect.mul(calcCompressedPointsBoost());
@@ -19,5 +20,7 @@ export function calcPointGain(){
     
     if(player.currentChallenge == 3) basePoints = basePoints.pow(0.65);
     if(challenges[2].completed) basePoints = basePoints.pow(1.05);
+    basePoints = basePoints.pow(calcElectromagneticForceBoost());
+
     return basePoints;
 }

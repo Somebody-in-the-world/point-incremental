@@ -16,13 +16,12 @@ export function calcAutomaticPointGainPercent(){
     if(player.currentChallenge == 1) return new Decimal(1);
     let power = 0.6;
     if(challenges[0].completed) power += 0.1;
-    return player.automationPoints.pow(power).div(10);
+    return player.automationPoints.pow(power).div(4);
 };
 
-export function automaticPointGainTick(){
+export function automaticPointGainTick(deltaTime){
     player.points = player.points.add(calcPointGain().mul(
-        calcAutomaticPointGainPercent())
-        .mul(player.settings.updateRate / 1000));
+        calcAutomaticPointGainPercent()).mul(deltaTime));
 };
 
 export function automationPointsSacrifice(){
@@ -30,10 +29,10 @@ export function automationPointsSacrifice(){
     player.compressedPoints = new Decimal(0);
 }
 
-export function automaticAPGainTick(){
+export function automaticAPGainTick(deltaTime){
     if(spacetimeMilestones[2].unlocked){
         player.automationPoints = player.automationPoints.add(
-            player.compressedPoints.div(10).mul(player.settings.updateRate / 1000)
+            player.compressedPoints.div(10).mul(deltaTime)
         );
     }
 }

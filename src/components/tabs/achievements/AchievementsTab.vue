@@ -26,6 +26,12 @@
 <style scoped>
     .achievementContainer {
         display: grid;
-        grid-template-columns: auto auto auto auto auto auto auto auto;
+        grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    }
+
+    @media (min-width: 769px) {
+        .achievementContainer {
+            margin: 0 15%;
+        }
     }
 </style>

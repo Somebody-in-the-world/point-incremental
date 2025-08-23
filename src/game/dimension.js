@@ -3,9 +3,9 @@ import { Purchasable } from "./purchasable";
 export class Dimension extends Purchasable {
     constructor(boughtAmountGetter, boughtAmountSetter, 
         formula, condition, generatedAmountGetter, generatedAmountSetter,
-        multiplier, purchaseFunc){
+        multiplier, purchaseFunc, cap){
         super(true, boughtAmountGetter, boughtAmountSetter, 
-        formula, condition, multiplier, purchaseFunc);
+        formula, condition, multiplier, purchaseFunc, cap);
         this.generatedAmountGetter = generatedAmountGetter;
         this.generatedAmountSetter = generatedAmountSetter;
     }

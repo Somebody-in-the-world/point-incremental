@@ -1,5 +1,7 @@
+import { darkGenerators } from "./dark-matter";
 import { dimensions } from "./dimensional";
 import { spacetimeMilestones, spacetimeUpgrades } from "./spacetime";
+import { tearSpacetimeUpgrades } from "./tear-spacetime";
 
 export function pointCompressionReset(){
     player.points = new Decimal(0);
@@ -31,3 +33,36 @@ export function spacetimeReset(){
         dimensions[i].boughtAmount = 0;
     }
 }
+
+export function atomicReset(){
+    player.spacetimePoints = new Decimal(0);
+    player.currentChallenge = 0;
+    player.darkMatter = new Decimal(0);
+    player.records.spacetimeAmount = 0;
+    player.spacetimePointMultipliers = 0;
+    player.latestUnlockedChallenge = 0;
+    player.darkGeneratorsUnlocked = 0;
+    player.records.highestSPPerMin = new Decimal(0);
+    player.records.fastestSpacetime = 99999999;
+    player.spacetimeTore = false;
+    player.electromagneticForce = new Decimal(0);
+    player.strongForce = new Decimal(0);
+    player.weakForce = new Decimal(0);
+
+    for(const upgrade of spacetimeUpgrades){
+        upgrade.boughtAmount = false;
+    }
+    for(const upgrade of tearSpacetimeUpgrades){
+        if(upgrade.repeatable){
+            upgrade.boughtAmount = 0;
+        } else {
+            upgrade.boughtAmount = false;
+        }
+    }
+    for(let i = 0; i < 6; i++){
+        darkGenerators[i].boughtAmount = 0;
+        player.challengeCompletions[i] = false;
+    }
+    spacetimeReset();
+}
+

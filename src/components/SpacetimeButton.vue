@@ -35,8 +35,6 @@
     #collapse-button {
         width: 100%;
         height: 20vh;
-        border-style: solid;
-        border-width: 2px;
         border-radius: 2px;
         font-size: 2.5em;
     }

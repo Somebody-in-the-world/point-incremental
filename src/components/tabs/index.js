@@ -8,6 +8,7 @@ import SpacetimeUpgradesTab from "./spacetime-upgrades/SpacetimeUpgradesTab.vue"
 import SpacetimeMilestonesTab from "./spacetime-milestones/SpacetimeMilestonesTab.vue";
 import TearSpacetimeTab from "./tear-spacetime/TearSpacetimeTab.vue";
 import DarkMatterTab from "./dark-matter-tab/DarkMatterTab.vue";
+import ParticlesTab from "./particles/ParticlesTab.vue";
 
 export default {
     AchievementsTab,
@@ -19,5 +20,6 @@ export default {
     SpacetimeUpgradesTab,
     SpacetimeMilestonesTab,
     TearSpacetimeTab,
-    DarkMatterTab
+    DarkMatterTab,
+    ParticlesTab
 };

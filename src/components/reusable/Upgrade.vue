@@ -16,13 +16,15 @@
             return {
                 cost: new Decimal(),
                 description: "",
-                hasEffect: this.purchasable.effectObject
+                hasEffect: this.purchasable.effectObject,
+                capped: false
             };
         },
         methods: {
             update(){
                 this.cost = this.purchasable.cost;
                 this.description = this.purchasable.description;
+                this.capped = this.purchasable.reachedCap;
             }
         }
     };
@@ -36,6 +38,6 @@
             Currently: <EffectDisplay :purchasable="purchasable" />
             <br>
         </span>
-        Cost: {{ format(cost) }} {{ currency }}
+        <span v-if="!capped">Cost: {{ format(cost) }} {{ currency }}</span>
     </PurchasableComponent>
 </template>

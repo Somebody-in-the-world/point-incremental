@@ -7,11 +7,14 @@
     import SpacetimeButton from "./components/SpacetimeButton.vue";
     import PostTearSpacetimeButton from "./components/PostTearSpacetimeButton.vue";
     import DarkMatterUnlockButton from "./components/DarkMatterUnlockButton.vue";
+    import AtomicButton from "./components/AtomicButton.vue";
+    import ParticlesDisplay from "./components/ParticlesDisplay.vue";
 
     import SubTabSwitch from "./components/tabs/SubTabSwitch.vue";
     import TabSwitch from "./components/tabs/TabSwitch.vue";
     import { currentTab, currentSubTab, tabComponentNames, subTabComponentNames } from "./game/tabs.js";
     import { canSpacetime } from "./game/spacetime";
+    import { canAtomic } from "./game/atomic";
 
     export default {
         name: "GameUI",
@@ -24,14 +27,19 @@
             TabSwitch,
             SpacetimeButton,
             PostTearSpacetimeButton,
-            DarkMatterUnlockButton
+            DarkMatterUnlockButton,
+            AtomicButton,
+            ParticlesDisplay
         },
         data(){
             return {
                 tabComponentName: tabComponentNames[0],
                 forceSpacetime: false,
+                hideTab: false,
                 spacetimeTore: false,
-                displaySpacetimePoints: false
+                displaySpacetimePoints: false,
+                showDarkGenrators: false,
+                displayParticles: false
             };
         },
         methods: {
@@ -43,7 +51,10 @@
                 }
                 this.spacetimeTore = player.spacetimeTore;
                 this.forceSpacetime = canSpacetime() && (!this.spacetimeTore);
-                this.displaySpacetimePoints = player.records.spacetimeAmount > 0;
+                this.hideTab = this.forceSpacetime && !(player.records.fastestSpacetime < 60 || player.records.atomicAmount > 0);
+                this.displaySpacetimePoints = player.records.totalSpacetimeAmount > 0;
+                this.showDarkGenrators = (player.darkGeneratorsUnlocked < 6) && (!canAtomic());
+                this.displayParticles = player.records.atomicAmount > 0;
             }
         }
     };
@@ -53,17 +64,19 @@
     <div v-if="spacetimeTore">
         <div id="top-buttons">
             <PostTearSpacetimeButton />
-            <DarkMatterUnlockButton />
+            <DarkMatterUnlockButton v-if="showDarkGenrators" />
+            <AtomicButton v-if="!showDarkGenrators" />
         </div>
         <br>
     </div>
-    <SpacetimePointsDisplay v-if="displaySpacetimePoints" />
+    <ParticlesDisplay v-if="displayParticles" />
+    <SpacetimePointsDisplay v-if="displaySpacetimePoints" class="headers" />
     <AntiPointsDisplay />
-    <PointDisplay />
+    <PointDisplay class="headers" />
     <SpacetimeButton v-if="forceSpacetime" />
     <!-- it is here to reduce flickering, but it causes lag -->
     <!-- <KeepAlive> -->
-    <component :is="tabComponentName" v-if="!forceSpacetime" />
+    <component :is="tabComponentName" v-if="!hideTab" />
     <!-- </KeepAlive> -->
     <hr>
     <SubTabSwitch />

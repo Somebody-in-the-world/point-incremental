@@ -11,12 +11,13 @@
             return {
                 isCurrentSubTab: false,
                 shown: true,
-                subTabName: subTabNames[this.tabId][this.subTabId]
+                subTabName: ""
             };
         },
         methods: {
             update(){
                 this.isCurrentSubTab = this.tabId == currentTab && this.subTabId == currentSubTab;
+                this.subTabName = subTabNames[this.tabId][this.subTabId];
             },
             changeSubTab
         }

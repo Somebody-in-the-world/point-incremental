@@ -5,6 +5,7 @@ import { Effect } from "./effect";
 import { spacetimeUpgrades } from "./spacetime";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { challenges } from "./challenges";
+import { calcStrongForceBoost } from "./atomic";
 
 export function calcDimensionalReq(){
     if(achievements[12].unlocked) return new Decimal(1e25);
@@ -58,20 +59,21 @@ export const dimensionCostMult = [
 export function calcDimensionPerPurchaseMult(){
     let perPurchaseMult = new Decimal(2);
     if(challenges[3].completed) perPurchaseMult = perPurchaseMult.add(0.5);
+    perPurchaseMult = perPurchaseMult.mul(calcStrongForceBoost());
     return perPurchaseMult;
 }
 
-export function dimensionalPowerGainTick(){
+export function dimensionalPowerGainTick(deltaTime){
     if(player.currentChallenge == 4) return;
     for(let dim = 6; dim >= 0; dim--){
         player.dimensions.generated[dim] = player.dimensions.generated[dim].add(
             dimensions[dim+1].totalAmount.mul(dimensions[dim+1].effect).
-            mul(player.settings.updateRate / 1000)
+            mul(deltaTime)
         );
     }
     player.dimensionalPower = player.dimensionalPower.add(
-        calcDimensionalPowerGain().mul(player.settings.updateRate / 1000
-    ));
+        calcDimensionalPowerGain().mul(deltaTime)
+    );
 }
 
 export function calcDimensionalPowerGain(){
@@ -80,8 +82,14 @@ export function calcDimensionalPowerGain(){
 
 export function bulkBuyDimension(idx){
     if(player.dimensionalPoints.lt(1)) return;
-    const amount = Math.floor(Math.max(player.dimensionalPoints.div(dimensions[idx].cost)
-        .log(dimensionCostMult[idx]).add(1).toNumber(), 0));
+    const amount = Math.min(
+        Math.floor(Math.max(player.dimensionalPoints.div(dimensions[idx].cost)
+        .log(dimensionCostMult[idx]).add(1).toNumber(), 0)),
+        dimensions[idx].cap - dimensions[idx].boughtAmount
+    );
+
+    if(amount <= 0) return;
+
     dimensions[idx].boughtAmount += amount;
     const cost = dimensions[idx].formula(dimensions[idx].boughtAmount-1);
 
@@ -103,10 +111,10 @@ export function calcChall2FreePointUpgrades(){
     return player.dimensionalPower.add(1).log(10).add(1).log(10).pow(4);
 }
 
-export function automaticDPGainTick(){
+export function automaticDPGainTick(deltaTime){
     if(tearSpacetimeUpgrades[8].boughtAmount){
         player.dimensionalPoints = player.dimensionalPoints.add(
-            calcDimensionalPointsGain().div(100).mul(player.settings.updateRate / 1000)
+            calcDimensionalPointsGain().div(100).mul(deltaTime)
         );
     }
 }
@@ -136,7 +144,8 @@ export const dimensions = (function(){
                     
                     return mult;
                 }, "mult"),
-                (cost) => {player.dimensionalPoints = player.dimensionalPoints.sub(cost)}
+                (cost) => {player.dimensionalPoints = player.dimensionalPoints.sub(cost)},
+                1_000_000
             )
         );
     }

@@ -4,7 +4,6 @@
         calcSpacetimeReq
     } 
     from "@/game/spacetime";
-    import { challenges } from "@/game/challenges";
     import { INFINITY } from "@/game/constants";
 
     export default {
@@ -65,6 +64,5 @@
     #spacetime-button {
         width: 100%;
         height: 12.5vh;
-        border: 2px solid;
     }
 </style>

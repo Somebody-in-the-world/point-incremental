@@ -29,6 +29,13 @@ window.player = {
     darkGeneratorsUnlocked: 0,
     darkGenerators: new Array(6).fill(0),
     antiPoints: new Decimal(1),
+    particles: new Decimal(0),
+    protons: new Decimal(0),
+    neutrons: new Decimal(0),
+    electrons: new Decimal(0),
+    electromagneticForce: new Decimal(0),
+    strongForce: new Decimal(0),
+    weakForce: new Decimal(0),
     autobuyers: (function(){
         const autobuyersObject = Array.from({length: autobuyers.length}, () => ({
             active: true,
@@ -43,12 +50,15 @@ window.player = {
         pointCompressionAmount: 0,
         dimensionalAmount: 0,
         spacetimeAmount: 0,
+        totalSpacetimeAmount: 0,
+        atomicAmount: 0,
         timePlayed: 0,
         timeInCurrentSpacetime: 0,
         fastestSpacetime: 99999999
     },
     achievements: new Array(100).fill(false),
     settings: {
-        updateRate: 33
+        updateRate: 33,
+        notation: "scientific"
     }
 };

@@ -24,7 +24,8 @@
 </script>
 
 <template>
-    <div class="achievement" :class="{ unlocked: unlocked }">{{ title }}
+    <div class="achievement" :class="{ unlocked: unlocked }">
+        {{ title }}
         <span class="achievement-popup">{{ requirements }}
             <span v-show="hasReward">
                 <br>Reward: {{ reward }}
@@ -36,15 +37,16 @@
 <style scoped>
     .achievement {
         position: relative;
-        width: 10vw;
-        height: 10vw;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
         border-radius: 3px;
         border-width: 1px;
         border-style: solid;
         padding: 5px;
-        font-size: 0.6em;
         text-align: center;
         background-color: #ccc;
+        overflow: visible;
     }
 
     .unlocked {
@@ -59,17 +61,33 @@
         border-radius: 5px;
         position: absolute;
         bottom: 75%;
-        left: -30%;
         z-index: 1;
         background-color: #555;
         color: white;
         transition: 0.2s;
         pointer-events: none;
         padding: 5px;
-        font-size: 1.2em;
     }
 
     .achievement:hover .achievement-popup {
         opacity: 0.9;
     }
+
+    @media (max-width: 768px){
+        .achievement {
+            font-size: 1.75vmin;
+        }
+        .achievement-popup {
+            width: 150%;
+            left: -25%;
+        }
+    }
+
+    @media (min-width: 769px){
+        .achievement-popup {
+            width: 250%;
+            left: -75%;
+        }
+    }
+
 </style>

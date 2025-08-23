@@ -18,7 +18,14 @@ export function init(){
         created(){
             if(this.update){
                 Events.UI.add(GAME_EVENTS.GAME_TICK, this.update, this);
+                Events.UI.add(GAME_EVENTS.GAME_TICK, () => {this._tickUpdate++;}, this);
+                this.update();
             }
+        },
+        data(){
+            return {
+                _tickUpdate: 0 // Vue stuff
+            };
         },
         unmounted(){
             Events.UI.removeAll(this);
@@ -34,13 +41,15 @@ export function init(){
 }
 
 export function startGameLoop(){
-    gameLoop();
-    setTimeout(startGameLoop, player.settings.updateRate);
+    requestAnimationFrame(gameLoop);
 }
 
 export function startSaving(){
     saveGame();
-    setTimeout(startSaving, 2000);
+    setTimeout(startSaving, 1000);
 }
 
-
+export function startUpdateUI(){
+    Events.UI.dispatch(GAME_EVENTS.GAME_TICK);
+    setTimeout(startUpdateUI, player.settings.updateRate);
+}

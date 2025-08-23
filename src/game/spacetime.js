@@ -10,9 +10,9 @@ import { tearSpacetimeUpgrades } from "./tear-spacetime";
 
 let passiveSPGenCounter = 0;
 
-export function passiveGenerateSP(){
+export function passiveGenerateSP(deltaTime){
     if(spacetimeUpgrades[5].boughtAmount){
-        passiveSPGenCounter += player.settings.updateRate / 1000;
+        passiveSPGenCounter += deltaTime;
         if(passiveSPGenCounter >= player.records.fastestSpacetime*10){
             player.spacetimePoints = player.spacetimePoints.add(spacetimePointMultiplier.effect);
             passiveSPGenCounter = 0;
@@ -20,7 +20,7 @@ export function passiveGenerateSP(){
     }
     player.spacetimePoints = player.spacetimePoints.add(
         tearSpacetimeUpgrades[13].effect.mul(player.records.highestSPPerMin)
-        .mul(player.settings.updateRate / 1000).div(60)
+        .mul(deltaTime).div(60)
     );
 }
 
@@ -31,6 +31,18 @@ export function calcSpacetimeReq(){
 
 export function canSpacetime(){
     return player.points.gte(calcSpacetimeReq());
+}
+
+export function bulkBuySPMult(){
+    if(player.spacetimePoints.lt(1)) return;
+    const amount = Math.floor(Math.max(player.spacetimePoints.div(spacetimePointMultiplier.cost)
+        .log(25).add(1).toNumber(), 0));
+    spacetimePointMultiplier.boughtAmount += amount;
+    const cost = spacetimePointMultiplier.formula(spacetimePointMultiplier.boughtAmount-1);
+
+    if(player.spacetimePoints.gte(cost)){
+        player.spacetimePoints = player.spacetimePoints.sub(cost);
+    }
 }
 
 export function calcSpacetimePointsPerMinute(){
@@ -56,6 +68,7 @@ export function spacetimePrestige(){
         player.records.highestSPPerMin = calcSpacetimePointsPerMinute();
     }
     player.spacetimePoints = player.spacetimePoints.add(calcSpacetimePointsGain());
+    player.records.totalSpacetimeAmount += 1;
     player.records.spacetimeAmount += 1;
     if(player.records.timeInCurrentSpacetime < player.records.fastestSpacetime){
         player.records.fastestSpacetime = player.records.timeInCurrentSpacetime;
@@ -80,8 +93,8 @@ const upgradeEffects = [
         .pow(0.75).add(1), "mult"),
     null,
     new Effect(() => 
-        Decimal.min(player.dimensionalPower.pow(0.3), new Decimal(1e6)).mul(
-        player.dimensionalPower.pow(0.2)).add(1), "mult"
+        Decimal.min(Decimal.min(player.dimensionalPower.pow(0.3), new Decimal(1e6)).mul(
+        player.dimensionalPower.pow(0.2)).add(1), "1e10000"), "mult"
     ),
     new Effect(() => 
         player.spacetimePoints.mul(4).add(1).pow(1/3), "mult"
@@ -118,7 +131,7 @@ export const spacetimeUpgrades = (function(){
             () => upgradeCosts[i], (cost) => player.spacetimePoints.gte(cost),
             upgradeEffects[i],
             (cost) => {player.spacetimePoints = player.spacetimePoints.sub(cost);},
-            upgradeDescriptions[i])
+            null, upgradeDescriptions[i])
         );
     }
     return upgrades;
@@ -131,7 +144,7 @@ export const spacetimePointMultiplier = new Purchasable(
     (cost) => player.spacetimePoints.gte(cost),
     new Effect((boughtAmount) => new Decimal(3).pow(boughtAmount), "mult"),
     (cost) => { player.spacetimePoints = player.spacetimePoints.sub(cost); },
-    "Triple spacetime point gain"
+    null, "Triple spacetime point gain"
 );
 
 const milestoneGoals = [
