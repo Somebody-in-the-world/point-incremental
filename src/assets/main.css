@@ -19,6 +19,10 @@
     }
 }
 
+span {
+    font-size: inherit;
+}
+
 h1 { font-size: 5vmin; }
 h2 { font-size: 4.75vmin; }
 h3 { font-size: 3.5vmin; }

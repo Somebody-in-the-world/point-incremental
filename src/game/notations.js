@@ -75,20 +75,29 @@ function scienticNotation(mantissa, exponent){
     return `${mantissa.toFixed(2)}e${exponent}`;
 }
 
+function infinityNotation(mantissa, exponent){
+    const exp = exponent + Math.log10(mantissa);
+    return `${(exp / 308.25).toFixed(4)}∞`;
+}
+
 export function pickNotation(notation, mantissa, exponent){
     if(notation == "scientific"){
         return scienticNotation(mantissa, exponent);
     } else if(notation == "standard"){
         return standardNotation(mantissa, exponent);
+    } else if(notation == "infinity"){
+        return infinityNotation(mantissa, exponent);
     }
 }
 
 export const notationValues = [
     "scientific",
-    "standard"
+    "standard",
+    "infinity"
 ];
 
 export const notationNames = [
     "Scientific",
-    "Standard"
+    "Standard",
+    "Infinity"
 ]

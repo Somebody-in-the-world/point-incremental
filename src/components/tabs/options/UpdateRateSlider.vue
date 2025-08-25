@@ -8,10 +8,10 @@
         },
         methods: {
             update(){
-                this.updateRate = player.settings.updateRate;
+                this.updateRate = player.options.updateRate;
             },
             changeUpdateRate(updateRate){
-                player.settings.updateRate = updateRate;
+                player.options.updateRate = updateRate;
             }
         }
     };

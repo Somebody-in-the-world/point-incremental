@@ -57,8 +57,9 @@ window.player = {
         fastestSpacetime: 99999999
     },
     achievements: new Array(100).fill(false),
-    settings: {
+    options: {
         updateRate: 33,
-        notation: "scientific"
+        notation: "scientific",
+        saveInterval: 2000
     }
 };

@@ -94,10 +94,13 @@ const upgradeEffects = [
     null,
     new Effect(() => 
         Decimal.min(Decimal.min(player.dimensionalPower.pow(0.3), new Decimal(1e6)).mul(
-        player.dimensionalPower.pow(0.2)).add(1), "1e10000"), "mult"
+        player.dimensionalPower.pow(0.2)).add(1), "1e10000").mul(
+            player.dimensionalPower.div("1e10000").pow(0.05).add(1)
+        )
+        , "mult"
     ),
     new Effect(() => 
-        player.spacetimePoints.mul(4).add(1).pow(1/3), "mult"
+        Decimal.min(player.spacetimePoints.mul(4).add(1).pow(1/3), "1e1000"), "mult"
     ),
     new Effect(() =>
         Decimal.min(Decimal.log2(player.records.spacetimeAmount+1).mul(3), new Decimal(25)), "add"

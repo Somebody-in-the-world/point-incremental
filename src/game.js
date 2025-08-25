@@ -38,6 +38,9 @@ export function init(){
     const app = createApp(GameUI);
     app.mixin(globalMixin);
     app.mount("#app");
+
+    startGameLoop();
+    startUpdateUI();
 }
 
 export function startGameLoop(){
@@ -46,10 +49,10 @@ export function startGameLoop(){
 
 export function startSaving(){
     saveGame();
-    setTimeout(startSaving, 1000);
+    setTimeout(startSaving, player.options.saveInterval);
 }
 
 export function startUpdateUI(){
     Events.UI.dispatch(GAME_EVENTS.GAME_TICK);
-    setTimeout(startUpdateUI, player.settings.updateRate);
+    setTimeout(startUpdateUI, player.options.updateRate);
 }

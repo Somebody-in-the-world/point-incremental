@@ -12,10 +12,10 @@
         },
         methods: {
             update(){
-                this.notation = player.settings.notation;
+                this.notation = player.options.notation;
             },
             changeNotation(){
-                player.settings.notation = this.notation;
+                player.options.notation = this.notation;
             }
         }
     };

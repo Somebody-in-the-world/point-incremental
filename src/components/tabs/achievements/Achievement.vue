@@ -80,6 +80,7 @@
         .achievement-popup {
             width: 150%;
             left: -25%;
+            font-size: 2vmin;
         }
     }
 

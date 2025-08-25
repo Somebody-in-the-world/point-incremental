@@ -8,14 +8,14 @@ export function format(number, precision = 2){
         else {
             const mantissa = number.mag / 10**Math.floor(Math.log10(number));
             const exponent = Math.floor(Math.log10(number.mag));
-            formatted = pickNotation(player.settings.notation, mantissa, exponent);
+            formatted = pickNotation(player.options.notation, mantissa, exponent);
         }
     } else if (number.layer == 1){
         const isNegative = number.mag < 0;
         if(isNegative) number = number.pow(-1);
         const mantissa = 10**(number.mag - Math.floor(number.mag));
         const exponent = Math.floor(number.mag);
-        formatted = pickNotation(player.settings.notation, mantissa, exponent);
+        formatted = pickNotation(player.options.notation, mantissa, exponent);
         if(isNegative) formatted = `1 / ${formatted}`;
     }
 

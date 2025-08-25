@@ -70,9 +70,9 @@
         <br>
     </div>
     <ParticlesDisplay v-if="displayParticles" />
-    <SpacetimePointsDisplay v-if="displaySpacetimePoints" class="headers" />
+    <SpacetimePointsDisplay v-if="displaySpacetimePoints" />
     <AntiPointsDisplay />
-    <PointDisplay class="headers" />
+    <PointDisplay />
     <SpacetimeButton v-if="forceSpacetime" />
     <!-- it is here to reduce flickering, but it causes lag -->
     <!-- <KeepAlive> -->

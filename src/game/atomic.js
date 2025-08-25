@@ -36,7 +36,7 @@ export function calcStrongForceBoost(){
 
 export function calcWeakForceBoost(){
     return new Decimal(1).add(
-        player.weakForce.mul(10).pow(0.75).mul(5)
+        player.weakForce.pow(1.25)
     );
 }
 
