@@ -37,6 +37,9 @@ export function bulkBuySPMult(){
     if(player.spacetimePoints.lt(1)) return;
     const amount = Math.floor(Math.max(player.spacetimePoints.div(spacetimePointMultiplier.cost)
         .log(25).add(1).toNumber(), 0));
+
+    if(amount < 1) return;
+
     spacetimePointMultiplier.boughtAmount += amount;
     const cost = spacetimePointMultiplier.formula(spacetimePointMultiplier.boughtAmount-1);
 
