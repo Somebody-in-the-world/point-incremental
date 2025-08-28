@@ -35,9 +35,7 @@ export function calcStrongForceBoost(){
 }
 
 export function calcWeakForceBoost(){
-    return new Decimal(1).add(
-        player.weakForce.add(0).log(10).pow(0.2).mul(2)
-    );
+    return player.weakForce.add(1).log(10).pow(0.2).mul(2);
 }
 
 export function calcParticleToForceRate(amount){
