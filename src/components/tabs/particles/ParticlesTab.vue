@@ -23,7 +23,8 @@
                 weakForceBoost: new Decimal(),
                 electromagneticForceGain: new Decimal(),
                 strongForceGain: new Decimal(),
-                weakForceGain: new Decimal()
+                weakForceGain: new Decimal(),
+                unlockedDistributeAll: false
             };
         },
         methods: {
@@ -41,6 +42,14 @@
                 this.electromagneticForceGain = calcParticleToForceRate(player.protons);
                 this.strongForceGain = calcParticleToForceRate(player.neutrons);
                 this.weakForceGain = calcParticleToForceRate(player.electrons);
+                this.unlockedDistributeAll = achievements[33].unlocked;
+            },
+            distributeAll(){
+                player.protons = player.protons.add(player.particles.div(3).floor());
+                player.neutrons = player.neutrons.add(player.particles.div(3).floor());
+                player.electrons = player.electrons.add(player.particles.div(3).floor());
+                player.particles = player.particles.mod(3);
+                
             }
         }
     };
@@ -48,6 +57,7 @@
 
 <template>
     <h3 style="text-align: center">You have <span id="particles">{{ format(particles) }}</span> particles</h3>
+    <button id="distribute-all-button" v-if="unlockedDistributeAll" @click="distributeAll">Distribute all</button>
     <div id="particles-grid">
         <div>
             <h4>
@@ -72,7 +82,7 @@
                 You have <span class="electron">{{ format(electrons) }}</span> electrons, 
                 producing <span class="electron">{{ format(weakForceGain) }}</span> weak force per second<br>
                 You have <span class="electron">{{ format(weakForce) }}</span> weak force, 
-                making all dark generators <span class="electron">{{ format(weakForceBoost) }}x</span> stronger
+                dark matter boost exponent <span class="electron">+^{{ format(weakForceBoost) }}</span>
             </h4>
             <ParticleAssignmentButtons particleType="electron"/>
         </div>
@@ -80,6 +90,11 @@
 </template>
 
 <style scoped>
+    #distribute-all-button {
+        margin: auto;
+        display: flex;
+    }
+
     #particles {
         color: #60a0ff;
         text-shadow: 2px 2px 10px;

@@ -7,8 +7,10 @@ window.player = {
         boughtAmount: 0
     },
     compressedPoints: new Decimal(0),
+    highestPointsThisCompression: new Decimal(0),
     automationPoints: new Decimal(0),
     automationPointsUnlocked: false,
+    highestPointsThisDimensional: new Decimal(0),
     dimensionalPoints: new Decimal(0),
     dimensionalPower: new Decimal(0),
     dimensions: {
@@ -59,7 +61,8 @@ window.player = {
     achievements: new Array(100).fill(false),
     options: {
         updateRate: 33,
-        notation: "scientific",
-        saveInterval: 2000
+        notation: "mixed scientific",
+        saveInterval: 2000,
+        theme: "classic"
     }
 };

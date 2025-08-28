@@ -22,6 +22,12 @@ export function gameLoop(){
     if(player.points.gte(player.records.highestPoints)){
         player.records.highestPoints = player.points;
     }
+    if(player.points.gte(player.highestPointsThisCompression)){
+        player.highestPointsThisCompression = player.points;
+    }
+    if(player.points.gte(player.highestPointsThisDimensional)){
+        player.highestPointsThisDimensional = player.points;
+    }
 
     if(player.currentChallenge == 6){
         player.antiPoints = player.antiPoints.mul(new Decimal(1e300).pow(deltaTime));

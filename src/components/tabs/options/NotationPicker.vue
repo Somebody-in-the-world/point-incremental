@@ -25,7 +25,7 @@
     Notation: 
     <select v-model="notation" @change="changeNotation">
         <option v-for="(name, idx) in notationNames" 
-            :value="notationValues[idx]">
+            :value="notationValues[idx]" :key="idx">
             {{ name }}
         </option>
     </select>

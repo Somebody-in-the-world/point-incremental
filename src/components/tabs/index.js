@@ -9,6 +9,7 @@ import SpacetimeMilestonesTab from "./spacetime-milestones/SpacetimeMilestonesTa
 import TearSpacetimeTab from "./tear-spacetime/TearSpacetimeTab.vue";
 import DarkMatterTab from "./dark-matter-tab/DarkMatterTab.vue";
 import ParticlesTab from "./particles/ParticlesTab.vue";
+import StatisticsTab from "./statistics/StatisticsTab.vue";
 
 export default {
     AchievementsTab,
@@ -21,5 +22,6 @@ export default {
     SpacetimeMilestonesTab,
     TearSpacetimeTab,
     DarkMatterTab,
-    ParticlesTab
+    ParticlesTab,
+    StatisticsTab
 };

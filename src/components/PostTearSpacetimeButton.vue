@@ -39,7 +39,7 @@
 </script>
 
 <template>
-    <button class="spacetime" id="spacetime-button" :disabled="!canSpacetime" @click="spacetimePrestige">
+    <button class="spacetime-alt" id="spacetime-button" :disabled="!canSpacetime" @click="spacetimePrestige">
         <span :hidden="!canSpacetime">
             Spacetime to 
             <span :hidden="inChallenge">

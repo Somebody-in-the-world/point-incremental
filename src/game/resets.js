@@ -6,6 +6,7 @@ import { tearSpacetimeUpgrades } from "./tear-spacetime";
 export function pointCompressionReset(){
     player.points = new Decimal(0);
     player.pointUpgrade.boughtAmount = 0;
+    player.highestPointsThisCompression = new Decimal(0);
 }
 
 export function dimensionalReset(){
@@ -17,6 +18,7 @@ export function dimensionalReset(){
         spacetimeMilestones[1].unlocked;
     player.dimensionalPower = new Decimal(0);
     player.antiPoints = new Decimal(1);
+    player.highestPointsThisDimensional = new Decimal(0);
     for(let i = 0; i < 8; i++){
         dimensions[i].generatedAmount = new Decimal(0); 
     }

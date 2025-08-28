@@ -45,12 +45,12 @@
         border-style: solid;
         padding: 5px;
         text-align: center;
-        background-color: #ccc;
+        background-color: var(--ach-locked-color);
         overflow: visible;
     }
 
     .unlocked {
-        background-color: #78e25a !important;
+        background-color: var(--ach-color) !important;
     }
 
     .achievement-popup {

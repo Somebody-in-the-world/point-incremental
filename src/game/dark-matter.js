@@ -14,10 +14,12 @@ export const darkMatterUnlockRequirements = [
     new Decimal("1e150000")
 ];
 
-export const darkMatterBoostExponent = 120;
+export function calcDarkMatterBoostExponent(){
+    return 120 + calcWeakForceBoost().toNumber();
+}
 
 export function calcDarkMatterBoost(){
-    return player.darkMatter.add(1).pow(darkMatterBoostExponent);
+    return player.darkMatter.add(1).pow(calcDarkMatterBoostExponent());
 }
 
 export function calcDarkMatterGain(){
@@ -74,8 +76,11 @@ export const darkGenerators = (function(){
         generators.push(new Purchasable(
             true, () => player.darkGenerators[idx], 
             (val) => {player.darkGenerators[idx] = val;},
-            (boughtAmount) => darkGeneratorBaseCosts[idx]
-                .mul(darkGeneratorCostMultipliers[idx].pow(boughtAmount)),
+            function(boughtAmount){
+                let baseCost = darkGeneratorBaseCosts[idx]
+                    .mul(darkGeneratorCostMultipliers[idx].pow(boughtAmount));
+                return baseCost;
+            },
             (cost) => player.spacetimePoints.gte(cost), 
             new Effect(function(boughtAmount){
                 let effect = darkGeneratorMultiplierPerPurchases[idx]
@@ -99,7 +104,6 @@ export const darkGenerators = (function(){
                     if(tearSpacetimeUpgrades[11].boughtAmount){
                         effect = effect.mul(tearSpacetimeUpgrades[11].effect);
                     }
-                    effect = effect.mul(calcWeakForceBoost());
                 }
                 return effect;
             }, "mult"),

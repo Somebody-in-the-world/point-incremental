@@ -1,12 +1,12 @@
 <script>
-    import { darkMatterBoostExponent, calcDarkMatterBoost, calcDarkMatterGain } from "@/game/dark-matter";
+    import { calcDarkMatterBoostExponent, calcDarkMatterBoost, calcDarkMatterGain } from "@/game/dark-matter";
 
     export default {
         name: "DarkMatterDisplay",
         data(){
             return {
                 darkMatter: new Decimal(),
-                darkMatterBoostExponent,
+                darkMatterBoostExponent: 120,
                 darkMatterBoost: new Decimal(),
                 darkMatterPerSecond: new Decimal()
             };
@@ -16,6 +16,7 @@
                 this.darkMatter = player.darkMatter;
                 this.darkMatterBoost = calcDarkMatterBoost();
                 this.darkMatterPerSecond = calcDarkMatterGain();
+                this.darkMatterBoostExponent = calcDarkMatterBoostExponent();
             }
         }
     };
@@ -34,7 +35,6 @@
 
 <style scoped>
     .dark-matter {
-        color: black;
         font-size: 1.25em;
         text-shadow: 0px 2px 5px;
     }

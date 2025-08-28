@@ -1,6 +1,7 @@
 <script>
     import UpdateRateSlider from "./UpdateRateSlider.vue";
     import NotationPicker from "./NotationPicker.vue";
+    import ThemePicker from "./ThemePicker.vue";
     import SavingButtons from "./SavingButtons.vue";
     import ResetGameButton from "./ResetGameButton.vue";
 
@@ -9,6 +10,7 @@
         components: {
             UpdateRateSlider,
             NotationPicker,
+            ThemePicker,
             SavingButtons,
             ResetGameButton
         }
@@ -19,6 +21,8 @@
     <UpdateRateSlider />
     <br>
     <NotationPicker />
+    <br>
+    <ThemePicker />
     <br>
     <SavingButtons />
     <br>

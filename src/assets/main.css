@@ -1,6 +1,28 @@
 * {
     font-family: Monospace;
     box-sizing: border-box;
+    border-color: var(--border-color);
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: all 0.5s;
+}
+
+button, select, input, textarea {
+    color: var(--text-color);
+    background-color: var(--button-color);
+}
+
+button:hover {
+    color: var(--hovered-button-color);
+    background-color: var(--hovered-button-bg-color);
+}
+
+button:disabled {
+    color: var(--disabled-button-color);
+    background-color: var(--disabled-button-bg-color);
 }
 
 @media (max-width: 768px){
@@ -43,16 +65,29 @@ button:disabled {
 }
 
 .spacetime {
-    color: white;
+    color: var(--spacetime-color);
     transition: 0.3s;
-    background-color: black;
-    border: 2px solid white;
+    background-color: var(--spacetime-bg-color);
+    border: 2px solid var(--spacetime-color);
 }
 
 .spacetime:hover, .spacetime:disabled {
-    background-color: white;
-    border-color: black;
-    color: black;
+    background-color: var(--spacetime-color);
+    border-color: var(--spacetime-bg-color);
+    color: var(--spacetime-bg-color);
+}
+
+.spacetime-alt {
+    color: var(--spacetime-alt-color);
+    transition: 0.3s;
+    background-color: var(--spacetime-alt-bg-color);
+    border: 2px solid var(--spacetime-alt-color);
+}
+
+.spacetime-alt:hover, .spacetime-alt:disabled {
+    background-color: var(--spacetime-alt-color);
+    border-color: var(--spacetime-alt-bg-color);
+    color: var(--spacetime-alt-bg-color);
 }
 
 .atomic {

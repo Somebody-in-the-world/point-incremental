@@ -32,15 +32,15 @@
     #milestone {
         width: 100%;
         height: fit-content;
-        border: 1px solid black;
+        border: 1px solid;
         border-radius: 2px;
         text-align: center;
         padding: 10px 0px;
         font-size: 12px;
-        background-color: #ff8080;
+        background-color: var(--milestone-locked-color);
     }
 
     .milestone-unlocked {
-        background-color: #80ff80 !important;
+        background-color: var(--milestone-color) !important;
     }
 </style>

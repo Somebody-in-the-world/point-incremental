@@ -30,13 +30,13 @@ export function calcElectromagneticForceBoost(){
 
 export function calcStrongForceBoost(){
     return new Decimal(1).add(
-        player.strongForce.add(1).log(10).pow(0.2).div(5)
+        player.strongForce.add(1).log(10).pow(0.35).div(5)
     );
 }
 
 export function calcWeakForceBoost(){
     return new Decimal(1).add(
-        player.weakForce.pow(1.25)
+        player.weakForce.add(0).log(10).pow(0.2).mul(2)
     );
 }
 

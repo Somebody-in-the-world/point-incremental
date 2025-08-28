@@ -7,6 +7,7 @@ import { gameLoop } from "./game/gameloop";
 import { format } from "./game/format";
 import { loadGame, saveGame } from "./game/saving";
 import { achievements } from "./game/achievements";
+import { applyTheme } from "./game/themes";
 
 export function init(){
     window.Decimal = Decimal;
@@ -24,7 +25,7 @@ export function init(){
         },
         data(){
             return {
-                _tickUpdate: 0 // Vue stuff
+                _tickUpdate: 0
             };
         },
         unmounted(){
@@ -40,6 +41,7 @@ export function init(){
     app.mount("#app");
 
     startGameLoop();
+    applyTheme();
     startUpdateUI();
 }
 

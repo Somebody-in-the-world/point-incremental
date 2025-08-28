@@ -75,29 +75,55 @@ function scienticNotation(mantissa, exponent){
     return `${mantissa.toFixed(2)}e${exponent}`;
 }
 
+function logarithmNotation(mantissa, exponent){
+    return `e${(exponent+Math.log10(mantissa)).toFixed(2)}`;
+}
+
+function mixedLogarithmNotation(mantissa, exponent){
+    if(exponent < 1000) return logarithmNotation(mantissa, exponent);
+    const exp = exponent + Math.log10(mantissa);
+    const doubleExponent = Math.floor(Math.log10(exp));
+    const expMantissa = exp / 10**doubleExponent;
+    return `e${standardNotation(expMantissa, doubleExponent)}`;
+}
+
 function infinityNotation(mantissa, exponent){
     const exp = exponent + Math.log10(mantissa);
     return `${(exp / 308.25).toFixed(4)}∞`;
 }
 
 export function pickNotation(notation, mantissa, exponent){
-    if(notation == "scientific"){
-        return scienticNotation(mantissa, exponent);
-    } else if(notation == "standard"){
-        return standardNotation(mantissa, exponent);
-    } else if(notation == "infinity"){
-        return infinityNotation(mantissa, exponent);
+    switch(notation){
+        case "mixed scientific":
+            if(exponent >= 33) return scienticNotation(mantissa, exponent);
+            else return standardNotation(mantissa, exponent);
+        case "mixed logarithm":
+            return mixedLogarithmNotation(mantissa, exponent);
+        case "scientific":
+            return scienticNotation(mantissa, exponent);
+        case "logarithm":
+            return logarithmNotation(mantissa, exponent);
+        case "standard": 
+            return standardNotation(mantissa, exponent);
+        case "infinity":
+            return infinityNotation(mantissa, exponent);
     }
 }
 
 export const notationValues = [
+    "mixed scientific",
+    "mixed logarithm",
     "scientific",
+    "logarithm",
     "standard",
     "infinity"
 ];
 
 export const notationNames = [
+    "Mixed Scientific",
+    "Mixed Logarithm",
     "Scientific",
+    "Logarithm",
     "Standard",
     "Infinity"
 ]

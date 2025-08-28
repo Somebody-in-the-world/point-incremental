@@ -37,7 +37,7 @@
 </script>
 
 <template>
-    <button class="spacetime" id="dark-matter-unlock-button" :disabled="!canUnlockDarkMatter" @click="unlockDarkGenerator">
+    <button class="spacetime-alt" id="dark-matter-unlock-button" :disabled="!canUnlockDarkMatter" @click="unlockDarkGenerator">
         <span v-if="canUnlockDarkMatter">
             Unlock {{ hasUnlockedGenerators ? "a new dark generator" : "dark matter" }}
         </span>

@@ -13,7 +13,7 @@ export function calcDimensionalReq(){
 }
 
 export function calcDimensionalPointsGain(){
-    let DPGain = player.points.div(calcDimensionalReq()).pow(0.1);
+    let DPGain = player.highestPointsThisDimensional.div(calcDimensionalReq()).pow(0.1);
     if(achievements[18].unlocked) DPGain = DPGain.mul(3);
     if(tearSpacetimeUpgrades[5].boughtAmount) DPGain = DPGain.mul(tearSpacetimeUpgrades[5].effect);
     return DPGain.floor();

@@ -2,7 +2,7 @@
     import { calcPointGain } from "@/game/points.js";
 
     export default {
-        name: "PointButton",
+        name: "GetPointButton",
         data(){
             return {
                 pointGain: new Decimal()

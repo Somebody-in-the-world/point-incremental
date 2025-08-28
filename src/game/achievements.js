@@ -73,7 +73,10 @@ export const achievementsTitle = [
     "NEW CHALLENGES???",
     "Anti-anti-anti-challenged",
     "Googol (spacetime points)",
-    "We couldn't afford 9"
+    "We couldn't afford 9",
+    "Zooming in",
+    "Perfectly balanced",
+    "Thats REALLY a lot of points"
 ];
 
 export const achievementsRequirements = [
@@ -108,7 +111,10 @@ export const achievementsRequirements = [
     "Complete challenge 4",
     "Complete all challenges",
     "Get 1e100 spacetime points",
-    "Buy a tier 6 dark generator"
+    "Buy a tier 6 dark generator",
+    "Go atomic",
+    "Have one of each particle type",
+    "Have 1e1000000 points"
 ];
 
 export const achievementReqFuncs = [
@@ -147,7 +153,10 @@ export const achievementReqFuncs = [
     () => challenges[3].completed,
     () => calcTotalChallsCompleted() == challenges.length,
     () => player.spacetimePoints.gte(1e100),
-    () => darkGenerators[5].boughtAmount > 0
+    () => darkGenerators[5].boughtAmount > 0,
+    () => player.records.atomicAmount > 0,
+    () => player.protons.gt(0) && player.neutrons.gt(0) && player.electrons.gt(0),
+    () => player.points.gte("1e1e6")
 ];
 
 export const achievementsRewards = [
@@ -164,6 +173,8 @@ export const achievementsRewards = [
     null, null, null, null, null, null,
     "Gain 2x more dark matter",
     "Gain 1e100x more points",
+    null, null, 
+    "You can distribute all particles",
     null
 ];
 

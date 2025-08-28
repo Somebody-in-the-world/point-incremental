@@ -3,7 +3,7 @@ import { pointCompressionReset } from "./resets";
 import { spacetimeMilestones } from "./spacetime";
 
 export function calcCompressedPointsGain(){
-    return player.points.div(250).pow(0.4).floor();
+    return player.highestPointsThisCompression.div(250).pow(0.4).floor();
 }
 
 export function calcCompressedPointsBoost(){

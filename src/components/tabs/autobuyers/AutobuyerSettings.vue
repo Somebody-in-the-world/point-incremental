@@ -50,7 +50,7 @@
 
 <style scoped>
     #autobuyer-settings {
-        border: 2px solid black;
+        border: 2px solid;
         border-radius: 5px;
         padding: 10px 0px;
         text-align: center;

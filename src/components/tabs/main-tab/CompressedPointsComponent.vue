@@ -15,7 +15,7 @@
         },
         methods: {
             update(){
-                this.shown = player.points.gte(250) || player.records.pointCompressionAmount > 0;
+                this.shown = player.highestPointsThisCompression.gte(250) || player.records.pointCompressionAmount > 0;
             }
         }
     };
