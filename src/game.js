@@ -8,6 +8,7 @@ import { format } from "./game/format";
 import { loadGame, saveGame } from "./game/saving";
 import { achievements } from "./game/achievements";
 import { applyTheme } from "./game/themes";
+import { fixAutobuyers } from "./game/autobuyers";
 
 export function init(){
     window.Decimal = Decimal;
@@ -40,6 +41,7 @@ export function init(){
     app.mixin(globalMixin);
     app.mount("#app");
 
+    fixAutobuyers();
     startGameLoop();
     applyTheme();
     startUpdateUI();

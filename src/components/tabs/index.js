@@ -1,4 +1,5 @@
 import AchievementsTab from "./achievements/AchievementsTab.vue";
+import AtomicMilestonesTab from "./atomic-milestones/AtomicMilestonesTab.vue";
 import AutobuyersTab from "./autobuyers/AutobuyersTab.vue";
 import ChallengesTab from "./challenges/ChallengesTab.vue";
 import DimensionalTab from "./dimensional/DimensionalTab.vue";
@@ -13,6 +14,7 @@ import StatisticsTab from "./statistics/StatisticsTab.vue";
 
 export default {
     AchievementsTab,
+    AtomicMilestonesTab,
     AutobuyersTab,
     ChallengesTab,
     DimensionalTab,

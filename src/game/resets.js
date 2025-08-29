@@ -1,3 +1,4 @@
+import { atomicMilestones } from "./atomic";
 import { darkGenerators } from "./dark-matter";
 import { dimensions } from "./dimensional";
 import { spacetimeMilestones, spacetimeUpgrades } from "./spacetime";
@@ -37,33 +38,33 @@ export function spacetimeReset(){
 }
 
 export function atomicReset(){
+    player.records.timeInCurrentAtomic = 0;
     player.spacetimePoints = new Decimal(0);
     player.currentChallenge = 0;
     player.darkMatter = new Decimal(0);
-    player.records.spacetimeAmount = 0;
+    player.records.spacetimeAmount = atomicMilestones[1].unlocked ? 50 : 0;
     player.spacetimePointMultipliers = 0;
-    player.latestUnlockedChallenge = 0;
-    player.darkGeneratorsUnlocked = 0;
+    player.latestUnlockedChallenge = atomicMilestones[5].unlocked ? 6 : 0;
+    player.darkGeneratorsUnlocked = atomicMilestones[8].unlocked ? 6 : 0;
     player.records.highestSPPerMin = new Decimal(0);
     player.records.fastestSpacetime = 99999999;
-    player.spacetimeTore = false;
+    player.spacetimeTore = atomicMilestones[1].unlocked;
     player.electromagneticForce = new Decimal(0);
     player.strongForce = new Decimal(0);
     player.weakForce = new Decimal(0);
-
     for(const upgrade of spacetimeUpgrades){
-        upgrade.boughtAmount = false;
+        upgrade.boughtAmount = atomicMilestones[2].unlocked;
     }
     for(const upgrade of tearSpacetimeUpgrades){
         if(upgrade.repeatable){
-            upgrade.boughtAmount = 0;
+            upgrade.boughtAmount = atomicMilestones[3].unlocked ? upgrade.cap : 0;
         } else {
-            upgrade.boughtAmount = false;
+            upgrade.boughtAmount = atomicMilestones[3].unlocked;
         }
     }
     for(let i = 0; i < 6; i++){
         darkGenerators[i].boughtAmount = 0;
-        player.challengeCompletions[i] = false;
+        player.challengeCompletions[i] = atomicMilestones[5].unlocked;
     }
     spacetimeReset();
 }

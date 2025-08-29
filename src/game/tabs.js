@@ -4,11 +4,11 @@ export const tabComponentNames = ["MainTab", "AutobuyersTab", "ChallengesTab", "
 export const tabNames = ["Main", "Automation", "Challenges", "Dimensional", "Spacetime", "Dark Matter", "Atomic", "Achievements", "Statistics", "Options"];
 export const subTabComponentNames = [[], [], [], [],
     ["SpacetimeUpgradesTab", "SpacetimeMilestonesTab", "TearSpacetimeTab"], [],
-    ["ParticlesTab"], 
+    ["ParticlesTab", "AtomicMilestonesTab"], 
 [], [], []];
 export const subTabNames = [[], [], [], [], 
     ["Upgrades", "Milestones", "Tear Spacetime"], [],
-    ["Particles"], 
+    ["Particles", "Atomic Milestones"], 
 [], [], []];
 export const tabUnlocked = Array.from({length: tabNames.length}, () => true);
 export const tabClassStyles = ["", "", "", "", "spacetime-alt", "spacetime-alt", "atomic", "", ""];

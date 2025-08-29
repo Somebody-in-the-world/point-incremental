@@ -8,26 +8,33 @@
         data(){
             return {
                 name: this.autobuyerObject.name,
-                extraText: this.autobuyerObject.extraSettings.text,
-                hasTextBox: this.autobuyerObject.extraSettings.textbox,
+                extraText: "",
+                hasInput: this.autobuyerObject.hasInput,
                 textBoxInput: "",
-                textBoxInputShown: false,
-                isActive: true
+                inputShown: false,
+                isActive: true,
+                showChangeModeButton: false
             };
         },
         methods: {
             update(){
                 this.isActive = this.autobuyerObject.active;
-                if(this.hasTextBox){
-                    this.textBoxInput = this.autobuyerObject.textBoxInput;
-                    this.textBoxInputShown = this.autobuyerObject.textBoxInputShown;
+                if(this.hasInput){
+                    this.extraText = this.autobuyerObject.currentModeObject.text;
+                    this.input = this.autobuyerObject.input;
+                    this.inputShown = this.autobuyerObject.totalUnlockedModes > 0;
+                    this.showChangeModeButton = this.autobuyerObject.totalUnlockedModes > 1;
                 }
             },
             setActive(isActive){
                 this.autobuyerObject.active = isActive;
             },
             setInput(input){
-                this.autobuyerObject.textBoxInput = input;
+                this.autobuyerObject.input = input;
+            },
+            changeMode(){
+                this.autobuyerObject.mode = 
+                    (this.autobuyerObject.mode + 1) % this.autobuyerObject.totalUnlockedModes;
             }
         }
     };
@@ -37,11 +44,12 @@
     <div id="autobuyer-settings">
         {{ name }}
         <br>
-        <div v-if="textBoxInputShown">
-            {{ extraText }}
-            <div v-if="hasTextBox">
-                <input type="text" :value="textBoxInput" @input="setInput($event.target.value)" />
+        <div v-if="hasInput && inputShown">
+            <div>
+                <button v-if="showChangeModeButton" @click="changeMode">Change Mode</button>
             </div>
+            {{ extraText }}
+            <input type="text" :value="input" @input="setInput($event.target.value)" />
         </div>
         <br>
         Active: <input type="checkbox" :checked="isActive" @input="setActive($event.target.checked)" />

@@ -1,10 +1,16 @@
 export class Autobuyer {
-    constructor(name, unlockReq, activeGetter, activeSetter, extraSettings){
+    constructor(name, unlockReq, activeGetter, activeSetter, hasInput,
+        modes, inputGetter, inputSetter, modeGetter, modeSetter){
         this.name = name;
         this.unlockReq = unlockReq;
         this.activeGetter = activeGetter;
         this.activeSetter = activeSetter;
-        this.extraSettings = extraSettings;
+        this.hasInput = hasInput;
+        this.modes = modes;
+        this.inputGetter = inputGetter;
+        this.inputSetter = inputSetter;
+        this.modeGetter = modeGetter;
+        this.modeSetter = modeSetter;
     }
 
     get unlocked(){
@@ -15,16 +21,33 @@ export class Autobuyer {
         return this.activeGetter();
     }
 
-    get textBoxInput(){
-        return this.extraSettings.inputGetter();
+    get mode(){
+        return this.modeGetter();
     }
 
-    get textBoxInputShown(){
-        return this.extraSettings.inputShowReq();
+    set mode(mode){
+        this.modeSetter(mode);
     }
 
-    set textBoxInput(input){
-        this.extraSettings.inputSetter(input);
+    get currentModeObject(){
+        if(this.mode >= this.modes.length) this.mode = 0;
+        return this.modes[this.mode];
+    }
+
+    get totalUnlockedModes(){
+        let total = 0;
+        for(const mode of this.modes){
+            if(mode.inputShowReq()) total += 1;
+        }
+        return total;
+    }
+
+    get input(){
+        return this.inputGetter();
+    }
+
+    set input(input){
+        this.inputSetter(input);
     }
 
     set active(isActive){

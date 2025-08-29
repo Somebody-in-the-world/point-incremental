@@ -116,7 +116,8 @@ export const notationValues = [
     "scientific",
     "logarithm",
     "standard",
-    "infinity"
+    "infinity",
+    "blind"
 ];
 
 export const notationNames = [
@@ -125,5 +126,6 @@ export const notationNames = [
     "Scientific",
     "Logarithm",
     "Standard",
-    "Infinity"
+    "Infinity",
+    "Blind"
 ]

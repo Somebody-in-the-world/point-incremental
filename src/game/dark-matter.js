@@ -62,6 +62,9 @@ export function bulkBuyDarkGenerator(idx){
     if(player.spacetimePoints.lt(1)) return;
     const amount = Math.floor(Math.max(player.spacetimePoints.div(darkGenerators[idx].cost)
         .log(darkGeneratorCostMultipliers[idx]).add(1).toNumber(), 0));
+
+    if(amount <= 0) return;
+
     darkGenerators[idx].boughtAmount += amount;
     const cost = darkGenerators[idx].formula(darkGenerators[idx].boughtAmount-1);
 

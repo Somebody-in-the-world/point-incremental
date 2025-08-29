@@ -62,6 +62,7 @@ export function gameLoop(){
 
     player.records.timePlayed += deltaTime;
     player.records.timeInCurrentSpacetime += deltaTime;
+    player.records.timeInCurrentAtomic += deltaTime;
 
     lastTick = now;
     requestAnimationFrame(gameLoop);

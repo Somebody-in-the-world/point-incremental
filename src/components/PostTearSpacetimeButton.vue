@@ -45,7 +45,7 @@
             <span :hidden="inChallenge">
                 gain {{ format(spacetimePointsGain) }} spacetime points
                 <br>
-                <span style="font-size: 0.65em" v-if="showPeakInfo">
+                <span style="font-size: 0.65em;" v-if="showPeakInfo">
                     ({{ format(spacetimePointsPerMinute) }} SP/min, 
                     Peak: {{ format(peakSPPerMin) }} SP/min at {{ format(SPAtPeakSPPerMin) }} SP)
                 </span>

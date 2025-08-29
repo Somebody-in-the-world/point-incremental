@@ -21,7 +21,7 @@ export const pointUpgrade =
                 cost = calcPreInfinityCost(boughtAmount);
             }
             if(challenges[4].completed){
-                cost = cost.div(player.darkMatter.add(1).mul(1e5).pow(180));
+                cost = cost.div(Decimal.min(player.darkMatter.add(1).mul(1e5).pow(180), "1e1000000"));
             }
             return cost;
         }, 

@@ -3,6 +3,7 @@ import { dimensions } from "./dimensional";
 import { spacetimeMilestones, spacetimeUpgrades } from "./spacetime";
 import { calcTotalChallsCompleted, challenges } from "./challenges";
 import { darkGenerators } from "./dark-matter";
+import { atomicMilestones } from "./atomic";
 
 export class Achievement {
     constructor(id, title, requirements, reward, 
@@ -76,7 +77,9 @@ export const achievementsTitle = [
     "We couldn't afford 9",
     "Zooming in",
     "Perfectly balanced",
-    "Thats REALLY a lot of points"
+    "Thats REALLY a lot of points",
+    "Collapser of multiple spacetimes",
+    "This mile took an atomic"
 ];
 
 export const achievementsRequirements = [
@@ -114,7 +117,9 @@ export const achievementsRequirements = [
     "Buy a tier 6 dark generator",
     "Go atomic",
     "Have one of each particle type",
-    "Have 1e1000000 points"
+    "Get 1e1000000 points",
+    "Get 1e10000 spacetime points",
+    "Get all atomic milestones"
 ];
 
 export const achievementReqFuncs = [
@@ -156,7 +161,9 @@ export const achievementReqFuncs = [
     () => darkGenerators[5].boughtAmount > 0,
     () => player.records.atomicAmount > 0,
     () => player.protons.gt(0) && player.neutrons.gt(0) && player.electrons.gt(0),
-    () => player.points.gte("1e1e6")
+    () => player.points.gte("1e1e6"),
+    () => player.spacetimePoints.gte("1e10000"),
+    () => atomicMilestones[9].unlocked
 ];
 
 export const achievementsRewards = [
@@ -175,7 +182,7 @@ export const achievementsRewards = [
     "Gain 1e100x more points",
     null, null, 
     "You can distribute all particles",
-    null
+    null, null, null
 ];
 
 export const achievements = (function(){

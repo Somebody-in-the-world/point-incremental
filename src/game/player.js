@@ -1,5 +1,6 @@
 import Decimal from "break_eternity.js";
 import { autobuyers } from "./autobuyers";
+import { achievements } from "./achievements";
 
 window.player = {
     points: new Decimal(0),
@@ -38,9 +39,13 @@ window.player = {
     electromagneticForce: new Decimal(0),
     strongForce: new Decimal(0),
     weakForce: new Decimal(0),
+    atomicMilestones: new Array(10).fill(false),
+    peakParticlesPerMin: new Decimal(0),
+    particlesAtPeakParticlesPerMin: new Decimal(0),
     autobuyers: (function(){
         const autobuyersObject = Array.from({length: autobuyers.length}, () => ({
             active: true,
+            mode: 0,
             input: ""
         }));
 
@@ -56,9 +61,11 @@ window.player = {
         atomicAmount: 0,
         timePlayed: 0,
         timeInCurrentSpacetime: 0,
-        fastestSpacetime: 99999999
+        fastestSpacetime: 99999999,
+        timeInCurrentAtomic: 0,
+        fastestAtomic: 99999999
     },
-    achievements: new Array(100).fill(false),
+    achievements: new Array(achievements.length).fill(false),
     options: {
         updateRate: 33,
         notation: "mixed scientific",
