@@ -42,6 +42,14 @@ window.player = {
     atomicMilestones: new Array(10).fill(false),
     peakParticlesPerMin: new Decimal(0),
     particlesAtPeakParticlesPerMin: new Decimal(0),
+    quantumDepth: 0,
+    quantumUnlocked: false,
+    quantumFoam: new Decimal(0),
+    quantumUpgrades: new Array(4).fill(0),
+    quantumDepthUpgrade: 0,
+    projectedQuantumDepth: 1,
+    quarks: 0,
+    totalQuarks: 0,
     autobuyers: (function(){
         const autobuyersObject = Array.from({length: autobuyers.length}, () => ({
             active: true,

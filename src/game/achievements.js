@@ -79,7 +79,10 @@ export const achievementsTitle = [
     "Perfectly balanced",
     "Thats REALLY a lot of points",
     "Collapser of multiple spacetimes",
-    "This mile took an atomic"
+    "This mile took an atomic",
+    "Zooming in DEEPER",
+    "Physics breaker",
+    "Zooming in EVEN DEEPER"
 ];
 
 export const achievementsRequirements = [
@@ -119,7 +122,10 @@ export const achievementsRequirements = [
     "Have one of each particle type",
     "Get 1e1000000 points",
     "Get 1e10000 spacetime points",
-    "Get all atomic milestones"
+    "Get all atomic milestones",
+    "Enter the quantum",
+    "Get 1e10 particles",
+    "Enter the quantum at depth 2"
 ];
 
 export const achievementReqFuncs = [
@@ -163,7 +169,10 @@ export const achievementReqFuncs = [
     () => player.protons.gt(0) && player.neutrons.gt(0) && player.electrons.gt(0),
     () => player.points.gte("1e1e6"),
     () => player.spacetimePoints.gte("1e10000"),
-    () => atomicMilestones[9].unlocked
+    () => atomicMilestones[9].unlocked,
+    () => player.quantumDepth > 0,
+    () => player.particles.gte(1e10),
+    () => player.quantumDepth >= 2
 ];
 
 export const achievementsRewards = [
@@ -182,7 +191,7 @@ export const achievementsRewards = [
     "Gain 1e100x more points",
     null, null, 
     "You can distribute all particles",
-    null, null, null
+    null, null, null, null, null, null
 ];
 
 export const achievements = (function(){

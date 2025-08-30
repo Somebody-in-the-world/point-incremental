@@ -1,5 +1,5 @@
 <script>
-    import { notationNames, notationValues } from "@/game/notations";
+    import { notationNames, notationValues, updateNotation } from "@/game/notations";
     
     export default {
         name: "NotationPicker",
@@ -16,6 +16,7 @@
             },
             changeNotation(){
                 player.options.notation = this.notation;
+                updateNotation();
             }
         }
     };

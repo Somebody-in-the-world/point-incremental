@@ -29,5 +29,6 @@ Events.logic = new Events();
 
 window.GAME_EVENTS = {
     GAME_TICK: "GAME_TICK",
+    NOTATION_CHANGE: "NOTATION_CHANGE",
     SPACETIME_ANIM: "SPACETIME_ANIM"
 }

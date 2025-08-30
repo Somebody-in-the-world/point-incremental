@@ -3,6 +3,7 @@ import { Milestone } from "./milestone";
 import { darkGenerators } from "./dark-matter";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { challenges } from "./challenges";
+import { quantumUpgrades } from "./quantum";
 
 export function calcAtomicReq(){
     return new Decimal("1e1000");
@@ -13,11 +14,12 @@ export function canAtomic(){
 }
 
 export function calcParticleGain(){
-    return new Decimal(4).pow(player.spacetimePoints.log(10).div(1000).sub(1)).floor();
+    if(!canAtomic()) return new Decimal(0);
+    return new Decimal(4).pow(player.spacetimePoints.log(10).div(1000).sub(1)).mul(quantumUpgrades[2].effect).floor();
 }
 
 export function calcNextParticleReq(){
-    return new Decimal(10).pow(calcParticleGain().add(1).log(4).add(1).mul(1000));
+    return new Decimal(10).pow(calcParticleGain().add(1).div(quantumUpgrades[2].effect).log(4).add(1).mul(1000));
 }
 
 export function atomicPrestige(){

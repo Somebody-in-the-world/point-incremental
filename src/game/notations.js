@@ -110,6 +110,10 @@ export function pickNotation(notation, mantissa, exponent){
     }
 }
 
+export function updateNotation(){
+    Events.UI.dispatch(GAME_EVENTS.NOTATION_CHANGE);
+}
+
 export const notationValues = [
     "mixed scientific",
     "mixed logarithm",

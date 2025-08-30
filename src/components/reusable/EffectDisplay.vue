@@ -5,6 +5,7 @@
         name: "EffectDisplay",
         props: {
             purchasable: { type: Purchasable, required: true },
+            isNext: { type: Boolean, default: false }
         },
         data(){
             return {
@@ -14,7 +15,12 @@
         },
         methods: {
             update(){
-                this.effect = this.purchasable.effect;
+                if(this.isNext){
+                    this.effect = this.purchasable.effectObject.formula(
+                        this.purchasable.boughtAmount+1);
+                } else {
+                    this.effect = this.purchasable.effect;
+                }
             }
         }
     };

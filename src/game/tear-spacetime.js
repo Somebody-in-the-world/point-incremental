@@ -30,7 +30,7 @@ const upgradeEffects = [
     new Effect(() => player.spacetimePoints.pow(2).mul(1e15).pow(1.5).add(1), "mult"),
     new Effect(() => new Decimal((dimensions[7].boughtAmount*25)**0.5), "add"),
     new Effect(() => new Decimal(player.records.spacetimeAmount).pow(8).add(1), "mult"),
-    new Effect(() => player.spacetimePoints.pow(1.25).add(1), "mult"),
+    new Effect(() => Decimal.min(player.spacetimePoints.pow(1.25).add(1), "1e50000"), "mult"),
     new Effect(() => player.records.highestPoints.add(1).log(10).pow(10).add(1), "mult"),
     new Effect(() => Decimal.min(player.dimensionalPoints.add(1).log(10).pow(0.5).div(20).add(1), new Decimal(2.5)), "mult"),
     null, null,

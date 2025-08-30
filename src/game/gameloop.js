@@ -8,6 +8,7 @@ import { challenges, unlockPointReq } from "./challenges";
 import { darkMatterGainTick } from "./dark-matter";
 import { unlockAchivements } from "./achievements";
 import { forceGainTick } from "./atomic";
+import { quantumFoamGainTick } from "./quantum";
 
 let lastTick = performance.now();
 
@@ -39,6 +40,7 @@ export function gameLoop(){
     automaticDPGainTick(deltaTime);
     darkMatterGainTick(deltaTime);
     forceGainTick(deltaTime);
+    quantumFoamGainTick(deltaTime);
 
     runAutobuyers();
 

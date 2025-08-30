@@ -32,11 +32,16 @@
 
 <template>
     <PurchasableComponent :purchasable="purchasable">
-        <slot></slot> {{ description }}
+        {{ description }}
         <br>
+        <slot />
         <span v-if="hasEffect">
             Currently: <EffectDisplay :purchasable="purchasable" />
             <br>
+            <span v-if="(!capped) && purchasable.repeatable">
+                Next: <EffectDisplay :purchasable="purchasable" isNext />
+                <br>
+            </span>
         </span>
         <span v-if="!capped">Cost: {{ format(cost) }} {{ currency }}</span>
     </PurchasableComponent>

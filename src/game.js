@@ -21,6 +21,7 @@ export function init(){
             if(this.update){
                 Events.UI.add(GAME_EVENTS.GAME_TICK, this.update, this);
                 Events.UI.add(GAME_EVENTS.GAME_TICK, () => {this._tickUpdate++;}, this);
+                Events.UI.add(GAME_EVENTS.NOTATION_CHANGE, this.$forceUpdate, this);
                 this.update();
             }
         },

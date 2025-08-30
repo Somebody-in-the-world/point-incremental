@@ -10,6 +10,7 @@ import SpacetimeMilestonesTab from "./spacetime-milestones/SpacetimeMilestonesTa
 import TearSpacetimeTab from "./tear-spacetime/TearSpacetimeTab.vue";
 import DarkMatterTab from "./dark-matter-tab/DarkMatterTab.vue";
 import ParticlesTab from "./particles/ParticlesTab.vue";
+import QuantumTab from "./quantum/QuantumTab.vue";
 import StatisticsTab from "./statistics/StatisticsTab.vue";
 
 export default {
@@ -25,5 +26,6 @@ export default {
     TearSpacetimeTab,
     DarkMatterTab,
     ParticlesTab,
+    QuantumTab,
     StatisticsTab
 };

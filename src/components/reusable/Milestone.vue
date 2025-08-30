@@ -36,7 +36,6 @@
         border-radius: 2px;
         text-align: center;
         padding: 10px 0px;
-        font-size: 12px;
         background-color: var(--milestone-locked-color);
     }
 
