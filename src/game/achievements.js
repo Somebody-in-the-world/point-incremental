@@ -178,7 +178,11 @@ export const achievementReqFuncs = [
 export const achievementsRewards = [
     null, null, null, null, null, null,
     "Unlock max all for point upgrades",
-    null, null, null, null, null,
+    null,
+    "Compressing your points no longer resets your point upgrades",
+    null, 
+    "Gain 10x more points",
+    null, null,
     "Reduce the dimensional requirement to 1e25 points",
     "First dimension is boosted based on your point upgrades",
     null, null, null,

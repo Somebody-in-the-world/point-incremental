@@ -12,6 +12,7 @@
 
     import SubTabSwitch from "./components/tabs/SubTabSwitch.vue";
     import TabSwitch from "./components/tabs/TabSwitch.vue";
+    import NewsTicker from "./components/NewsTicker.vue"
     import { currentTab, currentSubTab, tabComponentNames, subTabComponentNames } from "./game/tabs.js";
     import { canSpacetime } from "./game/spacetime";
     import { canAtomic } from "./game/atomic";
@@ -29,7 +30,8 @@
             PostTearSpacetimeButton,
             DarkMatterUnlockButton,
             AtomicButton,
-            ParticlesDisplay
+            ParticlesDisplay,
+            NewsTicker
         },
         data(){
             return {
@@ -39,7 +41,8 @@
                 spacetimeTore: false,
                 displaySpacetimePoints: false,
                 showDarkGenrators: false,
-                displayParticles: false
+                displayParticles: false,
+                displayNews: true
             };
         },
         methods: {
@@ -55,12 +58,14 @@
                 this.displaySpacetimePoints = player.records.totalSpacetimeAmount > 0;
                 this.showDarkGenrators = (player.darkGeneratorsUnlocked < 6) && (!canAtomic());
                 this.displayParticles = player.records.atomicAmount > 0;
+                this.displayNews = player.options.newsTicker.on;
             }
         }
     };
 </script>
 
 <template>
+    <NewsTicker v-if="displayNews" />
     <div v-if="spacetimeTore">
         <div id="top-buttons">
             <PostTearSpacetimeButton />

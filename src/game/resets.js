@@ -6,7 +6,9 @@ import { tearSpacetimeUpgrades } from "./tear-spacetime";
 
 export function pointCompressionReset(){
     player.points = new Decimal(0);
-    player.pointUpgrade.boughtAmount = 0;
+    if(!achievements[8].unlocked){
+        player.pointUpgrade.boughtAmount = 0;
+    }
     player.highestPointsThisCompression = new Decimal(0);
 }
 

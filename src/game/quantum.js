@@ -53,7 +53,7 @@ export const quantumDepthUpgrade = new Purchasable(
     (cost) => player.quantumFoam.gte(cost), 
     new Effect((boughtAmount) => new Decimal(boughtAmount), "add"),
     (cost) => { player.quantumFoam = player.quantumFoam.sub(cost); },
-    null, "Increase the maximum quantum depth"
+    10, "Increase the maximum quantum depth"
 );
 
 export const quarkPurchasable = new Purchasable(
@@ -94,12 +94,13 @@ export function calcMaxAvailQuantumDepth(){
 
 export function calcQuantumFoamGain(){
     if(!canAtomic()) return new Decimal(0);
-    return new Decimal(3).pow(
+    const baseGain = new Decimal(3).pow(
         player.points.add(1).log(10).div(200000).add(
             player.spacetimePoints.add(1).log(10).div(1000)).pow(0.75).add(
             calcParticleGain().add(1).log(10).add(1).log(10).mul(1.5)
         ).mul(player.quantumDepth**1.25)
     ).sub(1).mul(quantumUpgrades[3].effect).mul(3);
+    return baseGain;
 }
 
 export function quantumFoamGainTick(deltaTime){

@@ -78,6 +78,10 @@ window.player = {
         updateRate: 33,
         notation: "mixed scientific",
         saveInterval: 2000,
-        theme: "classic"
+        theme: "classic",
+        newsTicker: {
+            on: false,
+            speed: 10
+        }
     }
 };

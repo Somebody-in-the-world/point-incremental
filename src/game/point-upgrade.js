@@ -63,6 +63,14 @@ function calcPreInfinityCost(boughtAmount){
     return costBase.pow(boughtAmount).mul(10);
 }
 
+export function bulkBuyPointUpgrades(){
+    let maxAffordable = calcMaxPointUpgradesAffordable();
+    pointUpgrade.boughtAmount += maxAffordable.amount;
+    if(player.points.gte(maxAffordable.totalCost)){
+        player.points = player.points.sub(maxAffordable.totalCost);
+    }
+}
+
 export function calcMaxPointUpgradesAffordable(){
     let low = pointUpgrade.boughtAmount;
     let high = pointUpgrade.boughtAmount+1;

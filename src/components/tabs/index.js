@@ -12,6 +12,7 @@ import DarkMatterTab from "./dark-matter-tab/DarkMatterTab.vue";
 import ParticlesTab from "./particles/ParticlesTab.vue";
 import QuantumTab from "./quantum/QuantumTab.vue";
 import StatisticsTab from "./statistics/StatisticsTab.vue";
+import HotkeysTab from "./options/HotkeysTab.vue";
 
 export default {
     AchievementsTab,
@@ -27,5 +28,6 @@ export default {
     DarkMatterTab,
     ParticlesTab,
     QuantumTab,
-    StatisticsTab
+    StatisticsTab,
+    HotkeysTab
 };

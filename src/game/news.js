@@ -1,0 +1,27 @@
+export const newsMessages = [
+    "This is the first news message in the entire game!",
+    "oops the game bugged so your save got wiped",
+    "One day, you will stop your grinding.",
+    "ₜₕᵢₛ ₜₑₓₜ ᵢₛ ₛₘₒₗ",
+    "Use blind notation for better experience",
+    "If you think the game is not fun, it gets even worse later to the point that it's fun!",
+    "Once upon a time, nothing happened...",
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAntimatter Dimensions is a really good game",
+    "I hate this - me",
+    "[THIS NEWS MESSAGE HAS BEEN DELETED]",
+    "Next update coming tomorrow",
+    "Look at what you've done, it all started with the 'get a point' button...",
+    `If this number: ${Math.floor(Math.random()*100)} is larger than 90, consider yourself lucky!`,
+    "haha points go brrrrrrrrrrrrrrrrr",
+    "how much references does this game have",
+    "Your ordinal is H_ω²+ω5+6 (10), press i to markup for 156 ordinal points... Wait, wrong game",
+    "onion",
+    `Here's a way to get free points, the devs don't want you to know. First, go into the options tab, then click the big red friendly 
+RESET THE GAME button, then just click confirm and do whatever it tells you, now, you will have free points! Disclamer: might wipe your save`,
+    "no cheating",
+    "we ran out of news messages k bye",
+    "\"Most quotes on the internet are falsely attributed\" - Hevipelle",
+    "Click here to do nothing!",
+    "This game is absolutely not a clone of antimatter dimensions",
+    "Wait... If you say you are smart and you say that it's a joke, doesn't it make YOU a joke?"
+];

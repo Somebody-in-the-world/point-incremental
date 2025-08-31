@@ -1,7 +1,7 @@
 import { Autobuyer } from "./autobuyer";
 import { dimensions, dimensionalPointsPrestige, calcDimensionalPointsGain, calcDimensionalReq, bulkBuyDimension } from "./dimensional";
 import { spacetimePrestige, canSpacetime, calcSpacetimePointsGain } from "./spacetime";
-import { pointUpgrade, calcMaxPointUpgradesAffordable } from "./point-upgrade";
+import { pointUpgrade, bulkBuyPointUpgrades } from "./point-upgrade";
 import { spacetimeMilestones, bulkBuySPMult } from "./spacetime";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { bulkBuyDarkGenerator } from "./dark-matter";
@@ -36,11 +36,7 @@ export function runAutobuyers(){
     }
     if(autobuyers[3].unlocked && autobuyers[3].active){
         if(achievements[22].unlocked){
-            let maxAffordable = calcMaxPointUpgradesAffordable();
-            pointUpgrade.boughtAmount += maxAffordable.amount;
-            if(player.points.gte(maxAffordable.totalCost)){
-                player.points = player.points.sub(maxAffordable.totalCost);
-            }
+            bulkBuyPointUpgrades();
         } else {
             if(pointUpgrade.canBuy) pointUpgrade.buy();
         }

@@ -34,6 +34,24 @@ const themeCSSVars = {
         "--ach-locked-color": "#808080",
         "--milestone-color": "#008000",
         "--milestone-locked-color": "#a04040"
+    },
+    colorful: {
+        "--text-color": "blue",
+        "--bg-color": "red",
+        "--border-color": "yellow",
+        "--button-color": "green",
+        "--hovered-button-color": "darkblue",
+        "--hovered-button-bg-color": "black",
+        "--disabled-button-color": "white",
+        "--disabled-button-bg-color": "orange",
+        "--spacetime-color": "purple",
+        "--spacetime-bg-color": "pink",
+        "--spacetime-alt-color": "gray",
+        "--spacetime-alt-bg-color": "crimson",
+        "--ach-color": "lightgreen",
+        "--ach-locked-color": "darkred",
+        "--milestone-color": "aqua",
+        "--milestone-locked-color": "brown"
     }
 }
 
@@ -47,11 +65,13 @@ export function applyTheme(){
 
 export const themeValues = [
     "classic",
-    "dark"
+    "dark",
+    "colorful"
 ];
 
 export const themeNames = [
     "Classic",
-    "Dark (beta)"
+    "Dark",
+    "Colorful"
 ]
 

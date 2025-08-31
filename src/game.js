@@ -9,6 +9,7 @@ import { loadGame, saveGame } from "./game/saving";
 import { achievements } from "./game/achievements";
 import { applyTheme } from "./game/themes";
 import { fixAutobuyers } from "./game/autobuyers";
+import { setupHotkeys } from "./game/hotkeys";
 
 export function init(){
     window.Decimal = Decimal;
@@ -43,6 +44,7 @@ export function init(){
     app.mount("#app");
 
     fixAutobuyers();
+    setupHotkeys();
     startGameLoop();
     applyTheme();
     startUpdateUI();
