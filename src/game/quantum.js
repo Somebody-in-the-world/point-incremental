@@ -12,7 +12,7 @@ export const quantumUnlock = new Purchasable(
 );
 
 export const upgradeCosts = [
-    1, 2, 3, 3
+    1, 2, 5, 3
 ];
 
 export const upgradeDescriptions = [
@@ -25,7 +25,8 @@ export const upgradeDescriptions = [
 export const upgradeEffects = [
     new Effect((boughtAmount) => player.quantumFoam.pow(100*boughtAmount), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.pow(4*boughtAmount), "mult"),
-    new Effect((boughtAmount) => player.quantumFoam.pow(0.08*boughtAmount), "mult"),
+    new Effect((boughtAmount) => player.quantumFoam.pow(0.1*Math.min(boughtAmount, 4))
+        .mul(player.quantumFoam.pow(0.033*Math.max(boughtAmount-4, 0))), "mult"),
     new Effect((boughtAmount) => new Decimal(4).pow(boughtAmount), "mult")
 ];
 
@@ -49,7 +50,7 @@ export const quantumUpgrades = (function(){
 export const quantumDepthUpgrade = new Purchasable(
     true, () => player.quantumDepthUpgrade, 
     (boughtAmount) => { player.quantumDepthUpgrade = boughtAmount; },
-    (boughtAmount) => new Decimal(1e6).mul(new Decimal(1e3).pow(boughtAmount)),
+    (boughtAmount) => new Decimal(1e6).mul(new Decimal(3).pow(Math.max(boughtAmount-1, 0)).mul(1000).pow(boughtAmount)),
     (cost) => player.quantumFoam.gte(cost), 
     new Effect((boughtAmount) => new Decimal(boughtAmount), "add"),
     (cost) => { player.quantumFoam = player.quantumFoam.sub(cost); },
@@ -94,13 +95,15 @@ export function calcMaxAvailQuantumDepth(){
 
 export function calcQuantumFoamGain(){
     if(!canAtomic()) return new Decimal(0);
-    const baseGain = new Decimal(3).pow(
+    const baseGain = new Decimal(5).pow(
         player.points.add(1).log(10).div(200000).add(
-            player.spacetimePoints.add(1).log(10).div(1000)).pow(0.75).add(
-            calcParticleGain().add(1).log(10).add(1).log(10).mul(1.5)
-        ).mul(player.quantumDepth**1.25)
-    ).sub(1).mul(quantumUpgrades[3].effect).mul(3);
-    return baseGain;
+        player.spacetimePoints.add(1).log(10).div(1000)).
+        pow(0.5)
+    ).mul(calcParticleGain().add(1).log(10).add(1)).mul(
+        new Decimal(player.quantumDepth).pow(1.5).mul(3)
+        .add(1).pow(player.quantumDepth).sub(1)
+    ).div(2);
+    return baseGain.mul(quantumUpgrades[3].effect);
 }
 
 export function quantumFoamGainTick(deltaTime){

@@ -15,7 +15,7 @@ export function calcPointGain(){
     if(tearSpacetimeUpgrades[2].boughtAmount) basePoints = basePoints.mul(tearSpacetimeUpgrades[2].effect);
     if(tearSpacetimeUpgrades[4].boughtAmount) basePoints = basePoints.mul(tearSpacetimeUpgrades[4].effect);
     if(tearSpacetimeUpgrades[6].boughtAmount) basePoints = basePoints.mul(tearSpacetimeUpgrades[6].effect);
-    if(achievements[10].unlocked) basePoints = basePoints.mul(10);
+    if(achievements[8].unlocked) basePoints = basePoints.mul(10);
     if(achievements[30].unlocked) basePoints = basePoints.mul(1e100);
     basePoints = basePoints.mul(calcDarkMatterBoost());
     basePoints = basePoints.mul(quantumUpgrades[0].effect);

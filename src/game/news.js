@@ -23,5 +23,10 @@ RESET THE GAME button, then just click confirm and do whatever it tells you, now
     "\"Most quotes on the internet are falsely attributed\" - Hevipelle",
     "Click here to do nothing!",
     "This game is absolutely not a clone of antimatter dimensions",
-    "Wait... If you say you are smart and you say that it's a joke, doesn't it make YOU a joke?"
+    "Wait... If you say you are smart and you say that it's a joke, doesn't it make YOU a joke?",
+    "first",
+    `i know you are expecting a news message, but i think that it is better for you to play the game instead, 
+so this news message is just going forever and forever and forever and forever and forever and forever and 
+forever and forever and forever and forever and forever and forever and forever and forever and i was actually lying`,
+    "<button onclick='window.alert(\"Yay!\")'>This is a button!</button>"
 ];

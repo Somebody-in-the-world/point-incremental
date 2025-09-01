@@ -48,8 +48,7 @@
 <template>
     <div id="news-ticker">
         <div id="scroll-text" ref="news" :style="{animationDuration: animationDuration}" 
-            :key="animationKey" @animationend="updateNews">
-            {{ newsText }}
+            :key="animationKey" @animationend="updateNews" v-html="newsText">
         </div>
     </div>
 </template>
