@@ -42,7 +42,8 @@
                 displaySpacetimePoints: false,
                 showDarkGenrators: false,
                 displayParticles: false,
-                displayNews: true
+                displayNews: true,
+                isTopTabs: false
             };
         },
         methods: {
@@ -59,6 +60,7 @@
                 this.showDarkGenrators = (player.darkGeneratorsUnlocked < 6) && (!canAtomic());
                 this.displayParticles = player.records.atomicAmount > 0;
                 this.displayNews = player.options.newsTicker.on;
+                this.isTopTabs = player.options.topTabs;
             }
         }
     };
@@ -81,12 +83,20 @@
     <SpacetimeButton v-if="forceSpacetime" />
     <!-- it is here to reduce flickering, but it causes lag -->
     <!-- <KeepAlive> -->
+    <div v-if="isTopTabs">
+        <TabSwitch />
+        <hr>
+        <SubTabSwitch />
+        <hr>
+    </div>
     <component :is="tabComponentName" v-if="!hideTab" />
     <!-- </KeepAlive> -->
-    <hr>
-    <SubTabSwitch />
-    <hr>
-    <TabSwitch />
+    <div v-if="!isTopTabs">
+        <hr>
+        <SubTabSwitch />
+        <hr>
+        <TabSwitch />
+    </div>
 </template>
 
 <style scoped>

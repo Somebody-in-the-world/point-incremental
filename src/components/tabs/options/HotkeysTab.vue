@@ -1,6 +1,6 @@
 <script>
     export default {
-        name: "HotkeysDisplay",
+        name: "HotkeyTab",
         data(){
             return {
                 showCompressHotkey: false,

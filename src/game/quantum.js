@@ -23,9 +23,9 @@ export const upgradeDescriptions = [
 ];
 
 export const upgradeEffects = [
-    new Effect((boughtAmount) => player.quantumFoam.pow(100*boughtAmount), "mult"),
-    new Effect((boughtAmount) => player.quantumFoam.pow(4*boughtAmount), "mult"),
-    new Effect((boughtAmount) => player.quantumFoam.pow(0.1*Math.min(boughtAmount, 4))
+    new Effect((boughtAmount) => player.quantumFoam.add(1).pow(100*boughtAmount), "mult"),
+    new Effect((boughtAmount) => player.quantumFoam.add(1).pow(4*boughtAmount), "mult"),
+    new Effect((boughtAmount) => player.quantumFoam.add(1).pow(0.1*Math.min(boughtAmount, 4))
         .mul(player.quantumFoam.pow(0.033*Math.max(boughtAmount-4, 0))), "mult"),
     new Effect((boughtAmount) => new Decimal(4).pow(boughtAmount), "mult")
 ];
@@ -95,14 +95,12 @@ export function calcMaxAvailQuantumDepth(){
 
 export function calcQuantumFoamGain(){
     if(!canAtomic()) return new Decimal(0);
-    const baseGain = new Decimal(5).pow(
-        player.points.add(1).log(10).div(200000).add(
-        player.spacetimePoints.add(1).log(10).div(1000)).
-        pow(0.5)
-    ).mul(calcParticleGain().add(1).log(10).add(1)).mul(
+    const baseGain = player.points.add(1).log(10).div(200000).mul(
+        player.spacetimePoints.add(1).log(10).div(1000)).pow(2)
+    .mul(calcParticleGain().add(1).log(10).add(1)).mul(
         new Decimal(player.quantumDepth).pow(1.5).mul(3)
         .add(1).pow(player.quantumDepth).sub(1)
-    ).div(2);
+    );
     return baseGain.mul(quantumUpgrades[3].effect);
 }
 

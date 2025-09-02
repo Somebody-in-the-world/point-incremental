@@ -27,7 +27,7 @@
     #reset-game {
         background-color: red;
         color: white;
-        border: 2px solid black;
+        border: 2px solid;
         border-radius: 0;
     }
 </style>

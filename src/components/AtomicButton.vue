@@ -32,7 +32,9 @@
                 }
             },
             atomic(){
-                if(!window.confirm("Are you sure you want to go atomic? It will take time to get back here!")) return;
+                if(player.options.confirmations.atomic){
+                    if(!window.confirm("Are you sure you want to go atomic? It will take time to get back here!")) return;
+                }
                 atomicPrestige();
             }
         }

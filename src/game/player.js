@@ -79,9 +79,13 @@ window.player = {
         notation: "mixed scientific",
         saveInterval: 2000,
         theme: "classic",
+        topTabs: false,
         newsTicker: {
             on: false,
             speed: 10
+        },
+        confirmations: {
+            atomic: true
         }
     }
 };

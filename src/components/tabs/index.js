@@ -13,6 +13,7 @@ import ParticlesTab from "./particles/ParticlesTab.vue";
 import QuantumTab from "./quantum/QuantumTab.vue";
 import StatisticsTab from "./statistics/StatisticsTab.vue";
 import HotkeysTab from "./options/HotkeysTab.vue";
+import ConfirmationsTab from "./options/ConfirmationsTab.vue";
 
 export default {
     AchievementsTab,
@@ -29,5 +30,6 @@ export default {
     ParticlesTab,
     QuantumTab,
     StatisticsTab,
-    HotkeysTab
+    HotkeysTab,
+    ConfirmationsTab
 };
