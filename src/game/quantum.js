@@ -22,6 +22,20 @@ export const upgradeDescriptions = [
     "Quadruple quantum foam gain"
 ];
 
+export const nonRepeatableUpgradeCosts = [
+    new Decimal(5e6),
+    new Decimal(2).pow(1024)
+];
+
+export const nonRepeatableUpgradeDescriptions = [
+    "Unlock gravity",
+    "Coming Soon!"
+];
+
+export const nonRepeatableUpgradeDepthReqs = [
+    2, 2
+];
+
 export const upgradeEffects = [
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(100*boughtAmount), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(4*boughtAmount), "mult"),
@@ -47,10 +61,25 @@ export const quantumUpgrades = (function(){
     return upgrades;
 })();
 
+export const nonRepeatableQuantumUpgrades = (function(){
+    const upgrades = [];
+    for(const i in nonRepeatableUpgradeCosts){
+        upgrades.push(new Purchasable(
+            false, () => player.nonRepeatableQuantumUpgrades[i], 
+            (boughtAmount) => { player.nonRepeatableQuantumUpgrades[i] = boughtAmount; },
+            () => nonRepeatableUpgradeCosts[i], (cost) => player.quantumFoam.gte(cost), null,
+            (cost) => { player.quantumFoam = player.quantumFoam.sub(cost); }, null,
+            nonRepeatableUpgradeDescriptions[i], 
+            () => calcMaxAvailQuantumDepth() >= nonRepeatableUpgradeDepthReqs[i]
+        ));
+    }
+    return upgrades;
+})();
+
 export const quantumDepthUpgrade = new Purchasable(
     true, () => player.quantumDepthUpgrade, 
     (boughtAmount) => { player.quantumDepthUpgrade = boughtAmount; },
-    (boughtAmount) => new Decimal(1e6).mul(new Decimal(3).pow(Math.max(boughtAmount-1, 0)).mul(1000).pow(boughtAmount)),
+    (boughtAmount) => new Decimal(1e6).mul(new Decimal(10).pow(boughtAmount).mul(1e3).pow(boughtAmount)),
     (cost) => player.quantumFoam.gte(cost), 
     new Effect((boughtAmount) => new Decimal(boughtAmount), "add"),
     (cost) => { player.quantumFoam = player.quantumFoam.sub(cost); },

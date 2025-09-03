@@ -47,9 +47,11 @@ window.player = {
     quantumFoam: new Decimal(0),
     quantumUpgrades: new Array(4).fill(0),
     quantumDepthUpgrade: 0,
+    nonRepeatableQuantumUpgrades: new Array(2).fill(false),
     projectedQuantumDepth: 1,
     quarks: 0,
     totalQuarks: 0,
+    gravity: new Decimal(0),
     autobuyers: (function(){
         const autobuyersObject = Array.from({length: autobuyers.length}, () => ({
             active: true,

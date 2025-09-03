@@ -126,3 +126,8 @@ button:disabled {
     font-size: 1.25em;
 }
 
+.gravity {
+    color: #808080;
+    text-shadow: 1px 1px 5px;
+    font-size: 1.25em;
+}

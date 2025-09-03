@@ -3,7 +3,7 @@
     import QuantumFoamDisplay from "./QuantumFoamDisplay.vue";
     import QuarkDisplay from "./QuarkDisplay.vue";
     import Upgrade from "@/components/reusable/Upgrade.vue";
-    import { quantumUnlock, calcQuantumNerf,
+    import { quantumUnlock, calcQuantumNerf, nonRepeatableQuantumUpgrades,
         quantumUpgrades, respecUpgrades, quantumDepthUpgrade } from "@/game/quantum";
 
     export default {
@@ -14,7 +14,8 @@
                 depth: 0,
                 depthNerf: 1,
                 quantumUpgrades,
-                quantumDepthUpgrade
+                quantumDepthUpgrade,
+                nonRepeatableQuantumUpgrades
             };
         },
         components: {
@@ -46,18 +47,23 @@
     <QuantumFoamDisplay v-if="unlocked" />
     <QuarkDisplay v-if="unlocked" />
     <button style="width: 100%; padding: 10px 0;" @click="respecUpgrades" v-if="unlocked">Respec all upgrades</button>
-    <div id="upgrade-container">
+    <div class="upgrade-container">
         <Upgrade v-if="unlocked" v-for="(upgrade, idx) in quantumUpgrades"
-            :purchasable="upgrade" currency="Quarks" :key="idx" >
+            :purchasable="upgrade" currency="quarks" :key="idx" >
             Level {{ upgrade.boughtAmount }}<br>
         </Upgrade>
     </div>
     <Upgrade v-if="unlocked" style="width: 100%;"
         :purchasable="quantumDepthUpgrade" currency="Quantum Foam" />
+    <div class="upgrade-container">
+        <Upgrade v-if="unlocked" v-for="(upgrade, idx) in nonRepeatableQuantumUpgrades"
+            :purchasable="upgrade" currency="quantum foam" :key="idx" >
+        </Upgrade>
+    </div>
 </template>
 
 <style>
-    #upgrade-container {
+    .upgrade-container {
         display: grid;
         grid-template-columns: auto auto;
     }

@@ -3,7 +3,7 @@ import { Milestone } from "./milestone";
 import { darkGenerators } from "./dark-matter";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { challenges } from "./challenges";
-import { quantumUpgrades } from "./quantum";
+import { nonRepeatableQuantumUpgrades, quantumUpgrades } from "./quantum";
 
 export function calcAtomicReq(){
     return new Decimal("1e1000");
@@ -74,22 +74,27 @@ export function atomicPrestige(){
 
 export function calcElectromagneticForceBoost(){
     return new Decimal(1).add(
-        player.electromagneticForce.add(1).log(10).pow(0.25).div(45)
+        player.electromagneticForce.add(1).log(10).pow(0.25).div(45).mul(calcGravityToElectromagneticForceBoost())
     );
 }
 
 export function calcStrongForceBoost(){
     return new Decimal(1).add(
-        player.strongForce.add(1).log(10).pow(0.3).div(5)
+        player.strongForce.add(1).log(10).pow(0.3).div(5).mul(calcGravityToStrongForceBoost())
     );
 }
 
 export function calcWeakForceBoost(){
-    return player.weakForce.add(1).log(10).pow(0.25).mul(2.5);
+    return player.weakForce.add(1).log(10).pow(0.25).mul(2.5).mul(calcGravityToWeakForceBoost());
 }
 
 export function calcParticleToForceRate(amount){
     return amount.pow(2);
+}
+
+export function calcGravityGain(){
+    if(!nonRepeatableQuantumUpgrades[0].boughtAmount) return new Decimal(0);
+    return player.protons.add(player.neutrons).add(player.electrons).div(1e10).pow(0.4);
 }
 
 export function calcParticlesPerMinute(){
@@ -108,6 +113,19 @@ export function forceGainTick(deltaTime){
         calcParticleToForceRate(player.neutrons).mul(deltaTime));
     player.weakForce = player.weakForce.add(
         calcParticleToForceRate(player.electrons).mul(deltaTime));
+    player.gravity = player.gravity.add(calcGravityGain().mul(deltaTime));
+}
+
+export function calcGravityToElectromagneticForceBoost(){
+    return player.gravity.add(1).log(10).pow(0.4).div(25).add(1);
+}
+
+export function calcGravityToStrongForceBoost(){
+    return player.gravity.add(1).log(10).pow(0.5).div(5).add(1);
+}
+
+export function calcGravityToWeakForceBoost(){
+    return player.gravity.add(1).log(10).pow(0.3).div(50).add(1);
 }
 
 const milestoneGoals = [

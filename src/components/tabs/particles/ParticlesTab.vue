@@ -1,7 +1,12 @@
 <script>
     import { calcElectromagneticForceBoost, 
         calcStrongForceBoost, calcWeakForceBoost, 
-        calcParticleToForceRate } from "@/game/atomic";
+        calcParticleToForceRate, calcGravityGain, 
+        calcGravityToElectromagneticForceBoost,
+        calcGravityToStrongForceBoost, 
+        calcGravityToWeakForceBoost
+    } from "@/game/atomic";
+    import { nonRepeatableQuantumUpgrades } from "@/game/quantum";
     import ParticleAssignmentButtons from "./ParticleAssignmentButtons.vue";
 
     export default {
@@ -24,7 +29,13 @@
                 electromagneticForceGain: new Decimal(),
                 strongForceGain: new Decimal(),
                 weakForceGain: new Decimal(),
-                unlockedDistributeAll: false
+                unlockedDistributeAll: false,
+                gravity: new Decimal(),
+                gravityUnlocked: false,
+                gravityGain: new Decimal(),
+                gravityToElectromagneticForceBoost: new Decimal(),
+                gravityToStrongForceBoost: new Decimal(),
+                gravityToWeakForceBoost: new Decimal()
             };
         },
         methods: {
@@ -43,13 +54,18 @@
                 this.strongForceGain = calcParticleToForceRate(player.neutrons);
                 this.weakForceGain = calcParticleToForceRate(player.electrons);
                 this.unlockedDistributeAll = achievements[33].unlocked;
+                this.gravity = player.gravity;
+                this.gravityUnlocked = nonRepeatableQuantumUpgrades[0].boughtAmount;
+                this.gravityGain = calcGravityGain();
+                this.gravityToElectromagneticForceBoost = calcGravityToElectromagneticForceBoost();
+                this.gravityToStrongForceBoost = calcGravityToStrongForceBoost();
+                this.gravityToWeakForceBoost = calcGravityToWeakForceBoost();
             },
             distributeAll(){
                 player.protons = player.protons.add(player.particles.div(3).floor());
                 player.neutrons = player.neutrons.add(player.particles.div(3).floor());
                 player.electrons = player.electrons.add(player.particles.div(3).floor());
-                player.particles = player.particles.mod(3);
-                
+                player.particles = player.particles.mod(3);   
             }
         }
     };
@@ -82,11 +98,18 @@
                 You have <span class="electron">{{ format(electrons) }}</span> electrons, 
                 producing <span class="electron">{{ format(weakForceGain) }}</span> weak force per second<br>
                 You have <span class="electron">{{ format(weakForce) }}</span> weak force, 
-                dark matter boost exponent <span class="electron">+^{{ format(weakForceBoost) }}</span>
+                increasing dark matter boost exponent by <span class="electron">+^{{ format(weakForceBoost, 4) }}</span>
             </h4>
             <ParticleAssignmentButtons particleType="electron"/>
         </div>
     </div>
+    <h4 v-if="gravityUnlocked" style="text-align: center;">
+        You have <span class="gravity">{{ format(gravity) }}</span> gravity<br>
+        You are producing <span class="gravity">{{ format(gravityGain) }}</span> gravity per second (based on total particles)<br>
+        Gravity is boosting the electromagnetic force effect by <span class="proton">+{{ format(gravityToElectromagneticForceBoost.sub(1).mul(100)) }}%</span>, 
+        boosting the strong force effect by <span class="neutron">+{{ format(gravityToStrongForceBoost.sub(1).mul(100)) }}%</span>, and 
+        boosting the weak force effect by <span class="electron">+{{ format(gravityToWeakForceBoost.sub(1).mul(100)) }}%</span>
+    </h4>
 </template>
 
 <style scoped>

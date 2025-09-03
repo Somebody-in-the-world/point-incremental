@@ -1,11 +1,13 @@
 <script>
-    import { spacetimePrestige } from "@/game/spacetime";
+    import { spacetimePrestige, canSpacetime } from "@/game/spacetime";
     export default {
         name: "SpacetimeButton",
         methods: {
             spacetime(){
                 Events.UI.dispatch(GAME_EVENTS.SPACETIME_ANIM);
-                spacetimePrestige();
+                if(canSpacetime()){
+                    spacetimePrestige();
+                }
             }
         }
     };

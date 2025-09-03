@@ -1,6 +1,7 @@
 export class Purchasable {
     constructor(repeatable, boughtAmountGetter, boughtAmountSetter, 
-        formula, condition, effect, purchaseFunc, cap, description = ""){
+        formula, condition, effect, purchaseFunc, cap, description = "", 
+        unlocked = (() => true)){
         this.repeatable = repeatable;
         this.boughtAmountGetter = boughtAmountGetter;
         this.boughtAmountSetter = boughtAmountSetter;
@@ -9,6 +10,7 @@ export class Purchasable {
         this.effectObject = effect;
         this.purchaseFunc = purchaseFunc;
         this.description = description;
+        this.unlockedFunc = unlocked;
         if(cap) this.cap = cap;
     }
 
@@ -30,6 +32,10 @@ export class Purchasable {
 
     get canAfford(){
         return this.condition(this.cost);
+    }
+
+    get unlocked(){
+        return this.unlockedFunc();
     }
 
     get canBuy(){
