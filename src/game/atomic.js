@@ -94,7 +94,7 @@ export function calcParticleToForceRate(amount){
 
 export function calcGravityGain(){
     if(!nonRepeatableQuantumUpgrades[0].boughtAmount) return new Decimal(0);
-    return player.protons.add(player.neutrons).add(player.electrons).div(1e10).pow(0.4);
+    return player.protons.add(player.neutrons).add(player.electrons).div(1e10).pow(0.4).mul(quantumUpgrades[4].effect);
 }
 
 export function calcParticlesPerMinute(){
@@ -126,6 +126,19 @@ export function calcGravityToStrongForceBoost(){
 
 export function calcGravityToWeakForceBoost(){
     return player.gravity.add(1).log(10).pow(0.3).div(50).add(1);
+}
+
+export function calcGravitationalWavesGained(){
+    if(!(nonRepeatableQuantumUpgrades[1].boughtAmount)) return 0;
+    return player.gravity.add(1).div(1e3).log(2).floor().toNumber();
+}
+
+export function calcGravitationalWaveBoost(){
+    return new Decimal(1.25).pow(calcGravitationalWavesGained());
+}
+
+export function calcNextGravitationalWaveReq(){
+    return new Decimal(2).pow(calcGravitationalWavesGained()+1).mul(1e3);
 }
 
 const milestoneGoals = [

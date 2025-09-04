@@ -4,7 +4,10 @@
         calcParticleToForceRate, calcGravityGain, 
         calcGravityToElectromagneticForceBoost,
         calcGravityToStrongForceBoost, 
-        calcGravityToWeakForceBoost
+        calcGravityToWeakForceBoost,
+        calcGravitationalWavesGained,
+        calcNextGravitationalWaveReq,
+        calcGravitationalWaveBoost
     } from "@/game/atomic";
     import { nonRepeatableQuantumUpgrades } from "@/game/quantum";
     import ParticleAssignmentButtons from "./ParticleAssignmentButtons.vue";
@@ -35,7 +38,11 @@
                 gravityGain: new Decimal(),
                 gravityToElectromagneticForceBoost: new Decimal(),
                 gravityToStrongForceBoost: new Decimal(),
-                gravityToWeakForceBoost: new Decimal()
+                gravityToWeakForceBoost: new Decimal(),
+                gravitionalWavesUnlocked: false,
+                gravitationalWavesGained: 0,
+                nextGravitationalWaveReq: new Decimal(),
+                gravitationalWaveBoost: new Decimal()
             };
         },
         methods: {
@@ -60,6 +67,10 @@
                 this.gravityToElectromagneticForceBoost = calcGravityToElectromagneticForceBoost();
                 this.gravityToStrongForceBoost = calcGravityToStrongForceBoost();
                 this.gravityToWeakForceBoost = calcGravityToWeakForceBoost();
+                this.gravitionalWavesUnlocked = nonRepeatableQuantumUpgrades[1].boughtAmount;
+                this.gravitationalWavesGained = calcGravitationalWavesGained();
+                this.nextGravitationalWaveReq = calcNextGravitationalWaveReq();
+                this.gravitationalWaveBoost = calcGravitationalWaveBoost();
             },
             distributeAll(){
                 player.protons = player.protons.add(player.particles.div(3).floor());
@@ -109,6 +120,12 @@
         Gravity is boosting the electromagnetic force effect by <span class="proton">+{{ format(gravityToElectromagneticForceBoost.sub(1).mul(100)) }}%</span>, 
         boosting the strong force effect by <span class="neutron">+{{ format(gravityToStrongForceBoost.sub(1).mul(100)) }}%</span>, and 
         boosting the weak force effect by <span class="electron">+{{ format(gravityToWeakForceBoost.sub(1).mul(100)) }}%</span>
+        <br>
+        <span v-if="gravitionalWavesUnlocked">
+            You have gained <span class="gravity">{{ gravitationalWavesGained }}</span> gravitational waves, 
+            next gravitational wave at <span class="gravity">{{ format(nextGravitationalWaveReq) }}</span> gravity<br>
+            Your gravitational waves multiply quantum foam gain by <span class="gravity">{{ format(gravitationalWaveBoost) }}x</span>
+        </span>
     </h4>
 </template>
 
