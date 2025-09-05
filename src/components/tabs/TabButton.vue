@@ -1,5 +1,5 @@
 <script>
-    import { changeTab, currentTab, tabNames, tabUnlocked } from "@/game/tabs.js";
+    import { changeTab, currentTab, tabNames, tabUnlockFuncs } from "@/game/tabs.js";
 
     export default {
         name: "TabButton",
@@ -16,7 +16,7 @@
         methods: {
             update(){
                 this.isCurrentTab = this.tabId == currentTab;
-                this.shown = tabUnlocked[this.tabId];
+                this.shown = tabUnlockFuncs[this.tabId]();
             },
             changeTab
         }

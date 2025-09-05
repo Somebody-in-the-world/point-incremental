@@ -28,5 +28,9 @@ RESET THE GAME button, then just click confirm and do whatever it tells you, now
     `i know you are expecting a news message, but i think that it is better for you to play the game instead, 
 so this news message is just going forever and forever and forever and forever and forever and forever and 
 forever and forever and forever and forever and forever and forever and forever and forever and i was actually lying`,
-    "<button onclick='window.alert(\"Yay!\")'>This is a button!</button>"
-];
+    "<button onclick='window.alert(\"Yay!\")'>This is a button!</button>",
+    "This message is (softcapped)",
+    "<a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>https://www.youtube.com/watch?v=dQw4w9WgXcQ</a>",
+    "guys im trying to think of news message but i just cant pls help me"
+]
+

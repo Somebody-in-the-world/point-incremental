@@ -1,5 +1,5 @@
 <script>
-    import { changeSubTab, currentTab, currentSubTab, subTabNames } from "@/game/tabs.js";
+    import { changeSubTab, currentTab, currentSubTab, subTabNames, subTabUnlockFuncs } from "@/game/tabs.js";
 
     export default {
         name: "SubTabButton",
@@ -17,7 +17,11 @@
         methods: {
             update(){
                 this.isCurrentSubTab = this.tabId == currentTab && this.subTabId == currentSubTab;
-                this.subTabName = subTabNames[this.tabId][this.subTabId];
+                // no idea why
+                try {
+                    this.subTabName = subTabNames[this.tabId][this.subTabId];
+                    this.shown = subTabUnlockFuncs[this.tabId][this.subTabId]();
+                } catch {}
             },
             changeSubTab
         }

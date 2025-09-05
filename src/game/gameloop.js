@@ -1,14 +1,14 @@
 import { automaticPointGainTick, automaticAPGainTick } from "./automation-points";
 import { automaticCPGainTick } from "./compressed-points";
 import { automaticDPGainTick, dimensionalPowerGainTick } from "./dimensional";
-import { canSpacetime, passiveGenerateSP, spacetimeMilestones } from "./spacetime";
-import { tabUnlocked } from "./tabs";
+import { canSpacetime, passiveGenerateSP } from "./spacetime";
 import { runAutobuyers } from "./autobuyers";
 import { challenges, unlockPointReq } from "./challenges";
 import { darkMatterGainTick } from "./dark-matter";
 import { unlockAchivements } from "./achievements";
 import { forceGainTick } from "./atomic";
 import { quantumFoamGainTick } from "./quantum";
+import { particleDecayTick } from "./decay";
 
 let lastTick = performance.now();
 
@@ -41,6 +41,7 @@ export function gameLoop(){
     darkMatterGainTick(deltaTime);
     forceGainTick(deltaTime);
     quantumFoamGainTick(deltaTime);
+    particleDecayTick(deltaTime);
 
     runAutobuyers();
 
@@ -48,14 +49,6 @@ export function gameLoop(){
 
     // Achievements stuff
     unlockAchivements();
-    
-    // Tabs
-    tabUnlocked[1] = spacetimeMilestones[0].unlocked || player.records.atomicAmount > 0;
-    tabUnlocked[2] = challenges[0].unlocked || player.records.atomicAmount > 0;
-    tabUnlocked[3] = player.automationPointsUnlocked || player.records.dimensionalAmount > 0;
-    tabUnlocked[4] = player.records.totalSpacetimeAmount > 0;
-    tabUnlocked[5] = player.darkGeneratorsUnlocked > 0 || player.records.atomicAmount > 0;
-    tabUnlocked[6] = player.records.atomicAmount > 0;
 
     if(player.points.gte(unlockPointReq[player.latestUnlockedChallenge]) &&
         player.latestUnlockedChallenge != challenges.length){

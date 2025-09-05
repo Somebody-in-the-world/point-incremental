@@ -52,6 +52,7 @@ window.player = {
     quarks: 0,
     totalQuarks: 0,
     gravity: new Decimal(0),
+    decayEnergy: new Decimal(0),
     autobuyers: (function(){
         const autobuyersObject = Array.from({length: autobuyers.length}, () => ({
             active: true,
@@ -73,7 +74,8 @@ window.player = {
         timeInCurrentSpacetime: 0,
         fastestSpacetime: 99999999,
         timeInCurrentAtomic: 0,
-        fastestAtomic: 99999999
+        fastestAtomic: 99999999,
+        totalDecayEnergy: new Decimal(0)
     },
     achievements: new Array(achievements.length).fill(false),
     options: {

@@ -1,6 +1,6 @@
 import { atomicReset } from "./resets";
 import { Purchasable } from "./purchasable";
-import { calcGravitationalWaveBoost, calcParticleGain, canAtomic } from "./atomic";
+import { calcGravitationalWaveBoost, calcGravitationalWavesGained, calcParticleGain, canAtomic } from "./atomic";
 import { Effect } from "./effect";
 import Decimal from "break_eternity.js";
 
@@ -12,20 +12,20 @@ export const quantumUnlock = new Purchasable(
 );
 
 export const upgradeCosts = [
-    1, 2, 5, 3, 8, 99999999
+    1, 2, 5, 3, 8, 7
 ];
 
 export const upgradeCaps = [
-    40, 25, 15, 15, 10, 1
+    40, 25, 15, 20, 10, 10
 ];
 
 export const upgradeDescriptions = [
     "Gain more points based on quantum foam",
     "Gain more spacetime points based on quantum foam",
     "Gain more particles based on quantum foam",
-    "Quadruple quantum foam gain",
+    "Multiply quantum foam gain",
     "Gain more gravity based on quantum foam",
-    "Coming soon!"
+    "Gravitational waves multiply gravity"
 ];
 
 export const upgradeUnlockReqs = [
@@ -57,8 +57,10 @@ export const upgradeEffects = [
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(4*boughtAmount), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(0.1*Math.min(boughtAmount, 4))
         .mul(player.quantumFoam.pow(0.033*Math.max(boughtAmount-4, 0))), "mult"),
-    new Effect((boughtAmount) => new Decimal(4).pow(boughtAmount), "mult"),
-    new Effect((boughtAmount) => player.quantumFoam.add(1).log(10).pow(0.4).div(2).add(1).pow(boughtAmount), "mult")
+    new Effect((boughtAmount) => new Decimal(4).pow(
+        Math.min(boughtAmount, 10)).mul(new Decimal(2).pow(Math.max(boughtAmount-10, 0))), "mult"),
+    new Effect((boughtAmount) => player.quantumFoam.add(1).log(10).pow(0.4).div(2).add(1).pow(boughtAmount), "mult"),
+    new Effect((boughtAmount) => new Decimal((calcGravitationalWavesGained()+1)**0.5).add(1).pow(boughtAmount/2), "mult")
 ];
 
 export const quantumUpgrades = (function(){
