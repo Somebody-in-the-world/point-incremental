@@ -4,6 +4,7 @@ import { darkGenerators } from "./dark-matter";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { challenges } from "./challenges";
 import { nonRepeatableQuantumUpgrades, quantumUpgrades } from "./quantum";
+import { decayEnergyUpgrades } from "./decay";
 
 export function calcAtomicReq(){
     return new Decimal("1e1000");
@@ -15,11 +16,12 @@ export function canAtomic(){
 
 export function calcParticleGain(){
     if(!canAtomic()) return new Decimal(0);
-    return new Decimal(4).pow(player.spacetimePoints.log(10).div(1000).sub(1)).mul(quantumUpgrades[2].effect).floor();
+    return new Decimal(4).pow(player.spacetimePoints.log(10).div(1000).sub(1))
+        .mul(decayEnergyUpgrades[1].effect).mul(quantumUpgrades[2].effect).floor();
 }
 
 export function calcNextParticleReq(){
-    return new Decimal(10).pow(calcParticleGain().add(1).div(quantumUpgrades[2].effect).log(4).add(1).mul(1000));
+    return new Decimal(10).pow(calcParticleGain().add(1).div(quantumUpgrades[2].effect).div(decayEnergyUpgrades[1].effect).log(4).add(1).mul(1000));
 }
 
 export function atomicPrestige(){
@@ -94,7 +96,7 @@ export function calcParticleToForceRate(amount){
 
 export function calcGravityGain(){
     if(!nonRepeatableQuantumUpgrades[0].boughtAmount) return new Decimal(0);
-    return player.protons.add(player.neutrons).add(player.electrons).div(1e10).pow(0.4).mul(quantumUpgrades[4].effect);
+    return player.protons.add(player.neutrons).add(player.electrons).div(1e10).pow(0.4).mul(quantumUpgrades[4].effect).mul(quantumUpgrades[5].effect);
 }
 
 export function calcParticlesPerMinute(){

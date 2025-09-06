@@ -131,3 +131,9 @@ button:disabled {
     text-shadow: 1px 1px 5px;
     font-size: 1.25em;
 }
+
+.upgrade-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+

@@ -7,11 +7,11 @@ export const tabComponentNames = ["MainTab", "AutobuyersTab", "ChallengesTab", "
 export const tabNames = ["Main", "Automation", "Challenges", "Dimensional", "Spacetime", "Dark Matter", "Atomic", "Achievements", "Statistics", "Options"];
 export const subTabComponentNames = [[], [], [], [],
     ["SpacetimeUpgradesTab", "SpacetimeMilestonesTab", "TearSpacetimeTab"], [],
-    ["ParticlesTab", "AtomicMilestonesTab", "QuantumTab"], 
+    ["ParticlesTab", "DecayEnergyTab", "AtomicMilestonesTab", "QuantumTab"], 
 [], [], ["OptionsTab", "ConfirmationsTab", "HotkeysTab"]];
 export const subTabNames = [[], [], [], [], 
     ["Upgrades", "Milestones", "Tear Spacetime"], [],
-    ["Particles", "Atomic Milestones", "Quantum"], 
+    ["Particles", "Decay Energy", "Atomic Milestones", "Quantum"], 
 [], [], ["Options", "Confirmations", "Hotkeys"]];
 export const tabUnlockFuncs = [
     () => true, () => spacetimeMilestones[0].unlocked || player.records.atomicAmount > 0,
@@ -25,8 +25,8 @@ export const tabUnlockFuncs = [
 
 export const subTabUnlockFuncs = [
     [], [], [], [], [() => true, () => true, () => true],
-    [], [() => true, () => true, () => true],
-    [], [], []
+    [], [() => true, () => player.decayEnergy.gt(0), () => true, () => true],
+    [], [], [() => true, () => true, () => true]
 ];
 
 export const tabClassStyles = ["", "", "", "", "spacetime-alt", "spacetime-alt", "atomic", "", ""];

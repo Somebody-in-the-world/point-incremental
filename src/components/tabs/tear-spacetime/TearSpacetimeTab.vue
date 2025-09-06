@@ -25,15 +25,7 @@
 
 <template>
     <TearSpacetimeButton />
-    <div id="upgrade-container" v-show="displayUpgrades">
+    <div class="upgrade-container" v-show="displayUpgrades">
         <Upgrade v-for="(_, idx) in tearSpacetimeUpgrades" :purchasable="tearSpacetimeUpgrades[idx]" currency="SP" :key="idx"/>
     </div>
 </template>
-
-<style scoped>
-    #upgrade-container {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        width: 100%;
-    }
-</style>

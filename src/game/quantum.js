@@ -1,6 +1,7 @@
 import { atomicReset } from "./resets";
 import { Purchasable } from "./purchasable";
 import { calcGravitationalWaveBoost, calcGravitationalWavesGained, calcParticleGain, canAtomic } from "./atomic";
+import { decayEnergyUpgrades } from "./decay";
 import { Effect } from "./effect";
 import Decimal from "break_eternity.js";
 
@@ -56,7 +57,9 @@ export const upgradeEffects = [
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(100*boughtAmount), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(4*boughtAmount), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(0.1*Math.min(boughtAmount, 4))
-        .mul(player.quantumFoam.pow(0.033*Math.max(boughtAmount-4, 0))), "mult"),
+        .mul(player.quantumFoam.pow(0.033*Math.min(Math.max(boughtAmount-4, 0), 6))
+        .mul(player.quantumFoam.pow(0.01*Math.max(boughtAmount-10, 0)))
+    ), "mult"),
     new Effect((boughtAmount) => new Decimal(4).pow(
         Math.min(boughtAmount, 10)).mul(new Decimal(2).pow(Math.max(boughtAmount-10, 0))), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.add(1).log(10).pow(0.4).div(2).add(1).pow(boughtAmount), "mult"),
@@ -149,7 +152,7 @@ export function calcQuantumFoamGain(){
         new Decimal(player.quantumDepth).pow(1.5).mul(3)
         .add(1).pow(player.quantumDepth).sub(1)
     );
-    return baseGain.mul(quantumUpgrades[3].effect).mul(calcGravitationalWaveBoost());
+    return baseGain.mul(quantumUpgrades[3].effect).mul(calcGravitationalWaveBoost()).mul(decayEnergyUpgrades[0].effect);
 }
 
 export function quantumFoamGainTick(deltaTime){

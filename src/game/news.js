@@ -31,6 +31,7 @@ forever and forever and forever and forever and forever and forever and forever 
     "<button onclick='window.alert(\"Yay!\")'>This is a button!</button>",
     "This message is (softcapped)",
     "<a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>https://www.youtube.com/watch?v=dQw4w9WgXcQ</a>",
-    "guys im trying to think of news message but i just cant pls help me"
+    "guys im trying to think of news message but i just cant pls help me",
+    "What is the point if you have no points?"
 ]
 
