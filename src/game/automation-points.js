@@ -1,4 +1,4 @@
-import {challenges} from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcPointGain } from "./points";
 import { Purchasable } from "./purchasable";
 import { spacetimeMilestones } from "./spacetime";
@@ -13,9 +13,9 @@ export const automationPointsUnlock = new Purchasable(false,
 );
 
 export function calcAutomaticPointGainPercent(){
-    if(player.currentChallenge == 1) return new Decimal(1);
+    if(spacetimeChallenges[0].isRunning) return new Decimal(1);
     let power = 0.6;
-    if(challenges[0].completed) power += 0.1;
+    if(spacetimeChallenges[0].completed) power += 0.1;
     return player.automationPoints.pow(power).div(4);
 };
 

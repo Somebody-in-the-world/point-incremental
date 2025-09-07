@@ -4,7 +4,7 @@ import Decimal from "break_eternity.js";
 import { Effect } from "./effect";
 import { spacetimeUpgrades } from "./spacetime";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
-import { challenges } from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcStrongForceBoost } from "./atomic";
 
 export function calcDimensionalReq(){
@@ -58,13 +58,13 @@ export const dimensionCostMult = [
 
 export function calcDimensionPerPurchaseMult(){
     let perPurchaseMult = new Decimal(2);
-    if(challenges[3].completed) perPurchaseMult = perPurchaseMult.add(0.5);
+    if(spacetimeChallenges[3].completed) perPurchaseMult = perPurchaseMult.add(0.5);
     perPurchaseMult = perPurchaseMult.mul(calcStrongForceBoost());
     return perPurchaseMult;
 }
 
 export function dimensionalPowerGainTick(deltaTime){
-    if(player.currentChallenge == 4) return;
+    if(spacetimeChallenges[3].isRunning) return;
     for(let dim = 6; dim >= 0; dim--){
         player.dimensions.generated[dim] = player.dimensions.generated[dim].add(
             dimensions[dim+1].totalAmount.mul(dimensions[dim+1].effect).

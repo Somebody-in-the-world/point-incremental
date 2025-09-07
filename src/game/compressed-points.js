@@ -1,4 +1,4 @@
-import { challenges } from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 import { pointCompressionReset } from "./resets";
 import { spacetimeMilestones } from "./spacetime";
 
@@ -7,9 +7,9 @@ export function calcCompressedPointsGain(){
 }
 
 export function calcCompressedPointsBoost(){
-    if(player.currentChallenge == 1) return new Decimal(1);
+    if(spacetimeChallenges[0].isRunning) return new Decimal(1);
     let power = 0.75;
-    if(challenges[0].completed) power += 0.05;
+    if(spacetimeChallenges[0].completed) power += 0.05;
     return player.compressedPoints.pow(power).add(1);
 }
 

@@ -1,10 +1,11 @@
 <script>
     import { Purchasable } from "@/game/purchasable";
+    import { Challenge } from "@/game/challenge";
 
     export default {
         name: "EffectDisplay",
         props: {
-            purchasable: { type: Purchasable, required: true },
+            purchasable: { type: [Purchasable, Challenge], required: true }, /* Challenge works too */
             isNext: { type: Boolean, default: false }
         },
         data(){

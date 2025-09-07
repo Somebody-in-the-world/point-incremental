@@ -5,6 +5,9 @@ export function isObject(item){
 export function mergeObjects(target, source){
     const result = { ...target };
     for(const prop in source){
+        if((typeof source[prop]) != (typeof result[prop])){
+            continue;
+        }
         if(source[prop] instanceof Decimal && result[prop] instanceof Decimal){
             result[prop] = source[prop];
         } else if(isObject(source[prop]) && isObject(result[prop])){

@@ -4,7 +4,7 @@
         calcDimensionalPowerBoost,
         calcChall2FreePointUpgrades
     } from "@/game/dimensional";
-    import { challenges } from "@/game/challenges";
+    import { spacetimeChallenges } from "@/game/spacetime-challenges";
 
     export default {
         name: "DimensionalPowerDisplay",
@@ -23,7 +23,7 @@
                 this.dimensionalPowerGain = calcDimensionalPowerGain();
                 this.dimensionalPowerBoost = calcDimensionalPowerBoost().mul(100);
                 this.chall2FreePointUpgrades = calcChall2FreePointUpgrades();
-                this.chall2Completed = challenges[1].completed;
+                this.chall2Completed = spacetimeChallenges[1].completed;
             }
         }
     };

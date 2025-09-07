@@ -38,6 +38,7 @@ export function spacetimeReset(){
 }
 
 export function atomicReset(){
+    player.currentAtomicChallenge = 0;
     player.quantumDepth = 0;
     player.peakParticlesPerMin = new Decimal(0);
     player.records.timeInCurrentAtomic = 0;

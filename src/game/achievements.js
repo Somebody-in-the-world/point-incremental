@@ -1,9 +1,10 @@
 import { calcSingleEffect, pointUpgrade } from "./point-upgrade";
 import { dimensions } from "./dimensional";
 import { spacetimeMilestones, spacetimeUpgrades } from "./spacetime";
-import { calcTotalChallsCompleted, challenges } from "./challenges";
+import { calcTotalSpacetimeChallengesCompleted, spacetimeChallenges } from "./spacetime-challenges";
 import { darkGenerators } from "./dark-matter";
 import { atomicMilestones } from "./atomic";
+import { nonRepeatableQuantumUpgrades } from "./quantum";
 
 export class Achievement {
     constructor(id, title, requirements, reward, 
@@ -82,7 +83,13 @@ export const achievementsTitle = [
     "This mile took an atomic",
     "Zooming in DEEPER",
     "Physics breaker",
-    "Zooming in EVEN DEEPER"
+    "Zooming in EVEN DEEPER",
+    "Newton is happy",
+    "Albert einstein",
+    "Microscope?",
+    "Zooming in THE DEEPEST",
+    "Protons decay?",
+    "I forgot the formula"
 ];
 
 export const achievementsRequirements = [
@@ -115,7 +122,7 @@ export const achievementsRequirements = [
     "Complete a challenge",
     "Start generating dark matter",
     "Complete challenge 4",
-    "Complete all challenges",
+    "Complete all spacetimeChallenges",
     "Get 1e100 spacetime points",
     "Buy a tier 6 dark generator",
     "Go atomic",
@@ -125,7 +132,13 @@ export const achievementsRequirements = [
     "Get all atomic milestones",
     "Enter the quantum",
     "Get 1e10 particles",
-    "Enter the quantum at depth 2"
+    "Enter the quantum at depth 2",
+    "Unlock gravity",
+    "Unlock gravitational waves",
+    "Enter the quantum at depth 3",
+    "Enter the quantum at depth 4",
+    "Start creating decay energy",
+    "Get 1e10 gravity"
 ];
 
 export const achievementReqFuncs = [
@@ -159,10 +172,10 @@ export const achievementReqFuncs = [
     () => player.spacetimePoints.gte(1000),
     () => player.spacetimeTore,
     () => player.points.gte("1e1000"),
-    () => calcTotalChallsCompleted() > 0,
+    () => calcTotalSpacetimeChallengesCompleted() > 0,
     () => darkGenerators[0].boughtAmount > 0,
-    () => challenges[3].completed,
-    () => calcTotalChallsCompleted() == challenges.length,
+    () => spacetimeChallenges[3].completed,
+    () => calcTotalSpacetimeChallengesCompleted() == spacetimeChallenges.length,
     () => player.spacetimePoints.gte(1e100),
     () => darkGenerators[5].boughtAmount > 0,
     () => player.records.atomicAmount > 0,
@@ -172,7 +185,13 @@ export const achievementReqFuncs = [
     () => atomicMilestones[9].unlocked,
     () => player.quantumDepth > 0,
     () => player.particles.gte(1e10),
-    () => player.quantumDepth >= 2
+    () => player.quantumDepth >= 2,
+    () => nonRepeatableQuantumUpgrades[0].boughtAmount,
+    () => nonRepeatableQuantumUpgrades[1].boughtAmount,
+    () => player.quantumDepth >= 3,
+    () => player.quantumDepth >= 4,
+    () => player.decayEnergy.gt(0),
+    () => player.gravity.gte(1e10)
 ];
 
 export const achievementsRewards = [
@@ -193,6 +212,8 @@ export const achievementsRewards = [
     "Gain 1e100x more points",
     null, null, 
     "You can distribute all particles",
+    null, null, null, null, null, null, 
+    "Gain 10% more quantum foam", 
     null, null, null, null, null, null
 ];
 

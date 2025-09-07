@@ -2,12 +2,14 @@ import { atomicReset } from "./resets";
 import { Milestone } from "./milestone";
 import { darkGenerators } from "./dark-matter";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
-import { challenges } from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 import { nonRepeatableQuantumUpgrades, quantumUpgrades } from "./quantum";
 import { decayEnergyUpgrades } from "./decay";
+import { atomicChallenges } from "./atomic-challenges";
 
 export function calcAtomicReq(){
-    return new Decimal("1e1000");
+    return player.currentAtomicChallenge == 0 ? 
+        new Decimal("1e1000") : atomicChallenges[player.currentAtomicChallenge-1].goal;
 }
 
 export function canAtomic(){
@@ -47,7 +49,7 @@ export function atomicPrestige(){
     if(!atomicMilestones[5].unlocked){
         player.atomicMilestones[5] = true;
         for(let i = 3; i < 5; i++){
-            if(challenges[i].completed){
+            if(spacetimeChallenges[i].completed){
                 player.atomicMilestones[5] = false;
             }
         }
@@ -70,6 +72,7 @@ export function atomicPrestige(){
     if(player.records.fastestAtomic <= 15){
         player.atomicMilestones[9] = true;
     }
+    if(player.currentAtomicChallenge > 0) atomicChallenges[player.currentAtomicChallenge-1].complete();
     
     atomicReset();
 }
@@ -132,7 +135,7 @@ export function calcGravityToWeakForceBoost(){
 
 export function calcGravitationalWavesGained(){
     if(!(nonRepeatableQuantumUpgrades[1].boughtAmount)) return 0;
-    return player.gravity.add(1).div(1e3).log(2).floor().toNumber();
+    return Math.max(player.gravity.add(1).div(1e3).log(2).add(1).floor().toNumber(), 0);
 }
 
 export function calcGravitationalWaveBoost(){
@@ -140,7 +143,7 @@ export function calcGravitationalWaveBoost(){
 }
 
 export function calcNextGravitationalWaveReq(){
-    return new Decimal(2).pow(calcGravitationalWavesGained()+1).mul(1e3);
+    return new Decimal(2).pow(calcGravitationalWavesGained()).mul(1e3);
 }
 
 const milestoneGoals = [

@@ -26,6 +26,7 @@ window.player = {
     peakSPPerMin: new Decimal(0),
     SPAtPeakSPPerMin: new Decimal(0),
     currentChallenge: 0,
+    currentAtomicChallenge: 0,
     latestUnlockedChallenge: 0,
     challengeCompletions: new Array(6).fill(false),
     darkMatter: new Decimal(0),
@@ -54,6 +55,7 @@ window.player = {
     gravity: new Decimal(0),
     decayEnergy: new Decimal(0),
     decayEnergyUpgrades: new Array(6).fill(0),
+    atomicChallengeCompletions: new Array(1).fill(0),
     autobuyers: (function(){
         const autobuyersObject = Array.from({length: autobuyers.length}, () => ({
             active: true,

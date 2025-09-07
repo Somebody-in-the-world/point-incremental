@@ -2,7 +2,7 @@ import { pointUpgrade } from "./point-upgrade";
 import { calcCompressedPointsBoost } from "./compressed-points";
 import { spacetimeUpgrades } from "./spacetime";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
-import { challenges } from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcDarkMatterBoost } from "./dark-matter";
 import { calcElectromagneticForceBoost } from "./atomic";
 import { calcQuantumNerf, quantumUpgrades } from "./quantum";
@@ -21,8 +21,8 @@ export function calcPointGain(){
     basePoints = basePoints.mul(quantumUpgrades[0].effect);
     basePoints = basePoints.div(player.antiPoints);
     
-    if(player.currentChallenge == 3) basePoints = basePoints.pow(0.65);
-    if(challenges[2].completed) basePoints = basePoints.pow(1.05);
+    if(spacetimeChallenges[2].isRunning) basePoints = basePoints.pow(0.65);
+    if(spacetimeChallenges[2].completed) basePoints = basePoints.pow(1.05);
     basePoints = basePoints.pow(calcElectromagneticForceBoost());
     basePoints = basePoints.pow(calcQuantumNerf(player.quantumDepth));
 

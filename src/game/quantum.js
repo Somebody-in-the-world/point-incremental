@@ -146,13 +146,15 @@ export function calcMaxAvailQuantumDepth(){
 
 export function calcQuantumFoamGain(){
     if(!canAtomic()) return new Decimal(0);
-    const baseGain = player.points.add(1).log(10).div(200000).mul(
+    let baseGain = player.points.add(1).log(10).div(200000).mul(
         player.spacetimePoints.add(1).log(10).div(1000)).pow(2)
     .mul(calcParticleGain().add(1).log(10).add(1)).mul(
         new Decimal(player.quantumDepth).pow(1.5).mul(3)
         .add(1).pow(player.quantumDepth).sub(1)
     );
-    return baseGain.mul(quantumUpgrades[3].effect).mul(calcGravitationalWaveBoost()).mul(decayEnergyUpgrades[0].effect);
+    baseGain = baseGain.mul(quantumUpgrades[3].effect).mul(calcGravitationalWaveBoost()).mul(decayEnergyUpgrades[0].effect);
+    if(achievements[40].unlocked) baseGain = baseGain.mul(1.1);
+    return baseGain;
 }
 
 export function quantumFoamGainTick(deltaTime){

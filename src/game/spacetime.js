@@ -5,7 +5,7 @@ import { Effect } from "./effect";
 import Decimal from "break_eternity.js";
 import { dimensions } from "./dimensional";
 import { Milestone } from "./milestone";
-import {challenges} from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { quantumUpgrades } from "./quantum";
 
@@ -27,7 +27,7 @@ export function passiveGenerateSP(deltaTime){
 
 export function calcSpacetimeReq(){
     if(player.currentChallenge == 0) return INFINITY;
-    else return challenges[player.currentChallenge-1].goal;
+    else return spacetimeChallenges[player.currentChallenge-1].goal;
 }
 
 export function canSpacetime(){
@@ -95,7 +95,7 @@ export function spacetimePrestige(){
     if(player.records.timeInCurrentSpacetime < player.records.fastestSpacetime){
         player.records.fastestSpacetime = player.records.timeInCurrentSpacetime;
     }
-    if(player.currentChallenge > 0) challenges[player.currentChallenge-1].complete();
+    if(player.currentChallenge > 0) spacetimeChallenges[player.currentChallenge-1].complete();
     spacetimeReset();
 }
 

@@ -3,7 +3,7 @@ import { automaticCPGainTick } from "./compressed-points";
 import { automaticDPGainTick, dimensionalPowerGainTick } from "./dimensional";
 import { canSpacetime, passiveGenerateSP } from "./spacetime";
 import { runAutobuyers } from "./autobuyers";
-import { challenges, unlockPointReq } from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 import { darkMatterGainTick } from "./dark-matter";
 import { unlockAchivements } from "./achievements";
 import { forceGainTick } from "./atomic";
@@ -30,7 +30,7 @@ export function gameLoop(){
         player.highestPointsThisDimensional = player.points;
     }
 
-    if(player.currentChallenge == 6){
+    if(spacetimeChallenges[5].isRunning){
         player.antiPoints = player.antiPoints.mul(new Decimal(1e300).pow(deltaTime));
     }
 
@@ -50,9 +50,10 @@ export function gameLoop(){
     // Achievements stuff
     unlockAchivements();
 
-    if(player.points.gte(unlockPointReq[player.latestUnlockedChallenge]) &&
-        player.latestUnlockedChallenge != challenges.length){
-        challenges[player.latestUnlockedChallenge].unlock();
+    if(player.latestUnlockedChallenge != spacetimeChallenges.length){
+        if(spacetimeChallenges[player.latestUnlockedChallenge].canUnlock){
+            spacetimeChallenges[player.latestUnlockedChallenge].unlock();
+        }
     }
 
     player.records.timePlayed += deltaTime;

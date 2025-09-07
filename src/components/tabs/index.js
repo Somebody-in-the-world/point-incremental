@@ -1,7 +1,8 @@
 import AchievementsTab from "./achievements/AchievementsTab.vue";
+import AtomicChallengesTab from "./atomic-challenges/AtomicChallengesTab.vue"
 import AtomicMilestonesTab from "./atomic-milestones/AtomicMilestonesTab.vue";
 import AutobuyersTab from "./autobuyers/AutobuyersTab.vue";
-import ChallengesTab from "./challenges/ChallengesTab.vue";
+import SpacetimeChallengesTab from "./spacetime-challenges/SpacetimeChallengesTab.vue";
 import DecayEnergyTab from "./decay-energy/DecayEnergyTab.vue";
 import DimensionalTab from "./dimensional/DimensionalTab.vue";
 import MainTab from "./main-tab/MainTab.vue";
@@ -19,8 +20,9 @@ import ConfirmationsTab from "./options/ConfirmationsTab.vue";
 export default {
     AchievementsTab,
     AtomicMilestonesTab,
+    AtomicChallengesTab,
     AutobuyersTab,
-    ChallengesTab,
+    SpacetimeChallengesTab,
     DecayEnergyTab,
     DimensionalTab,
     MainTab,

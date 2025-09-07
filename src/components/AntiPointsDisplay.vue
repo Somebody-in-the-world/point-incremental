@@ -1,4 +1,6 @@
 <script>
+    import { spacetimeChallenges } from "@/game/spacetime-challenges";
+
     export default {
         name: "AntiPointsDisplay",
         data(){
@@ -10,7 +12,7 @@
         methods: {
             update(){
                 this.antiPoints = player.antiPoints;
-                this.hidden = player.currentChallenge != 6;
+                this.hidden = !(spacetimeChallenges[5].isRunning);
             }
         }
     };

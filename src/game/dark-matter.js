@@ -2,7 +2,7 @@ import Decimal from "break_eternity.js";
 import { Purchasable } from "./purchasable";
 import { Effect } from "./effect";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
-import { challenges } from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcWeakForceBoost } from "./atomic";
 
 export const darkMatterUnlockRequirements = [
@@ -99,8 +99,8 @@ export const darkGenerators = (function(){
                     if(achievements[29].unlocked){
                         effect = effect.mul(2);
                     }
-                    if(challenges[5].completed){
-                        effect = effect.mul(player.spacetimePoints.add(1).log(10).add(1).pow(1.25));
+                    if(spacetimeChallenges[5].completed){
+                        effect = effect.mul(spacetimeChallenges[5].effect);
                     }
                 }
                 if(boughtAmount > 0){

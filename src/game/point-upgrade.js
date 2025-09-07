@@ -4,7 +4,7 @@ import { Effect } from "./effect";
 import { spacetimeUpgrades } from "./spacetime";
 import { INFINITY } from "./constants";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
-import { challenges } from "./challenges";
+import { spacetimeChallenges } from "./spacetime-challenges";
 
 export const pointUpgrade = 
     new Purchasable(true, () => player.pointUpgrade.boughtAmount,
@@ -20,18 +20,17 @@ export const pointUpgrade =
             } else {
                 cost = calcPreInfinityCost(boughtAmount);
             }
-            if(challenges[4].completed){
-                cost = cost.div(Decimal.min(player.darkMatter.add(1).mul(1e5).pow(180), "1e1000000"));
+            if(spacetimeChallenges[4].completed){
+                cost = cost.div(spacetimeChallenges[4].effect);
             }
             return cost;
         }, 
         (cost) => player.points.gte(cost), 
         new Effect(function(boughtAmount){
-            if(player.currentChallenge == 5) return new Decimal(1);
             let freeAmount = 0;
             if(spacetimeUpgrades[4].boughtAmount) freeAmount += spacetimeUpgrades[4].effect.toNumber();
             if(tearSpacetimeUpgrades[3].boughtAmount) freeAmount += tearSpacetimeUpgrades[3].effect.toNumber();
-            if(challenges[1].completed) freeAmount += calcChall2FreePointUpgrades().toNumber();
+            if(spacetimeChallenges[1].completed) freeAmount += calcChall2FreePointUpgrades().toNumber();
             return calcSingleEffect().pow(boughtAmount+freeAmount);
         }, "mult"),
         function(cost){
@@ -40,7 +39,8 @@ export const pointUpgrade =
     );
 
 export function calcSingleEffect(){
-    if(player.currentChallenge == 2) return new Decimal(2);
+    if(spacetimeChallenges[4].isRunning) return new Decimal(1);
+    if(spacetimeChallenges[1].isRunning) return new Decimal(2);
     let baseEffect = new Decimal(2);
     if(spacetimeUpgrades[1].boughtAmount) baseEffect = baseEffect.add(0.2);
     if(tearSpacetimeUpgrades[1].boughtAmount) baseEffect = baseEffect.add(0.3);
