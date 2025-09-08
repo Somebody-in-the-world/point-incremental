@@ -25,19 +25,6 @@
         display: grid;
         grid-template-columns: 50% 50%;
     }
-
-    .challenge-box {
-        border-color: #60a0ff;
-        color: #60a0ff;
-        background-color: #183060; 
-    }
-
-    .challenge-box ::v-deep button {
-        border-color: #60a0ff;
-        color: #60a0ff;
-        background-color: #183060; 
-    }
-
     @media (max-width: 768px) {
         #challenge-grid > * {
             font-size: 2.5vmin;

@@ -1,3 +1,4 @@
+import { nonRepeatableQuantumUpgrades } from "./quantum";
 import { spacetimeMilestones } from "./spacetime";
 import { spacetimeChallenges } from "./spacetime-challenges";
 
@@ -25,7 +26,7 @@ export const tabUnlockFuncs = [
 ];
 
 export const subTabUnlockFuncs = [
-    [], [], [() => true, () => false], 
+    [], [], [() => true, () => nonRepeatableQuantumUpgrades[3].boughtAmount], 
     [], [() => true, () => true, () => true],
     [], [() => true, () => player.decayEnergy.gt(0), () => true, () => true],
     [], [], [() => true, () => true, () => true]

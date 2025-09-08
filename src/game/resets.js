@@ -1,4 +1,5 @@
 import { atomicMilestones } from "./atomic";
+import { atomicChallenges } from "./atomic-challenges";
 import { darkGenerators } from "./dark-matter";
 import { dimensions } from "./dimensional";
 import { spacetimeMilestones, spacetimeUpgrades } from "./spacetime";
@@ -38,6 +39,9 @@ export function spacetimeReset(){
 }
 
 export function atomicReset(){
+    if(player.currentAtomicChallenge > 0){
+        player.quarks += atomicChallenges[player.currentAtomicChallenge-1].cost;
+    }
     player.currentAtomicChallenge = 0;
     player.quantumDepth = 0;
     player.peakParticlesPerMin = new Decimal(0);

@@ -5,6 +5,7 @@ import { calcTotalSpacetimeChallengesCompleted, spacetimeChallenges } from "./sp
 import { darkGenerators } from "./dark-matter";
 import { atomicMilestones } from "./atomic";
 import { nonRepeatableQuantumUpgrades } from "./quantum";
+import { calcUnlockedAtomicChalls } from "./atomic-challenges";
 
 export class Achievement {
     constructor(id, title, requirements, reward, 
@@ -89,7 +90,9 @@ export const achievementsTitle = [
     "Microscope?",
     "Zooming in THE DEEPEST",
     "Protons decay?",
-    "I forgot the formula"
+    "I forgot the formula",
+    "Atomically challenging",
+    "Thats not challenging!"
 ];
 
 export const achievementsRequirements = [
@@ -138,7 +141,9 @@ export const achievementsRequirements = [
     "Enter the quantum at depth 3",
     "Enter the quantum at depth 4",
     "Start creating decay energy",
-    "Get 1e10 gravity"
+    "Get 1e10 gravity",
+    "Enter an atomic challenge",
+    "Unlock 3 atomic challenges"
 ];
 
 export const achievementReqFuncs = [
@@ -191,7 +196,9 @@ export const achievementReqFuncs = [
     () => player.quantumDepth >= 3,
     () => player.quantumDepth >= 4,
     () => player.decayEnergy.gt(0),
-    () => player.gravity.gte(1e10)
+    () => player.gravity.gte(1e10),
+    () => player.currentAtomicChallenge > 0,
+    () => calcUnlockedAtomicChalls() >= 3
 ];
 
 export const achievementsRewards = [

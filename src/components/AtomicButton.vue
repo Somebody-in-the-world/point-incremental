@@ -2,6 +2,7 @@
     import { calcAtomicReq, calcParticleGain, calcNextParticleReq, 
         calcParticlesPerMinute,
         canAtomic, atomicPrestige } from "@/game/atomic";
+    import { atomicChallenges } from "@/game/atomic-challenges";
 
     export default {
         name: "AtomicButton",
@@ -13,6 +14,9 @@
                 particlesPerMinute: new Decimal(),
                 peakParticlesPerMinute: new Decimal(),
                 particlesAtPeakParticlesPerMin: new Decimal(),
+                inAtomicChallenge: false,
+                gainedCompletions: 0,
+                gainedCompletionsSPThreesold: new Decimal(),
                 canAtomic: false,
                 showNextInfo: false
             }
@@ -23,6 +27,13 @@
                 this.particleGain = calcParticleGain();
                 this.canAtomic = canAtomic();
                 this.showNextInfo = this.particleGain.lt(1e3);
+                this.inAtomicChallenge = player.currentAtomicChallenge > 0;
+                if(this.inAtomicChallenge){
+                    this.gainedCompletions = atomicChallenges[player.currentAtomicChallenge-1].gainedCompletions;
+                    this.gainedCompletionsSPThreesold = 
+                        atomicChallenges[player.currentAtomicChallenge-1].goal.pow(
+                        atomicChallenges[player.currentAtomicChallenge-1].completions);
+                }
                 if(this.showNextInfo){
                     this.nextParticleReq = calcNextParticleReq();
                 } else {
@@ -44,9 +55,9 @@
 <template>
     <button class="atomic" id="atomic-button" :disabled="!canAtomic" @click="atomic">
         <span v-if="!canAtomic">
-            Reach {{ format(atomicReq) }} spacetime points to atomic
+            Reach {{ format(atomicReq) }} spacetime points to {{ inAtomicChallenge ? "complete challenge" : "atomic" }}
         </span>
-        <span v-if="canAtomic">
+        <span v-if="canAtomic && (!inAtomicChallenge)">
             <div v-if="showNextInfo">Go atomic.<br></div>
             {{ showNextInfo ? "Gain" : "Go atomic to gain" }} {{ format(particleGain) }} particles 
             <span v-if="showNextInfo">
@@ -57,6 +68,11 @@
                 ({{ format(particlesPerMinute) }} particles/min, 
                 Peak: {{ format(peakParticlesPerMin) }}/min at {{ format(particlesAtPeakParticlesPerMin) }} particles)
             </span>
+        </span>
+        <span v-if="canAtomic && inAtomicChallenge">
+            Go Atomic.<br>
+            Gain {{ gainedCompletions.toFixed(3) }} atomic challenge completions 
+            <span :hidden="gainedCompletions>0">(More completions at {{ format(gainedCompletionsSPThreesold) }} SP)</span>
         </span>
     </button>
 </template>

@@ -33,5 +33,5 @@
     <span v-if="type == 'sub'">-{{ format(effect) }}</span>
     <span v-if="type == 'mult'">x{{ format(effect) }}</span>
     <span v-if="type == 'div'">/ {{ format(effect) }}</span>
-    <span v-if="type == 'power'">^{{ format(effect) }}</span>
+    <span v-if="type == 'power'">^{{ format(effect, 4) }}</span>
 </template>

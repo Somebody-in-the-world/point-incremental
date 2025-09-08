@@ -4,6 +4,7 @@ import { Effect } from "./effect";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcWeakForceBoost } from "./atomic";
+import { atomicChallenges } from "./atomic-challenges";
 
 export const darkMatterUnlockRequirements = [
     new Decimal("1e2500"),
@@ -27,6 +28,7 @@ export function calcDarkMatterGain(){
 }
 
 export function darkMatterGainTick(deltaTime){
+    if(atomicChallenges[2].isRunning) return;
     player.darkMatter = player.darkMatter.add(calcDarkMatterGain()
         .mul(deltaTime));
 }
@@ -106,6 +108,9 @@ export const darkGenerators = (function(){
                 if(boughtAmount > 0){
                     if(tearSpacetimeUpgrades[11].boughtAmount){
                         effect = effect.mul(tearSpacetimeUpgrades[11].effect);
+                    }
+                    if(atomicChallenges[2].effect){
+                        effect = effect.mul(atomicChallenges[2].effect);
                     }
                 }
                 return effect;

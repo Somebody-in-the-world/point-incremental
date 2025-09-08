@@ -17,7 +17,7 @@ export const upgradeCosts = [
 ];
 
 export const upgradeCaps = [
-    40, 25, 15, 20, 10, 10
+    40, 25, 25, 20, 10, 10
 ];
 
 export const upgradeDescriptions = [
@@ -39,25 +39,25 @@ export const nonRepeatableUpgradeCosts = [
     new Decimal(5e6),
     new Decimal(2.5e7),
     new Decimal(1e9),
-    new Decimal(2).pow(1024)
+    new Decimal(1e18)
 ];
 
 export const nonRepeatableUpgradeDescriptions = [
     "Unlock gravity",
     "Unlock gravitational waves",
     "Unlock more quantum upgrades",
-    "Coming soon!"
+    "Unlock Atomic Challenges"
 ];
 
 export const nonRepeatableUpgradeDepthReqs = [
-    2, 2, 3, 3
+    2, 2, 3, 4
 ];
 
 export const upgradeEffects = [
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(100*boughtAmount), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(4*boughtAmount), "mult"),
-    new Effect((boughtAmount) => player.quantumFoam.add(1).pow(0.1*Math.min(boughtAmount, 4))
-        .mul(player.quantumFoam.pow(0.033*Math.min(Math.max(boughtAmount-4, 0), 6))
+    new Effect((boughtAmount) => Decimal.min(player.quantumFoam.add(1).pow(0.1), 100).pow(Math.min(boughtAmount, 4))
+        .mul(Decimal.min(player.quantumFoam.pow(0.033), 4).pow(Math.min(Math.max(boughtAmount-4, 0), 6))
         .mul(player.quantumFoam.pow(0.01*Math.max(boughtAmount-10, 0)))
     ), "mult"),
     new Effect((boughtAmount) => new Decimal(4).pow(
@@ -122,8 +122,8 @@ export function respecUpgrades(){
     for(const upgrade of quantumUpgrades){
         upgrade.boughtAmount = 0;
     }
-    player.quarks = player.totalQuarks;
     atomicReset();
+    player.quarks = player.totalQuarks;
 }
 
 export function calcQuantumNerf(depth){
