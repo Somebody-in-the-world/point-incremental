@@ -11,7 +11,7 @@ const upgradeDescriptions = [
     "You gain more points based on current points",
     "Further increase the base point upgrade multiplier (2.2x -> 2.5x)",
     "Multiply point gain based on spacetime points",
-    "Gain free point upgrades based on 8th dimensions",
+    "Gain free point upgrades based on 8th dimensions bought",
     "Multiplier to points based on times spacetimed",
     "Multiplier to DP gain based on spacetime points",
     "Gain more points based on highest points",

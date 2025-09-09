@@ -2,6 +2,7 @@ import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcPointGain } from "./points";
 import { Purchasable } from "./purchasable";
 import { spacetimeMilestones } from "./spacetime";
+import { atomicChallenges } from "./atomic-challenges";
 
 export const automationPointsUnlock = new Purchasable(false, 
     () => player.automationPointsUnlocked,
@@ -13,10 +14,12 @@ export const automationPointsUnlock = new Purchasable(false,
 );
 
 export function calcAutomaticPointGainPercent(){
-    if(spacetimeChallenges[0].isRunning) return new Decimal(1);
+    if(spacetimeChallenges[0].isRunning || atomicChallenges[3].isRunning) return new Decimal(1);
     let power = 0.6;
     if(spacetimeChallenges[0].completed) power += 0.1;
-    return player.automationPoints.pow(power).div(4);
+    let baseEffect = player.automationPoints.pow(power).div(4);
+    if(baseEffect.gte("1e3.5e6")) return new Decimal("1e3.5e6").mul(baseEffect.div("1e3.5e6").pow(0.5));
+    return baseEffect;
 };
 
 export function automaticPointGainTick(deltaTime){

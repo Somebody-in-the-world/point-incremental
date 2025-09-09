@@ -6,6 +6,8 @@ import { spacetimeUpgrades } from "./spacetime";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcStrongForceBoost } from "./atomic";
+import { atomicChallenges } from "./atomic-challenges";
+import { pointUpgrade } from "./point-upgrade";
 
 export function calcDimensionalReq(){
     if(achievements[12].unlocked) return new Decimal(1e25);
@@ -70,6 +72,12 @@ export function dimensionalPowerGainTick(deltaTime){
             dimensions[dim+1].totalAmount.mul(dimensions[dim+1].effect).
             mul(deltaTime)
         );
+    }
+    if(atomicChallenges[4].isRunning){
+        player.points = player.points.add(
+            calcDimensionalPowerGain().mul(deltaTime)
+        );
+        return;
     }
     player.dimensionalPower = player.dimensionalPower.add(
         calcDimensionalPowerGain().mul(deltaTime)
@@ -141,6 +149,7 @@ export const dimensions = (function(){
                         mult = mult.mul(1.1);
                     }
                     if(spacetimeUpgrades[3].boughtAmount) mult = mult.mul(spacetimeUpgrades[3].effect);
+                    if(atomicChallenges[4].isRunning) mult = mult.mul(pointUpgrade.effect);
                     
                     return mult;
                 }, "mult"),

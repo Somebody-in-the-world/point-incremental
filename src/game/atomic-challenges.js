@@ -41,6 +41,7 @@ class AtomicChallenge extends Challenge {
             .div(this.goal.log(10)).toNumber() - 
             player.atomicChallengeCompletions[this.id-1], 0);
     }
+    get completed(){ return this.completions >= 1; }
     get canComplete(){ return player.spacetimePoints.gte(this.goal) && (this.gainedCompletions > 0); }
     get completions(){ return player.atomicChallengeCompletions[this.id-1]; }
     get isRunning(){ return player.currentAtomicChallenge == this.id; }
@@ -52,33 +53,41 @@ class AtomicChallenge extends Challenge {
 const challengeDescriptions = [
     "All spacetime challenges at once",
     "Increased SP multiplier cost scalling starts immediately (Normally at 1e20000 SP)",
-    "Dark generators are disabled"
+    "Dark generators are disabled",
+    "All multipliers to point gain (except point upgrades) are disabled and AP effect is always 100%, but point upgrade effect becomes 1e100x",
+    ""
 ];
 
 const challengeGoals = [
     new Decimal("1e2000"),
     new Decimal("1e10000"),
-    new Decimal("1e4000")
+    new Decimal("1e4000"),
+    new Decimal("1e3000"),
+    new Decimal("1e1e15")
 ];
 
 const challengeRewards = [
     "Gain a multiplier to particle gain",
     "Increased SP multiplier cost scalling starts later",
-    "Dark generator multiplier based on gravity"
+    "Dark generator multiplier based on gravity",
+    "Point upgrades are stronger based on strong force",
+    ""
 ];
 
 const challengeEffects = [
     new Effect((completions) => new Decimal(5).pow(completions**0.75), "mult"),
     new Effect((completions) => new Decimal(1).add(completions/15), "power"),
-    new Effect((completions) => player.gravity.pow(completions*2.5), "mult")
+    new Effect((completions) => player.gravity.pow(completions*2.5), "mult"),
+    new Effect((completions) => player.strongForce.add(1).log(10).mul(completions).add(1).log(10).div(3).add(1).pow(0.75), "power"),
+    null
 ];
 
 const challengeCosts = [
-    25, 40, 30
+    25, 40, 30, 80, 99999999
 ]
 
 export const atomicChallengeRequirements = [
-    55, 70, 75
+    55, 70, 75, 90, 99999999
 ];
 
 export const atomicChallenges = (function(){

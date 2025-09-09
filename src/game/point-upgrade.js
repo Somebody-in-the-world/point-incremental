@@ -5,6 +5,7 @@ import { spacetimeUpgrades } from "./spacetime";
 import { INFINITY } from "./constants";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { spacetimeChallenges } from "./spacetime-challenges";
+import { atomicChallenges } from "./atomic-challenges";
 
 export const pointUpgrade = 
     new Purchasable(true, () => player.pointUpgrade.boughtAmount,
@@ -44,7 +45,10 @@ export function calcSingleEffect(){
     let baseEffect = new Decimal(2);
     if(spacetimeUpgrades[1].boughtAmount) baseEffect = baseEffect.add(0.2);
     if(tearSpacetimeUpgrades[1].boughtAmount) baseEffect = baseEffect.add(0.3);
-    return baseEffect.add(calcDimensionalPowerBoost());
+    baseEffect = baseEffect.add(calcDimensionalPowerBoost());
+    if(atomicChallenges[3].isRunning) return new Decimal(1e100);
+    if(atomicChallenges[3].completed) baseEffect = baseEffect.pow(atomicChallenges[3].effect);
+    return baseEffect;
 }
 
 function calcCostMultiplierGrowth(){
