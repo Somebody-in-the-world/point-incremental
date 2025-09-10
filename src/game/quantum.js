@@ -39,18 +39,20 @@ export const nonRepeatableUpgradeCosts = [
     new Decimal(5e6),
     new Decimal(2.5e7),
     new Decimal(1e9),
-    new Decimal(1e18)
+    new Decimal(1e18),
+    new Decimal(1e33)
 ];
 
 export const nonRepeatableUpgradeDescriptions = [
     "Unlock gravity",
     "Unlock gravitational waves",
     "Unlock more quantum upgrades",
-    "Unlock Atomic Challenges"
+    "Unlock Atomic Challenges",
+    "Uncap quantum upgrades (though they get more expensive) and you can bulk buy them"
 ];
 
 export const nonRepeatableUpgradeDepthReqs = [
-    2, 2, 3, 4
+    2, 2, 3, 4, 6
 ];
 
 export const upgradeEffects = [
@@ -72,16 +74,27 @@ export const quantumUpgrades = (function(){
         upgrades.push(new Purchasable(
             true, () => player.quantumUpgrades[i], 
             (boughtAmount) => { player.quantumUpgrades[i] = boughtAmount; },
-            () => new Decimal(upgradeCosts[i]),
+            () => new Decimal(calcTotalUpgradeCost(i, player.quantumUpgradeBulk)),
             (cost) => player.quarks >= cost.toNumber(), upgradeEffects[i],
             function(cost){ 
                 player.quarks = player.quarks - cost.toNumber();
-            }, upgradeCaps[i],
+                this.boughtAmount += player.quantumUpgradeBulk-1;
+            }, () => nonRepeatableQuantumUpgrades[4].boughtAmount ? Infinity : upgradeCaps[i],
             upgradeDescriptions[i], upgradeUnlockReqs[i]
         ));
     }
     return upgrades;
 })();
+
+function calcTotalUpgradeCost(id, bulk){
+    let cost = 0;
+    let bought = quantumUpgrades[id].boughtAmount;
+    for(let _ = 0; _ < bulk; _++){
+        cost += (Math.floor(bought / upgradeCaps[id])+1) * upgradeCosts[id];
+        bought++;
+    }
+    return cost;
+}
 
 export const nonRepeatableQuantumUpgrades = (function(){
     const upgrades = [];
@@ -105,7 +118,7 @@ export const quantumDepthUpgrade = new Purchasable(
     (cost) => player.quantumFoam.gte(cost), 
     new Effect((boughtAmount) => new Decimal(boughtAmount), "add"),
     (cost) => { player.quantumFoam = player.quantumFoam.sub(cost); },
-    10, "Increase the maximum quantum depth"
+    () => 10, "Increase the maximum quantum depth"
 );
 
 export const quarkPurchasable = new Purchasable(

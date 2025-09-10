@@ -83,7 +83,7 @@ const challengeEffects = [
 ];
 
 const challengeCosts = [
-    25, 40, 30, 80, 99999999
+    25, 40, 30, 80, 90
 ]
 
 export const atomicChallengeRequirements = [

@@ -66,7 +66,7 @@ const upgradeRepeatable = [
 const upgradeCaps = [
     null, null, null, null, null, null,
     null, null, null, null, null, null,
-    8, 10
+    () => 8, () => 10
 ];
 
 export const tearSpacetimeUpgrades = (function(){

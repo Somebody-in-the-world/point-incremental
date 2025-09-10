@@ -15,7 +15,9 @@
                 depthNerf: 1,
                 quantumUpgrades,
                 quantumDepthUpgrade,
-                nonRepeatableQuantumUpgrades
+                nonRepeatableQuantumUpgrades,
+                bulkUnlocked: false,
+                bulk: 1
             };
         },
         components: {
@@ -29,8 +31,13 @@
                 this.unlocked = quantumUnlock.boughtAmount;
                 this.depth = player.projectedQuantumDepth;
                 this.depthNerf = calcQuantumNerf(this.depth);
+                this.bulkUnlocked = nonRepeatableQuantumUpgrades[4].boughtAmount;
+                this.bulk = player.quantumUpgradeBulk;
             },
-            respecUpgrades
+            respecUpgrades,
+            changeBulk(bulk){
+                player.quantumUpgradeBulk = bulk;
+            }
         }
     }
 </script>
@@ -45,6 +52,13 @@
         SP, and particles gained on atomic
     </h4>
     <QuantumFoamDisplay v-if="unlocked" />
+    <h4 style="text-align: center;" v-if="bulkUnlocked" >
+        Quantum Upgrade Bulk: {{ bulk }}
+    </h4>
+    <div class="upgrade-container" v-if="bulkUnlocked">
+        <button :disabled="bulk==1" @click="changeBulk(1)">Bulk buy 1 upgrade</button>
+        <button :disabled="bulk==10" @click="changeBulk(10)">Bulk buy 10 upgrades</button>
+    </div>
     <QuarkDisplay v-if="unlocked" />
     <button style="width: 100%; padding: 10px 0;" @click="respecUpgrades" v-if="unlocked">Respec all upgrades</button>
     <div class="upgrade-container">

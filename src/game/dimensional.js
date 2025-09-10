@@ -154,7 +154,7 @@ export const dimensions = (function(){
                     return mult;
                 }, "mult"),
                 (cost) => {player.dimensionalPoints = player.dimensionalPoints.sub(cost)},
-                1_000_000
+                () => 1_000_000
             )
         );
     }

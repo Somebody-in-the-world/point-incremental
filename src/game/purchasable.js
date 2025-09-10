@@ -11,14 +11,20 @@ export class Purchasable {
         this.purchaseFunc = purchaseFunc;
         this.description = description;
         this.unlockedFunc = unlocked;
-        if(cap) this.cap = cap;
+        if(cap) this.capFunc = cap;
     }
 
     get boughtAmount(){
         return this.boughtAmountGetter();
     }
+    
+    get cap(){
+        if(!this.capFunc) return null;
+        return this.capFunc();
+    }
 
     get reachedCap(){
+        if(!this.capFunc) return false;
         return this.boughtAmount >= this.cap;
     }
 
