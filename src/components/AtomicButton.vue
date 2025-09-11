@@ -17,6 +17,7 @@
                 inAtomicChallenge: false,
                 gainedCompletions: 0,
                 gainedCompletionsSPThreesold: new Decimal(),
+                fullCompletions: false,
                 canAtomic: false,
                 showNextInfo: false
             }
@@ -33,6 +34,8 @@
                     this.gainedCompletionsSPThreesold = 
                         atomicChallenges[player.currentAtomicChallenge-1].goal.pow(
                         atomicChallenges[player.currentAtomicChallenge-1].completions);
+                    this.fullCompletions = (atomicChallenges[player.currentAtomicChallenge-1].gainedCompletions 
+                        + atomicChallenges[player.currentAtomicChallenge-1].completions) >= 5;
                 }
                 if(this.showNextInfo){
                     this.nextParticleReq = calcNextParticleReq();
@@ -71,8 +74,9 @@
         </span>
         <span v-if="canAtomic && inAtomicChallenge">
             Go Atomic.<br>
-            Gain {{ gainedCompletions.toFixed(3) }} atomic challenge completions 
-            <span :hidden="gainedCompletions>0">(More completions at {{ format(gainedCompletionsSPThreesold) }} SP)</span>
+            <span :hidden="(!fullCompletions) || (gainedCompletions>0)">This atomic challenge is already fully completed</span>
+            <span :hidden="fullCompletions">Gain {{ gainedCompletions.toFixed(3) }} atomic challenge completions</span>
+            <span :hidden="(gainedCompletions>0) || (fullCompletions)">(More completions at {{ format(gainedCompletionsSPThreesold) }} SP)</span>
         </span>
     </button>
 </template>

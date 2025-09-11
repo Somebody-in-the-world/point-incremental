@@ -20,6 +20,7 @@ class AtomicChallenge extends Challenge {
 
     complete(){
         player.atomicChallengeCompletions[this.id-1] += this.gainedCompletions;
+        if(this.completions > 5) player.atomicChallengeCompletions[this.id-1] = 5;
         this.exit();
     }
 
@@ -37,9 +38,9 @@ class AtomicChallenge extends Challenge {
 
     get canStart(){ return player.quarks >= this.cost; }
     get gainedCompletions(){ 
-        return Math.max(player.spacetimePoints.add(1).log(10)
+        return Math.min(Math.max(player.spacetimePoints.add(1).log(10)
             .div(this.goal.log(10)).toNumber() - 
-            player.atomicChallengeCompletions[this.id-1], 0);
+            player.atomicChallengeCompletions[this.id-1], 0), 5-this.completions);
     }
     get completed(){ return this.completions >= 1; }
     get canComplete(){ return player.spacetimePoints.gte(this.goal) && (this.gainedCompletions > 0); }
@@ -55,7 +56,7 @@ const challengeDescriptions = [
     "Increased SP multiplier cost scalling starts immediately (Normally at 1e20000 SP)",
     "Dark generators are disabled",
     "All multipliers to point gain (except point upgrades) are disabled and AP effect is always 100%, but point upgrade effect becomes 1e100x",
-    ""
+    "Particles are disabled"
 ];
 
 const challengeGoals = [
@@ -63,7 +64,7 @@ const challengeGoals = [
     new Decimal("1e10000"),
     new Decimal("1e4000"),
     new Decimal("1e3000"),
-    new Decimal("1e1e15")
+    new Decimal("1e16000")
 ];
 
 const challengeRewards = [
@@ -71,23 +72,23 @@ const challengeRewards = [
     "Increased SP multiplier cost scalling starts later",
     "Dark generator multiplier based on gravity",
     "Point upgrades are stronger based on strong force",
-    ""
+    "Multiply quantum foam gain"
 ];
 
 const challengeEffects = [
     new Effect((completions) => new Decimal(5).pow(completions**0.75), "mult"),
     new Effect((completions) => new Decimal(1).add(completions/15), "power"),
     new Effect((completions) => player.gravity.pow(completions*2.5), "mult"),
-    new Effect((completions) => player.strongForce.add(1).log(10).mul(completions).add(1).log(10).div(3).add(1).pow(0.75), "power"),
-    null
+    new Effect((completions) => player.strongForce.add(1).log(10).mul(completions).div(3).add(1).pow(0.75), "mult"),
+    new Effect((completions) => new Decimal(3).pow(completions**0.5), "mult")
 ];
 
 const challengeCosts = [
-    25, 40, 30, 80, 90
+    25, 40, 30, 80, 100
 ]
 
 export const atomicChallengeRequirements = [
-    55, 70, 75, 90, 99999999
+    55, 70, 75, 90, 110
 ];
 
 export const atomicChallenges = (function(){

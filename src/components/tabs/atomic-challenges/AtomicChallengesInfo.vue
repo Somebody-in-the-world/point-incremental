@@ -32,7 +32,7 @@
         </span>
     </h3>
     <h5>
-        Atomic challenges can be completed a fractional amount past 1, but more completions require more SP
+        Atomic challenges can be completed a fractional amount past 1 (5 completions max), but more completions require more SP
         <br>
         Atomic challenges cost a certain amount of quarks to enter, however, they are fully returned on completion or exit
     </h5>

@@ -7,7 +7,7 @@ import { atomicChallenges } from "./atomic-challenges";
 export const automationPointsUnlock = new Purchasable(false, 
     () => player.automationPointsUnlocked,
     (val) => {player.automationPointsUnlocked = val;},
-    () => new Decimal(250),
+    () => new Decimal(100),
     (cost) => player.compressedPoints.gte(cost),
     null,
     null
@@ -18,7 +18,6 @@ export function calcAutomaticPointGainPercent(){
     let power = 0.6;
     if(spacetimeChallenges[0].completed) power += 0.1;
     let baseEffect = player.automationPoints.pow(power).div(4);
-    if(baseEffect.gte("1e3.5e6")) return new Decimal("1e3.5e6").mul(baseEffect.div("1e3.5e6").pow(0.5));
     return baseEffect;
 };
 

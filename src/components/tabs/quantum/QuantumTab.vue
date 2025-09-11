@@ -31,7 +31,7 @@
                 this.unlocked = quantumUnlock.boughtAmount;
                 this.depth = player.projectedQuantumDepth;
                 this.depthNerf = calcQuantumNerf(this.depth);
-                this.bulkUnlocked = nonRepeatableQuantumUpgrades[4].boughtAmount;
+                this.bulkUnlocked = nonRepeatableQuantumUpgrades[3].boughtAmount;
                 this.bulk = player.quantumUpgradeBulk;
             },
             respecUpgrades,

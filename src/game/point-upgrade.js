@@ -47,7 +47,7 @@ export function calcSingleEffect(){
     if(tearSpacetimeUpgrades[1].boughtAmount) baseEffect = baseEffect.add(0.3);
     baseEffect = baseEffect.add(calcDimensionalPowerBoost());
     if(atomicChallenges[3].isRunning) return new Decimal(1e100);
-    if(atomicChallenges[3].completed) baseEffect = baseEffect.pow(atomicChallenges[3].effect);
+    if(atomicChallenges[3].completed) baseEffect = baseEffect.mul(atomicChallenges[3].effect);
     return baseEffect;
 }
 

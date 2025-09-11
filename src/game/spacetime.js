@@ -7,7 +7,7 @@ import { dimensions } from "./dimensional";
 import { Milestone } from "./milestone";
 import { spacetimeChallenges } from "./spacetime-challenges";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
-import { quantumUpgrades } from "./quantum";
+import { nonRepeatableQuantumUpgrades, quantumUpgrades } from "./quantum";
 import { atomicChallenges } from "./atomic-challenges";
 
 let passiveSPGenCounter = 0;
@@ -38,6 +38,14 @@ export function canSpacetime(){
 export function calcSPMultCostIncreaseThreesold(){
     if(atomicChallenges[1].isRunning) return new Decimal(10);
     return new Decimal("1e20000").pow(atomicChallenges[1].effect);
+}
+
+export function automaticSPGainTick(deltaTime){
+    if(nonRepeatableQuantumUpgrades[5].boughtAmount){
+        player.spacetimePoints = player.spacetimePoints.add(
+            calcSpacetimePointsGain().div(100).mul(deltaTime)
+        );
+    }
 }
 
 export function bulkBuySPMult(){

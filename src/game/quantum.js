@@ -4,6 +4,7 @@ import { calcGravitationalWaveBoost, calcGravitationalWavesGained, calcParticleG
 import { decayEnergyUpgrades } from "./decay";
 import { Effect } from "./effect";
 import Decimal from "break_eternity.js";
+import {atomicChallenges} from "./atomic-challenges";
 
 export const quantumUnlock = new Purchasable(
     false, () => player.quantumUnlocked, (val) => { player.quantumUnlocked = val; },
@@ -40,19 +41,21 @@ export const nonRepeatableUpgradeCosts = [
     new Decimal(2.5e7),
     new Decimal(1e9),
     new Decimal(1e18),
-    new Decimal(1e33)
+    new Decimal(1e33),
+    new Decimal(1e35)
 ];
 
 export const nonRepeatableUpgradeDescriptions = [
-    "Unlock gravity",
+    "Unlock gravity (in particles tab)",
     "Unlock gravitational waves",
     "Unlock more quantum upgrades",
-    "Unlock Atomic Challenges",
-    "Uncap quantum upgrades (though they get more expensive) and you can bulk buy them"
+    "Unlock Atomic Challenges and you can bulk buy quantum upgrades",
+    "Uncap quantum upgrades (though they get more expensive)",
+    "Passively gain 1% of SP gained on spacetime per second"
 ];
 
 export const nonRepeatableUpgradeDepthReqs = [
-    2, 2, 3, 4, 6
+    2, 2, 3, 4, 6, 6
 ];
 
 export const upgradeEffects = [
@@ -167,6 +170,7 @@ export function calcQuantumFoamGain(){
     );
     baseGain = baseGain.mul(quantumUpgrades[3].effect).mul(calcGravitationalWaveBoost()).mul(decayEnergyUpgrades[0].effect);
     if(achievements[40].unlocked) baseGain = baseGain.mul(1.1);
+    if(atomicChallenges[4].completed) baseGain = baseGain.mul(atomicChallenges[4].effect);
     return baseGain;
 }
 

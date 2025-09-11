@@ -5,7 +5,6 @@ import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcWeakForceBoost } from "./atomic";
 import { atomicChallenges } from "./atomic-challenges";
-import {pointUpgrade} from "./point-upgrade";
 
 export const darkMatterUnlockRequirements = [
     new Decimal("1e2500"),
@@ -30,10 +29,6 @@ export function calcDarkMatterGain(){
 
 export function darkMatterGainTick(deltaTime){
     if(atomicChallenges[2].isRunning) return;
-    if(atomicChallenges[4].isRunning){
-        player.dimensions.generated[7] = player.dimensions.generated[7].add(calcDarkMatterGain().mul(deltaTime));
-        return;
-    }
     player.darkMatter = player.darkMatter.add(calcDarkMatterGain()
         .mul(deltaTime));
 }
@@ -116,9 +111,6 @@ export const darkGenerators = (function(){
                     }
                     if(atomicChallenges[2].completed){
                         effect = effect.mul(atomicChallenges[2].effect);
-                    }
-                    if(atomicChallenges[4].isRunning){
-                        effect = effect.mul(pointUpgrade.effect);
                     }
                 }
                 return effect;

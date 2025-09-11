@@ -115,13 +115,14 @@ export function calcParticlesPerMinute(){
 }
 
 export function forceGainTick(deltaTime){
+    player.gravity = player.gravity.add(calcGravityGain().mul(deltaTime));
+    if(atomicChallenges[4].isRunning) return;
     player.electromagneticForce = player.electromagneticForce.add(
         calcParticleToForceRate(player.protons).mul(deltaTime));
     player.strongForce = player.strongForce.add(
         calcParticleToForceRate(player.neutrons).mul(deltaTime));
     player.weakForce = player.weakForce.add(
         calcParticleToForceRate(player.electrons).mul(deltaTime));
-    player.gravity = player.gravity.add(calcGravityGain().mul(deltaTime));
 }
 
 export function calcGravityToElectromagneticForceBoost(){

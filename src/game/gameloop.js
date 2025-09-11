@@ -1,7 +1,7 @@
 import { automaticPointGainTick, automaticAPGainTick } from "./automation-points";
 import { automaticCPGainTick } from "./compressed-points";
 import { automaticDPGainTick, dimensionalPowerGainTick } from "./dimensional";
-import { canSpacetime, passiveGenerateSP } from "./spacetime";
+import { automaticSPGainTick, canSpacetime, passiveGenerateSP } from "./spacetime";
 import { runAutobuyers } from "./autobuyers";
 import { spacetimeChallenges } from "./spacetime-challenges";
 import { darkMatterGainTick } from "./dark-matter";
@@ -38,6 +38,7 @@ export function gameLoop(){
     automaticAPGainTick(deltaTime);
     dimensionalPowerGainTick(deltaTime);
     automaticDPGainTick(deltaTime);
+    automaticSPGainTick(deltaTime);
     darkMatterGainTick(deltaTime);
     forceGainTick(deltaTime);
     quantumFoamGainTick(deltaTime);
