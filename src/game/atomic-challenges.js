@@ -64,7 +64,7 @@ const challengeGoals = [
     new Decimal("1e10000"),
     new Decimal("1e4000"),
     new Decimal("1e3000"),
-    new Decimal("1e16000")
+    new Decimal("1e14500")
 ];
 
 const challengeRewards = [
@@ -84,11 +84,11 @@ const challengeEffects = [
 ];
 
 const challengeCosts = [
-    25, 40, 30, 80, 100
+    25, 40, 30, 75, 90
 ]
 
 export const atomicChallengeRequirements = [
-    55, 70, 75, 90, 110
+    55, 70, 75, 90, 100
 ];
 
 export const atomicChallenges = (function(){

@@ -1,6 +1,13 @@
 import { INFINITY } from "./constants";
 import { pickNotation } from "./notations";
 
+export function formatInt(number, decimals = 0){
+    return number.toLocaleString("en-US", {
+        minimumFractionDigits: decimals, 
+        maximumFractionDigits: decimals
+    });
+}
+
 export function format(number, precision = 2){
     let formatted;
     if(number.layer == 0){

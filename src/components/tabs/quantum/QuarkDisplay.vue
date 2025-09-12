@@ -33,7 +33,7 @@
     <h3 style="text-align: center;">You have <span class="quarks">{{ quarks }}</span> quarks 
         (<span class="quarks">{{ totalQuarks }}</span> quarks total)</h3>
     <Purchasable :purchasable="quarkPurchasable" class="atomic" id="quark-button" >
-        Buy a quark
+        Condense your quantum foam into a quark
         <br>
         Cost: {{ format(quarkCost) }} quantum foam
     </Purchasable>

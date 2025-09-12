@@ -59,7 +59,7 @@ export const nonRepeatableUpgradeDepthReqs = [
 ];
 
 export const upgradeEffects = [
-    new Effect((boughtAmount) => player.quantumFoam.add(1).pow(100*boughtAmount), "mult"),
+    new Effect((boughtAmount) => player.quantumFoam.add(1).pow(125*boughtAmount), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.add(1).pow(4*boughtAmount), "mult"),
     new Effect((boughtAmount) => Decimal.min(player.quantumFoam.add(1).pow(0.1), 100).pow(Math.min(boughtAmount, 4))
         .mul(Decimal.min(player.quantumFoam.pow(0.033), 4).pow(Math.min(Math.max(boughtAmount-4, 0), 6))
@@ -81,7 +81,11 @@ export const quantumUpgrades = (function(){
             (cost) => player.quarks >= cost.toNumber(), upgradeEffects[i],
             function(cost){ 
                 player.quarks = player.quarks - cost.toNumber();
-                this.boughtAmount += player.quantumUpgradeBulk-1;
+                let bulk = player.quantumUpgradeBulk;
+                if(!(nonRepeatableQuantumUpgrades[4].boughtAmount)){
+                    bulk = Math.min(quantumUpgrades[i].cap-quantumUpgrades[i].boughtAmount, bulk);
+                }
+                this.boughtAmount += bulk-1;
             }, () => nonRepeatableQuantumUpgrades[4].boughtAmount ? Infinity : upgradeCaps[i],
             upgradeDescriptions[i], upgradeUnlockReqs[i]
         ));
@@ -90,6 +94,9 @@ export const quantumUpgrades = (function(){
 })();
 
 function calcTotalUpgradeCost(id, bulk){
+    if(!(nonRepeatableQuantumUpgrades[4].boughtAmount)){
+        bulk = Math.min(quantumUpgrades[id].cap-quantumUpgrades[id].boughtAmount, bulk);
+    }
     let cost = 0;
     let bought = quantumUpgrades[id].boughtAmount;
     for(let _ = 0; _ < bulk; _++){

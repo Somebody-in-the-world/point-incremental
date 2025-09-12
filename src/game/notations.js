@@ -1,3 +1,5 @@
+import { formatInt } from "./format";
+
 function partialStandardNotation(exponent){
     const prefixes = ["", "U", "D", "T", "Qa", "Qt", "Sx", "Sp", "O", "N"];
     const decillionTiered = ["", "Dc", "Vg", "Tg", "Qd", "Qi", "Se", "St", "Og", "Nn"];
@@ -72,11 +74,11 @@ function standardNotation(mantissa, exponent){
 }
 
 function scienticNotation(mantissa, exponent){
-    return `${mantissa.toFixed(2)}e${exponent}`;
+    return `${mantissa.toFixed(2)}e${formatInt(exponent)}`;
 }
 
 function logarithmNotation(mantissa, exponent){
-    return `e${(exponent+Math.log10(mantissa)).toFixed(2)}`;
+    return `e${formatInt(exponent+Math.log10(mantissa), 2)}`;
 }
 
 function mixedLogarithmNotation(mantissa, exponent){
@@ -89,7 +91,7 @@ function mixedLogarithmNotation(mantissa, exponent){
 
 function infinityNotation(mantissa, exponent){
     const exp = exponent + Math.log10(mantissa);
-    return `${(exp / 308.25).toFixed(4)}∞`;
+    return `${formatInt(exp / 308.25, 4)}∞`;
 }
 
 export function pickNotation(notation, mantissa, exponent){
