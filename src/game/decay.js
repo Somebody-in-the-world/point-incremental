@@ -1,12 +1,17 @@
 import { Purchasable } from "./purchasable";
 import { Effect } from "./effect";
 import Decimal from "break_eternity.js";
+import { atomicChallenges } from "./atomic-challenges";
 
 export function calcDecayEnergyGain(){
-    return Decimal.max(player.protons.sub(1e20), 0).add(
+    let baseGain = Decimal.max(player.protons.sub(1e20), 0).add(
         Decimal.max(player.neutrons.sub(1e20), 0)).add(
             Decimal.max(player.electrons.sub(1e20), 0)
-        ).div(1e20).pow(0.35).mul(decayEnergyUpgrades[3].effect);
+        ).div(1e20).pow(0.35);
+    if(baseGain.gte(1e33)) baseGain = baseGain.div(1e33).pow(0.35).mul(1e33);
+    baseGain = baseGain.mul(decayEnergyUpgrades[3].effect).mul(atomicChallenges[6].effect);
+    if(achievements[48].unlocked) baseGain = baseGain.mul(3);
+    return baseGain;
 }
 
 export function calcDecaySpeedBase(){

@@ -15,11 +15,11 @@ window.Events = class Events {
         }
     }
 
-    dispatch(event, args){
+    dispatch(event, args=[]){
         const handlers = this.handlers[event];
         if(!handlers) return;
         for(const handler of handlers){
-            handler.func(args);
+            handler.func(...args);
         }
     }
 };
@@ -30,5 +30,6 @@ Events.logic = new Events();
 window.GAME_EVENTS = {
     GAME_TICK: "GAME_TICK",
     NOTATION_CHANGE: "NOTATION_CHANGE",
+    POPUP_DISPLAY: "POPUP_DISPLAY",
     SPACETIME_ANIM: "SPACETIME_ANIM"
 }

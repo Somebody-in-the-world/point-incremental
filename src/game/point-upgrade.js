@@ -52,7 +52,7 @@ export function calcSingleEffect(){
 }
 
 function calcCostMultiplierGrowth(){
-    return new Decimal(10).sub(tearSpacetimeUpgrades[12].boughtAmount);
+    return new Decimal(10).sub(tearSpacetimeUpgrades[12].boughtAmount).sub(atomicChallenges[5].effect);
 }
 
 function calcPreInfinityCost(boughtAmount){
@@ -82,7 +82,7 @@ export function calcMaxPointUpgradesAffordable(){
     while(pointUpgrade.formula(high).lt(player.points)) high *= 2;
     while(low <= high){
         let mid = low + Math.floor((high - low) / 2);
-        if(pointUpgrade.formula(mid).gt(player.points)){
+        if(pointUpgrade.formula(mid).gte(player.points)){
             n = mid;
             high = mid - 1;
         } else {

@@ -34,8 +34,7 @@
                     this.gainedCompletionsSPThreesold = 
                         atomicChallenges[player.currentAtomicChallenge-1].goal.pow(
                         atomicChallenges[player.currentAtomicChallenge-1].completions);
-                    this.fullCompletions = (atomicChallenges[player.currentAtomicChallenge-1].gainedCompletions 
-                        + atomicChallenges[player.currentAtomicChallenge-1].completions) >= 5;
+                    this.fullCompletions = atomicChallenges[player.currentAtomicChallenge-1].completions >= 5;
                 }
                 if(this.showNextInfo){
                     this.nextParticleReq = calcNextParticleReq();

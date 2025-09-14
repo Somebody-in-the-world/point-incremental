@@ -22,7 +22,8 @@
                 if(!window.confirm("Are you really sure you want to import the save? Your progress will be overwritten!")) return;
                 try { JSON.parse(atob(this.saveData)); }
                 catch(err) {
-                    window.alert(`Cannot parse save data (Error: ${err.message})`);
+                    Events.UI.dispatch(GAME_EVENTS.POPUP_DISPLAY, [
+                        `Error while parsing save data: ${err.message}`, "error"]);
                     return;
                 }
 
@@ -36,6 +37,8 @@
                 textarea.value = this.saveData;
                 textarea.select();
                 textarea.setSelectionRange(0, 99999);
+                Events.UI.dispatch(GAME_EVENTS.POPUP_DISPLAY, [
+                    "Successfully exported save!", "info"]);
                 document.execCommand("copy");
             }
         }

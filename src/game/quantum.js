@@ -42,7 +42,8 @@ export const nonRepeatableUpgradeCosts = [
     new Decimal(1e9),
     new Decimal(1e18),
     new Decimal(1e33),
-    new Decimal(1e35)
+    new Decimal(1e35),
+    new Decimal(1e45)
 ];
 
 export const nonRepeatableUpgradeDescriptions = [
@@ -51,24 +52,28 @@ export const nonRepeatableUpgradeDescriptions = [
     "Unlock more quantum upgrades",
     "Unlock Atomic Challenges and you can bulk buy quantum upgrades",
     "Uncap quantum upgrades (though they get more expensive)",
-    "Passively gain 1% of SP gained on spacetime per second"
+    "Passively gain 1% of SP gained on spacetime per second",
+    "Boost per gravitational wave 1.25x -> 1.3x"
 ];
 
 export const nonRepeatableUpgradeDepthReqs = [
-    2, 2, 3, 4, 6, 6
+    2, 2, 3, 4, 6, 6, 7
 ];
 
 export const upgradeEffects = [
-    new Effect((boughtAmount) => player.quantumFoam.add(1).pow(125*boughtAmount), "mult"),
-    new Effect((boughtAmount) => player.quantumFoam.add(1).pow(4*boughtAmount), "mult"),
+    new Effect((boughtAmount) => atomicChallenges[6].isRunning ? new Decimal(1) : player.quantumFoam.add(1).pow(125*boughtAmount), "mult"),
+    new Effect((boughtAmount) => atomicChallenges[6].isRunning ? new Decimal(1) : player.quantumFoam.add(1).pow(4*boughtAmount), "mult"),
     new Effect((boughtAmount) => Decimal.min(player.quantumFoam.add(1).pow(0.1), 100).pow(Math.min(boughtAmount, 4))
         .mul(Decimal.min(player.quantumFoam.pow(0.033), 4).pow(Math.min(Math.max(boughtAmount-4, 0), 6))
         .mul(player.quantumFoam.pow(0.01*Math.max(boughtAmount-10, 0)))
     ), "mult"),
     new Effect((boughtAmount) => new Decimal(4).pow(
-        Math.min(boughtAmount, 10)).mul(new Decimal(2).pow(Math.max(boughtAmount-10, 0))), "mult"),
-    new Effect((boughtAmount) => player.quantumFoam.add(1).log(10).pow(0.4).div(2).add(1).pow(boughtAmount), "mult"),
-    new Effect((boughtAmount) => new Decimal((calcGravitationalWavesGained()+1)**0.5).add(1).pow(boughtAmount/2), "mult")
+        Math.min(boughtAmount, 10)).mul(new Decimal(2).pow(Math.min(Math.max(boughtAmount-10, 0), 25))
+        .mul(new Decimal(2).sqrt().pow(Math.max(boughtAmount-35, 0)))), "mult"),
+    new Effect((boughtAmount) => player.quantumFoam.add(1).log(10).pow(0.4).div(2).add(1)
+        .pow(Math.min(boughtAmount, 10)+Math.max(boughtAmount-10, 0)*0.75), "mult"),
+    new Effect((boughtAmount) => new Decimal((calcGravitationalWavesGained()+1)**0.5).add(1)
+        .pow((Math.min(boughtAmount, 10)+Math.max(boughtAmount-10, 0)*0.5)/2), "mult")
 ];
 
 export const quantumUpgrades = (function(){

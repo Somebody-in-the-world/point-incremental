@@ -102,7 +102,10 @@ export function calcParticleToForceRate(amount){
 
 export function calcGravityGain(){
     if(!nonRepeatableQuantumUpgrades[0].boughtAmount) return new Decimal(0);
-    return player.protons.add(player.neutrons).add(player.electrons).div(1e10).pow(0.4).mul(quantumUpgrades[4].effect).mul(quantumUpgrades[5].effect);
+    let baseGain = player.protons.add(player.neutrons).add(player.electrons).div(1e10).pow(0.4);
+    if(baseGain.gte(1e40)) baseGain = baseGain.div(1e40).pow(0.5).mul(1e40)
+    baseGain = baseGain.mul(quantumUpgrades[4].effect).mul(quantumUpgrades[5].effect);
+    return baseGain;
 }
 
 export function calcParticlesPerMinute(){
@@ -143,7 +146,7 @@ export function calcGravitationalWavesGained(){
 }
 
 export function calcGravitationalWaveBoost(){
-    return new Decimal(1.25).pow(calcGravitationalWavesGained());
+    return new Decimal(1.25).add(nonRepeatableQuantumUpgrades[6].boughtAmount*0.05).pow(calcGravitationalWavesGained());
 }
 
 export function calcNextGravitationalWaveReq(){

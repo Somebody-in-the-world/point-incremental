@@ -56,7 +56,10 @@ const challengeDescriptions = [
     "Increased SP multiplier cost scalling starts immediately (Normally at 1e20000 SP)",
     "Dark generators are disabled",
     "All multipliers to point gain (except point upgrades) are disabled and AP effect is always 100%, but point upgrade effect becomes 1e100x",
-    "Particles are disabled"
+    "Particles are disabled",
+    "Point gain ^0.2",
+    "The first two quantum upgrades are disabled",
+    "Point gain is always 1.79e308 and AP effect is always 100%"
 ];
 
 const challengeGoals = [
@@ -64,7 +67,10 @@ const challengeGoals = [
     new Decimal("1e10000"),
     new Decimal("1e4000"),
     new Decimal("1e3000"),
-    new Decimal("1e14500")
+    new Decimal("1e14500"),
+    new Decimal("1e6500"),
+    new Decimal("1e50000"),
+    new Decimal("1e14000")
 ];
 
 const challengeRewards = [
@@ -72,23 +78,29 @@ const challengeRewards = [
     "Increased SP multiplier cost scalling starts later",
     "Dark generator multiplier based on gravity",
     "Point upgrades are stronger based on strong force",
-    "Multiply quantum foam gain"
+    "Multiply quantum foam gain",
+    "Further reduce point upgrade cost multiplier increase",
+    "Multiply decay energy gain",
+    "Gain more points"
 ];
 
 const challengeEffects = [
     new Effect((completions) => new Decimal(5).pow(completions**0.75), "mult"),
-    new Effect((completions) => new Decimal(1).add(completions/15), "power"),
+    new Effect((completions) => new Decimal(1).add(completions*0.07), "power"),
     new Effect((completions) => player.gravity.pow(completions*2.5), "mult"),
     new Effect((completions) => player.strongForce.add(1).log(10).mul(completions).div(3).add(1).pow(0.75), "mult"),
-    new Effect((completions) => new Decimal(3).pow(completions**0.5), "mult")
+    new Effect((completions) => new Decimal(3).pow(completions), "mult"),
+    new Effect((completions) => new Decimal(0.1).mul(completions), "sub"),
+    new Effect((completions) => new Decimal(4).pow(completions), "mult"),
+    new Effect((completions) => new Decimal("1e2e5").pow(completions), "mult")
 ];
 
 const challengeCosts = [
-    25, 40, 30, 75, 90
+    25, 40, 30, 75, 90, 60, 135, 100
 ]
 
 export const atomicChallengeRequirements = [
-    55, 70, 75, 90, 100
+    55, 70, 75, 90, 100, 115, 135, 200
 ];
 
 export const atomicChallenges = (function(){

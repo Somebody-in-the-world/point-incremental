@@ -49,7 +49,7 @@ window.player = {
     quantumUpgrades: new Array(6).fill(0),
     quantumUpgradeBulk: 1,
     quantumDepthUpgrade: 0,
-    nonRepeatableQuantumUpgrades: new Array(6).fill(false),
+    nonRepeatableQuantumUpgrades: new Array(8).fill(false),
     projectedQuantumDepth: 1,
     quarks: 0,
     totalQuarks: 0,
@@ -85,10 +85,10 @@ window.player = {
         updateRate: 33,
         notation: "mixed scientific",
         saveInterval: 2000,
-        theme: "classic",
-        topTabs: false,
+        theme: "dark",
+        topTabs: true,
         newsTicker: {
-            on: false,
+            on: true,
             speed: 10
         },
         confirmations: {

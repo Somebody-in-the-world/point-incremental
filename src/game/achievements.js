@@ -20,7 +20,9 @@ export class Achievement {
     }
 
     unlock(){
+        if(this.unlocked) return;
         this.unlocked = true;
+        Events.UI.dispatch(GAME_EVENTS.POPUP_DISPLAY, [this.title, "achievement"]);
     }
 
     get unlocked(){
@@ -92,7 +94,11 @@ export const achievementsTitle = [
     "Protons decay?",
     "I forgot the formula",
     "Atomically challenging",
-    "Thats not challenging!"
+    "Thats not challenging!",
+    "Wait, thats illegal!",
+    "Are you cheating?",
+    "Even MORE challenges?",
+    "Nice."
 ];
 
 export const achievementsRequirements = [
@@ -122,10 +128,10 @@ export const achievementsRequirements = [
     "Have 1000 spacetime points",
     "Tear spacetime",
     "Get 1e1000 points",
-    "Complete a challenge",
+    "Complete a spacetime challenge",
     "Start generating dark matter",
-    "Complete challenge 4",
-    "Complete all spacetimeChallenges",
+    "Complete spacetime challenge 4",
+    "Complete all spacetime challenges",
     "Get 1e100 spacetime points",
     "Buy a tier 6 dark generator",
     "Go atomic",
@@ -143,7 +149,11 @@ export const achievementsRequirements = [
     "Start creating decay energy",
     "Get 1e10 gravity",
     "Enter an atomic challenge",
-    "Unlock 3 atomic challenges"
+    "Unlock 3 atomic challenges",
+    "Get 1e25,000,000 points",
+    "Get 1e100 particles",
+    "Unlock 8 atomic challenges",
+    "Get 1e69 quantum foam"
 ];
 
 export const achievementReqFuncs = [
@@ -198,7 +208,11 @@ export const achievementReqFuncs = [
     () => player.decayEnergy.gt(0),
     () => player.gravity.gte(1e10),
     () => player.currentAtomicChallenge > 0,
-    () => calcUnlockedAtomicChalls() >= 3
+    () => calcUnlockedAtomicChalls() >= 3,
+    () => player.points.gte("1e2.5e7"),
+    () => player.particles.gte(1e100),
+    () => calcUnlockedAtomicChalls() >= 8,
+    () => player.quantumFoam.gte(1e69)
 ];
 
 export const achievementsRewards = [
@@ -221,7 +235,9 @@ export const achievementsRewards = [
     "You can distribute all particles",
     null, null, null, null, null, null, 
     "Gain 10% more quantum foam", 
-    null, null, null, null, null, null
+    null, null, null, null, null, null, null,
+    "Gain 3x decay energy",
+    null, null, null
 ];
 
 export const achievements = (function(){

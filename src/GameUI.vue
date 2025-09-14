@@ -12,7 +12,8 @@
 
     import SubTabSwitch from "./components/tabs/SubTabSwitch.vue";
     import TabSwitch from "./components/tabs/TabSwitch.vue";
-    import NewsTicker from "./components/NewsTicker.vue"
+    import NewsTicker from "./components/NewsTicker.vue";
+    import PopupDisplay from "./components/PopupDisplay.vue";
     import { currentTab, currentSubTab, tabComponentNames, subTabComponentNames } from "./game/tabs.js";
     import { canSpacetime } from "./game/spacetime";
     import { canAtomic } from "./game/atomic";
@@ -31,7 +32,8 @@
             DarkMatterUnlockButton,
             AtomicButton,
             ParticlesDisplay,
-            NewsTicker
+            NewsTicker,
+            PopupDisplay
         },
         data(){
             return {
@@ -67,6 +69,7 @@
 </script>
 
 <template>
+    <PopupDisplay />
     <NewsTicker v-if="displayNews" />
     <div v-if="spacetimeTore">
         <div id="top-buttons">

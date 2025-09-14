@@ -14,7 +14,7 @@ export const automationPointsUnlock = new Purchasable(false,
 );
 
 export function calcAutomaticPointGainPercent(){
-    if(spacetimeChallenges[0].isRunning || atomicChallenges[3].isRunning) return new Decimal(1);
+    if(spacetimeChallenges[0].isRunning || atomicChallenges[3].isRunning || atomicChallenges[7].isRunning) return new Decimal(1);
     let power = 0.6;
     if(spacetimeChallenges[0].completed) power += 0.1;
     let baseEffect = player.automationPoints.pow(power).div(4);

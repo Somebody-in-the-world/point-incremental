@@ -145,7 +145,7 @@ export const dimensions = (function(){
                     return mult;
                 }, "mult"),
                 (cost) => {player.dimensionalPoints = player.dimensionalPoints.sub(cost)},
-                () => 1_000_000
+                () => idx == 7 ? Infinity : 1_000_000
             )
         );
     }

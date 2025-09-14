@@ -27,10 +27,10 @@
     <input type="checkbox" v-model="newsOn" @input="changeNewsOn(Boolean($event.target.checked))" />
     <div :hidden="!newsOn">
         <br>
-        News ticker speed: {{ newsSpeed }}
+        News ticker speed: {{ newsSpeed*10 }}%
         <br>
         <input type="range" min="5" max="20"
-            v-model="newsSpeed" step="1" @input="changeSpeed(Number($event.target.value))" />
+            v-model="newsSpeed" step="0.5" @input="changeSpeed(Number($event.target.value))" />
     </div>
 </template>
 

@@ -94,6 +94,29 @@ function infinityNotation(mantissa, exponent){
     return `${formatInt(exp / 308.25, 4)}∞`;
 }
 
+function partialOrdinalNotation(mantissa, exponent){
+    let ordinal = "";
+    let exp = Math.log10(mantissa) + exponent;
+    if(exponent >= 10){
+        exp = Math.log10(exp);
+        ordinal = `ω^(${partialOrdinalNotation(10**(exp-Math.floor(exp)), Math.floor(exp))})`;
+    } else if(exponent >= 1) {
+        let expPow = Math.floor(exponent);
+        let expMult = Math.floor(mantissa);
+        let expAdd = partialOrdinalNotation((mantissa%1)*10, Math.floor(exp-1));
+        if(expMult>0){
+            ordinal = `ω${expPow==1?'':'^'+expPow}${expMult>1?'*'+expMult:''}${expAdd=='0'?'':'+'+expAdd}`;
+        } else {
+            ordinal = `${expAdd}`;
+        }
+    } else ordinal = Math.floor(mantissa);
+    return ordinal;
+}
+
+function ordinalNotation(mantissa, exponent){
+    return `g_${partialOrdinalNotation(mantissa, exponent)} (10)`
+}
+
 export function pickNotation(notation, mantissa, exponent){
     switch(notation){
         case "mixed scientific":
@@ -109,6 +132,10 @@ export function pickNotation(notation, mantissa, exponent){
             return standardNotation(mantissa, exponent);
         case "infinity":
             return infinityNotation(mantissa, exponent);
+        case "ordinal":
+            return ordinalNotation(mantissa, exponent);
+        case "blind":
+            return "";
     }
 }
 
@@ -123,6 +150,7 @@ export const notationValues = [
     "logarithm",
     "standard",
     "infinity",
+    "ordinal",
     "blind"
 ];
 
@@ -133,5 +161,10 @@ export const notationNames = [
     "Logarithm",
     "Standard",
     "Infinity",
+    "Ordinal",
     "Blind"
+];
+
+export const formatUnderThousand = [
+    false, false, false, false, false, false, true, true
 ]

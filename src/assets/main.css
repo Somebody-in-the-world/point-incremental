@@ -2,12 +2,19 @@
     font-family: Monospace;
     box-sizing: border-box;
     border-color: var(--border-color);
+    user-select: none;
+}
+
+:root {
+    --body-padding: 4px;
 }
 
 body {
     color: var(--text-color);
     background-color: var(--bg-color);
     transition: all 0.5s;
+    margin: 0;
+    padding: var(--body-padding);
 }
 
 button, select {
@@ -67,6 +74,10 @@ button {
 
 button:disabled {
     cursor: default;
+}
+
+.purchased {
+    background-color: var(--purchased-bg-color) !important;
 }
 
 .spacetime {

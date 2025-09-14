@@ -24,7 +24,6 @@
         },
         computed: {
             darkMatterUnlockGoal(){
-                this._tickUpdate; // Vue reactivity stuff
                 if(this.allGeneratorsUnlocked){
                     return "All dark generators unlocked!";
                 }
