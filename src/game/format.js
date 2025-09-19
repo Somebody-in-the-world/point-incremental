@@ -27,12 +27,12 @@ export function format(number, precision = 2){
             formatted = pickNotation(player.options.notation, mantissa, exponent);
         }
     } else if (number.layer == 1){
-        const isNegative = number.mag < 0;
-        if(isNegative) number = number.pow(-1);
+        const smallNumber = number.mag < 0;
+        if(smallNumber) number = number.pow(-1);
         const mantissa = 10**(number.mag - Math.floor(number.mag));
         const exponent = Math.floor(number.mag);
         formatted = pickNotation(player.options.notation, mantissa, exponent);
-        if(isNegative) formatted = `1 / ${formatted}`;
+        if(smallNumber) formatted = `1 / ${formatted}`;
     }
 
     if(number.gte(INFINITY) && (!(player.spacetimeTore))) formatted = "Infinite";

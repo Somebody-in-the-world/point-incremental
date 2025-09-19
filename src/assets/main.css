@@ -2,7 +2,6 @@
     font-family: Monospace;
     box-sizing: border-box;
     border-color: var(--border-color);
-    user-select: none;
 }
 
 :root {

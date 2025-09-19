@@ -6,6 +6,7 @@ import { spacetimeChallenges } from "./spacetime-challenges";
 import { nonRepeatableQuantumUpgrades, quantumUpgrades } from "./quantum";
 import { decayEnergyUpgrades } from "./decay";
 import { atomicChallenges } from "./atomic-challenges";
+import { calcTimeSpeed } from "./time";
 
 export function calcAtomicReq(){
     return player.currentAtomicChallenge == 0 ? 
@@ -104,6 +105,8 @@ export function calcGravityGain(){
     if(!nonRepeatableQuantumUpgrades[0].boughtAmount) return new Decimal(0);
     let baseGain = player.protons.add(player.neutrons).add(player.electrons).div(1e10).pow(0.4);
     if(baseGain.gte(1e40)) baseGain = baseGain.div(1e40).pow(0.5).mul(1e40)
+    if(baseGain.gte(1e70)) baseGain = baseGain.div(1e70).pow(0.5).mul(1e70)
+    if(baseGain.gte(1e120)) baseGain = baseGain.div(1e120).pow(0.2).mul(1e120)
     baseGain = baseGain.mul(quantumUpgrades[4].effect).mul(quantumUpgrades[5].effect);
     return baseGain;
 }
@@ -118,14 +121,14 @@ export function calcParticlesPerMinute(){
 }
 
 export function forceGainTick(deltaTime){
-    player.gravity = player.gravity.add(calcGravityGain().mul(deltaTime));
+    player.gravity = player.gravity.add(calcGravityGain().mul(deltaTime).mul(calcTimeSpeed()));
     if(atomicChallenges[4].isRunning) return;
     player.electromagneticForce = player.electromagneticForce.add(
-        calcParticleToForceRate(player.protons).mul(deltaTime));
+        calcParticleToForceRate(player.protons).mul(deltaTime).mul(calcTimeSpeed()));
     player.strongForce = player.strongForce.add(
-        calcParticleToForceRate(player.neutrons).mul(deltaTime));
+        calcParticleToForceRate(player.neutrons).mul(deltaTime).mul(calcTimeSpeed()));
     player.weakForce = player.weakForce.add(
-        calcParticleToForceRate(player.electrons).mul(deltaTime));
+        calcParticleToForceRate(player.electrons).mul(deltaTime).mul(calcTimeSpeed()));
 }
 
 export function calcGravityToElectromagneticForceBoost(){

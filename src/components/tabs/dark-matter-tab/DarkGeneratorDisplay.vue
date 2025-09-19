@@ -30,7 +30,7 @@
 
 <template>
     <PurchasableComponent class="spacetime generators" :purchasable="darkGenerator">
-        Tier {{ tier }} Dark Generator ({{ generatorBoughtAmount }})
+        Tier {{ tier }} Dark Generator ({{ formatInt(generatorBoughtAmount) }})
         <br>
         <span v-if="tier == 1">
             Generating {{ format(generatorEffect) }} dark matter per second

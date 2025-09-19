@@ -57,6 +57,7 @@ window.player = {
     decayEnergy: new Decimal(0),
     decayEnergyUpgrades: new Array(6).fill(0),
     atomicChallengeCompletions: new Array(10).fill(0),
+    dimensionalVortexes: 0,
     autobuyers: (function(){
         const autobuyersObject = Array.from({length: autobuyers.length}, () => ({
             active: true,

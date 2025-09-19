@@ -59,7 +59,9 @@ const challengeDescriptions = [
     "Particles are disabled",
     "Point gain ^0.2",
     "The first two quantum upgrades are disabled",
-    "Point gain is always 1.79e308 and AP effect is always 100%"
+    "Points are capped at 1.8e308",
+    "Dark matter boost dimensions instead of boosting points and dimensions directly produce points instead of dimensional power, dark matter boost exponent is also greatly reduced",
+    "Time is 1000x slower; the more time you spend in this spacetime, the less points you will gain"
 ];
 
 const challengeGoals = [
@@ -70,7 +72,9 @@ const challengeGoals = [
     new Decimal("1e14500"),
     new Decimal("1e6500"),
     new Decimal("1e50000"),
-    new Decimal("1e14000")
+    new Decimal("1e13500"),
+    new Decimal("1e40000"),
+    new Decimal("1e100000")
 ];
 
 const challengeRewards = [
@@ -81,7 +85,9 @@ const challengeRewards = [
     "Multiply quantum foam gain",
     "Further reduce point upgrade cost multiplier increase",
     "Multiply decay energy gain",
-    "Gain more points"
+    "Gain a multiplier to points",
+    "Dimensional power boosts dark generators",
+    "Increase dark generator per purchase multipliers"
 ];
 
 const challengeEffects = [
@@ -92,15 +98,17 @@ const challengeEffects = [
     new Effect((completions) => new Decimal(3).pow(completions), "mult"),
     new Effect((completions) => new Decimal(0.1).mul(completions), "sub"),
     new Effect((completions) => new Decimal(4).pow(completions), "mult"),
-    new Effect((completions) => new Decimal("1e2e5").pow(completions), "mult")
+    new Effect((completions) => new Decimal("1e2e5").pow(completions), "mult"),
+    new Effect((completions) => player.dimensionalPower.add(1).pow(0.0001*completions), "mult"),
+    new Effect((completions) => new Decimal(1).add(completions**0.5/10), "mult")
 ];
 
 const challengeCosts = [
-    25, 40, 30, 75, 90, 60, 135, 100
+    25, 40, 30, 75, 90, 60, 135, 100, 250, 350
 ]
 
 export const atomicChallengeRequirements = [
-    55, 70, 75, 90, 100, 115, 135, 200
+    55, 70, 75, 90, 100, 115, 135, 200, 320, 380
 ];
 
 export const atomicChallenges = (function(){

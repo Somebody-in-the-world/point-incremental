@@ -1,6 +1,7 @@
 <script>
     import DimensionalPointsDisplay from "./DimensionalPointsDisplay.vue";
     import DimensionalPrestige from "./DimensionalPrestige.vue";
+    import DimensionalVortexDisplay from "./DimensionalVortexDisplay.vue";
     import DimensionalPowerDisplay from "./DimensionalPowerDisplay.vue";
     import DimensionsDisplay from "./DimensionsDisplay.vue";
 
@@ -9,6 +10,7 @@
         components: {
             DimensionalPointsDisplay,
             DimensionalPrestige,
+            DimensionalVortexDisplay,
             DimensionalPowerDisplay,
             DimensionsDisplay
         },
@@ -28,6 +30,7 @@
 <template>
     <DimensionalPointsDisplay />
     <DimensionalPrestige />
+    <DimensionalVortexDisplay />
     <div v-if="showDimensions">
         <DimensionalPowerDisplay />
         <DimensionsDisplay />

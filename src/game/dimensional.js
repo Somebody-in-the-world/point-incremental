@@ -6,6 +6,11 @@ import { spacetimeUpgrades } from "./spacetime";
 import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcStrongForceBoost } from "./atomic";
+import { calcTimeSpeed } from "./time";
+import { atomicChallenges } from "./atomic-challenges";
+import { calcDarkMatterBoost } from "./dark-matter";
+import { Purchasable } from "./purchasable";
+import { nonRepeatableQuantumUpgrades } from "./quantum";
 
 export function calcDimensionalReq(){
     if(achievements[12].unlocked) return new Decimal(1e25);
@@ -33,6 +38,21 @@ export function dimensionalPointsPrestige(){
     dimensionalReset();
     player.records.dimensionalAmount++;
 }
+
+export function calcDimensionCaps(){
+    return Math.round(1_000_000 * dimensionalVortex.effect.toNumber());
+}
+
+let displayedDimensionalVortexTip = false;
+
+export const dimensionalVortex = new Purchasable(true, () => player.dimensionalVortexes,
+    (val) => {player.dimensionalVortexes = val;},
+    (boughtAmount) => new Decimal("1e2e7").mul(new Decimal("1e1e7").pow(3**boughtAmount-1)),
+    (cost) => player.dimensionalPoints.gte(cost), 
+    new Effect((boughtAmount) => new Decimal(3**boughtAmount), "mult"),
+    (cost) => { player.dimensionalPoints = player.dimensionalPoints.sub(cost); displayedDimensionalVortexTip = false; },
+    null, "", () => nonRepeatableQuantumUpgrades[7].boughtAmount
+);
 
 export const dimensionBaseCost = [
     new Decimal(1),
@@ -64,6 +84,11 @@ export function calcDimensionPerPurchaseMult(){
 }
 
 export function dimensionalPowerGainTick(deltaTime){
+    if(dimensionalVortex.unlocked && dimensionalVortex.canBuy && (!displayedDimensionalVortexTip)){
+        Events.UI.dispatch(GAME_EVENTS.POPUP_DISPLAY, 
+            ["A dimensional vortex is available for purchase!", "info"]);
+        displayedDimensionalVortexTip = true;
+    }
     if(spacetimeChallenges[3].isRunning) return;
     for(let dim = 6; dim >= 0; dim--){
         player.dimensions.generated[dim] = player.dimensions.generated[dim].add(
@@ -71,8 +96,14 @@ export function dimensionalPowerGainTick(deltaTime){
             mul(deltaTime)
         );
     }
+    if(atomicChallenges[8].isRunning){
+        player.points = player.points.add(
+            calcDimensionalPowerGain().mul(deltaTime).mul(calcTimeSpeed())
+        );
+        return;
+    }
     player.dimensionalPower = player.dimensionalPower.add(
-        calcDimensionalPowerGain().mul(deltaTime)
+        calcDimensionalPowerGain().mul(deltaTime).mul(calcTimeSpeed())
     );
 }
 
@@ -114,7 +145,7 @@ export function calcChall2FreePointUpgrades(){
 export function automaticDPGainTick(deltaTime){
     if(tearSpacetimeUpgrades[8].boughtAmount){
         player.dimensionalPoints = player.dimensionalPoints.add(
-            calcDimensionalPointsGain().div(100).mul(deltaTime)
+            calcDimensionalPointsGain().div(100).mul(deltaTime).mul(calcTimeSpeed())
         );
     }
 }
@@ -141,11 +172,11 @@ export const dimensions = (function(){
                         mult = mult.mul(1.1);
                     }
                     if(spacetimeUpgrades[3].boughtAmount) mult = mult.mul(spacetimeUpgrades[3].effect);
-                    
+                    if(atomicChallenges[8].isRunning) mult = mult.mul(calcDarkMatterBoost());
                     return mult;
                 }, "mult"),
                 (cost) => {player.dimensionalPoints = player.dimensionalPoints.sub(cost)},
-                () => idx == 7 ? Infinity : 1_000_000
+                () => idx == 7 ? Infinity : calcDimensionCaps()
             )
         );
     }

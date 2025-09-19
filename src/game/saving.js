@@ -31,3 +31,9 @@ export function saveGame(){
 export function toggleSave(isOn){
     enableSave = isOn;
 }
+
+export function resetGame(){
+    toggleSave(false);
+    localStorage.removeItem(saveKey);
+    location.reload();
+}

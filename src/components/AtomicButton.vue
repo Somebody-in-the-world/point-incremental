@@ -19,7 +19,8 @@
                 gainedCompletionsSPThreesold: new Decimal(),
                 fullCompletions: false,
                 canAtomic: false,
-                showNextInfo: false
+                showNextInfo: false,
+                showPeakInfo: false
             }
         },
         methods: {
@@ -28,6 +29,7 @@
                 this.particleGain = calcParticleGain();
                 this.canAtomic = canAtomic();
                 this.showNextInfo = this.particleGain.lt(1e3);
+                this.showPeakInfo = this.particleGain.lt(1e100);
                 this.inAtomicChallenge = player.currentAtomicChallenge > 0;
                 if(this.inAtomicChallenge){
                     this.gainedCompletions = atomicChallenges[player.currentAtomicChallenge-1].gainedCompletions;
@@ -53,7 +55,6 @@
         }
     };
 </script>
-
 <template>
     <button class="atomic" id="atomic-button" :disabled="!canAtomic" @click="atomic">
         <span v-if="!canAtomic">
@@ -66,7 +67,7 @@
                 (Next particle gained on {{ format(nextParticleReq) }} SP)
             </span>
             <br>
-            <span style="font-size: 0.65em;" v-if="!showNextInfo">
+            <span style="font-size: 0.65em;" v-if="(!showNextInfo) && showPeakInfo">
                 ({{ format(particlesPerMinute) }} particles/min, 
                 Peak: {{ format(peakParticlesPerMin) }}/min at {{ format(particlesAtPeakParticlesPerMin) }} particles)
             </span>

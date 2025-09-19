@@ -4,6 +4,7 @@ import { spacetimeReset } from "./resets";
 import { canSpacetime, spacetimePrestige } from "./spacetime";
 import { Effect } from "./effect";
 import { calcChall2FreePointUpgrades } from "./dimensional";
+import { atomicChallenges } from "./atomic-challenges";
 
 class SpacetimeChallenge extends Challenge {
     constructor(id, desc, goal, reward, effect){
@@ -29,7 +30,7 @@ class SpacetimeChallenge extends Challenge {
 
     get canComplete(){ return player.points.gte(this.goal); }
     get completed(){ return player.challengeCompletions[this.id-1]; }
-    get isRunning(){ return (player.currentChallenge == this.id) || (player.currentAtomicChallenge == 1); }
+    get isRunning(){ return (player.currentChallenge == this.id) || atomicChallenges[0].isRunning; }
     get canUnlock(){ return player.points.gte(unlockPointReq[this.id-1]); }
     get unlocked(){ return player.latestUnlockedChallenge >= this.id; }
     unlock(){ player.latestUnlockedChallenge = this.id; }

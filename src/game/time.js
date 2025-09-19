@@ -1,3 +1,11 @@
+import { atomicChallenges } from "./atomic-challenges";
+
+export function calcTimeSpeed(){
+    let timeSpeed = dev.timeSpeed;
+    if(atomicChallenges[9].isRunning) timeSpeed = timeSpeed.div(1000);
+    return timeSpeed;
+}
+
 export function formatTime(time){
     if(time < 1){
         return `${(time*1000).toFixed(2)}ms`
@@ -9,9 +17,11 @@ export function formatTime(time){
     const seconds = Math.floor(time % 60);
     const minutes = (Math.floor(time / 60)) % 60;
     const hours = (Math.floor(time / 3600)) % 24;
-    const days = Math.floor(time / 86400);
+    const days = Math.floor(time / 86400) % 365;
+    const years = Math.floor(time / (86400*365));
 
     const parts = [];
+    if(years > 0) parts.push(`${years} year${years != 1 ? 's' : ''}`);
     if(days > 0) parts.push(`${days} day${days != 1 ? 's' : ''}`);
     if(hours > 0) parts.push(`${hours} hour${hours != 1 ? 's' : ''}`);
     if(minutes > 0) parts.push(`${minutes} minute${minutes != 1 ? 's' : ''}`);

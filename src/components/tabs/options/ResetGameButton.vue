@@ -1,5 +1,5 @@
 <script>
-    import { saveKey, toggleSave } from "@/game/saving";
+    import { resetGame } from "@/game/saving";
 
     export default {
         name: "ResetGameButton",
@@ -10,10 +10,8 @@
                 if(!(window.prompt("Fine. Enter \"I really want to reset the game.\" to reset the game")
                     == "I really want to reset the game.")) return;
                 if(!window.confirm("Do you REALLY want to RESET the game, there is NO return. This is the last confirmation!")) return;
-
-                toggleSave(false);
-                localStorage.removeItem(saveKey);
-                location.reload();
+                
+                resetGame();
             }
         }
     };

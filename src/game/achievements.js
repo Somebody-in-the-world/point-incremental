@@ -6,6 +6,7 @@ import { darkGenerators } from "./dark-matter";
 import { atomicMilestones } from "./atomic";
 import { nonRepeatableQuantumUpgrades } from "./quantum";
 import { calcUnlockedAtomicChalls } from "./atomic-challenges";
+import { INFINITY } from "./constants";
 
 export class Achievement {
     constructor(id, title, requirements, reward, 
@@ -98,7 +99,9 @@ export const achievementsTitle = [
     "Wait, thats illegal!",
     "Are you cheating?",
     "Even MORE challenges?",
-    "Nice."
+    "Nice.",
+    "You really thought there was a prestige layer?",
+    "What do they look like?"
 ];
 
 export const achievementsRequirements = [
@@ -153,7 +156,9 @@ export const achievementsRequirements = [
     "Get 1e25,000,000 points",
     "Get 1e100 particles",
     "Unlock 8 atomic challenges",
-    "Get 1e69 quantum foam"
+    "Get 1e69 quantum foam",
+    "Get 1.8e308 particles",
+    "Create a dimensional vortex"
 ];
 
 export const achievementReqFuncs = [
@@ -212,7 +217,9 @@ export const achievementReqFuncs = [
     () => player.points.gte("1e2.5e7"),
     () => player.particles.gte(1e100),
     () => calcUnlockedAtomicChalls() >= 8,
-    () => player.quantumFoam.gte(1e69)
+    () => player.quantumFoam.gte(1e69),
+    () => player.particles.gte(INFINITY),
+    () => player.dimensionalVortexes > 0
 ];
 
 export const achievementsRewards = [
@@ -237,7 +244,8 @@ export const achievementsRewards = [
     "Gain 10% more quantum foam", 
     null, null, null, null, null, null, null,
     "Gain 3x decay energy",
-    null, null, null
+    null, null, null, null,
+    "Gain 50% more quantum foam"
 ];
 
 export const achievements = (function(){

@@ -1,10 +1,11 @@
 import Decimal from "break_eternity.js";
 import "./game/player";
+import "./game/dev";
 import { createApp } from 'vue';
 import GameUI from "./GameUI.vue";
 import "./game/events";
 import { gameLoop } from "./game/gameloop";
-import { format } from "./game/format";
+import { format, formatInt } from "./game/format";
 import { loadGame, saveGame } from "./game/saving";
 import { achievements } from "./game/achievements";
 import { applyTheme } from "./game/themes";
@@ -29,7 +30,8 @@ export function init(){
             Events.UI.removeAll(this);
         },
         methods: {
-            format
+            format,
+            formatInt
         }
     };
 

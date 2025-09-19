@@ -1,7 +1,7 @@
 import { automaticPointGainTick, automaticAPGainTick } from "./automation-points";
 import { automaticCPGainTick } from "./compressed-points";
 import { automaticDPGainTick, dimensionalPowerGainTick } from "./dimensional";
-import { automaticSPGainTick, canSpacetime, passiveGenerateSP } from "./spacetime";
+import { automaticSPGainTick, passiveGenerateSP } from "./spacetime";
 import { runAutobuyers } from "./autobuyers";
 import { spacetimeChallenges } from "./spacetime-challenges";
 import { darkMatterGainTick } from "./dark-matter";
@@ -9,6 +9,9 @@ import { unlockAchivements } from "./achievements";
 import { forceGainTick } from "./atomic";
 import { quantumFoamGainTick } from "./quantum";
 import { particleDecayTick } from "./decay";
+import { calcTimeSpeed } from "./time";
+import { INFINITY } from "./constants";
+import { atomicChallenges } from "./atomic-challenges";
 
 let lastTick = performance.now();
 
@@ -16,8 +19,9 @@ export function gameLoop(){
     const now = performance.now();
     let deltaTime = (now - lastTick) / 1000;
 
-    if((!canSpacetime()) || player.spacetimeTore){
-        automaticPointGainTick(deltaTime);
+    automaticPointGainTick(deltaTime);
+    if(player.points.gte(INFINITY) && (!player.spacetimeTore || atomicChallenges[7].isRunning)){
+        player.points = INFINITY;
     }
 
     if(player.points.gte(player.records.highestPoints)){
@@ -31,7 +35,7 @@ export function gameLoop(){
     }
 
     if(spacetimeChallenges[5].isRunning){
-        player.antiPoints = player.antiPoints.mul(new Decimal(1e300).pow(deltaTime));
+        player.antiPoints = player.antiPoints.mul(new Decimal(1e300).pow(deltaTime).pow(calcTimeSpeed()));
     }
 
     automaticCPGainTick(deltaTime);
@@ -57,9 +61,9 @@ export function gameLoop(){
         }
     }
 
-    player.records.timePlayed += deltaTime;
-    player.records.timeInCurrentSpacetime += deltaTime;
-    player.records.timeInCurrentAtomic += deltaTime;
+    player.records.timePlayed += deltaTime*calcTimeSpeed().toNumber();
+    player.records.timeInCurrentSpacetime += deltaTime*calcTimeSpeed().toNumber();
+    player.records.timeInCurrentAtomic += deltaTime*calcTimeSpeed().toNumber();
 
     lastTick = now;
     requestAnimationFrame(gameLoop);

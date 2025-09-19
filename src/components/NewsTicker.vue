@@ -27,7 +27,7 @@
                 }
                 this.newsText = newsText;
                 this.lastEntries.push(newsText);
-                if(this.lastEntries.length > 10) this.lastEntries.shift();
+                if(this.lastEntries.length > 15) this.lastEntries.shift();
                 this.animationKey++;
                 this.$nextTick(this.calcAnimationDuration);
             },

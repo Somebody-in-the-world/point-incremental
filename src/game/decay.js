@@ -2,6 +2,7 @@ import { Purchasable } from "./purchasable";
 import { Effect } from "./effect";
 import Decimal from "break_eternity.js";
 import { atomicChallenges } from "./atomic-challenges";
+import { calcTimeSpeed } from "./time";
 
 export function calcDecayEnergyGain(){
     let baseGain = Decimal.max(player.protons.sub(1e20), 0).add(
@@ -9,6 +10,7 @@ export function calcDecayEnergyGain(){
             Decimal.max(player.electrons.sub(1e20), 0)
         ).div(1e20).pow(0.35);
     if(baseGain.gte(1e33)) baseGain = baseGain.div(1e33).pow(0.35).mul(1e33);
+    if(baseGain.gte(1e150)) baseGain = baseGain.div(1e150).pow(0.2).mul(1e150);
     baseGain = baseGain.mul(decayEnergyUpgrades[3].effect).mul(atomicChallenges[6].effect);
     if(achievements[48].unlocked) baseGain = baseGain.mul(3);
     return baseGain;
@@ -23,16 +25,16 @@ export function calcDecaySpeed(){
 }
 
 export function particleDecayTick(deltaTime){
+    player.decayEnergy = player.decayEnergy.add(calcDecayEnergyGain().mul(deltaTime).mul(calcTimeSpeed()));
     if(player.protons.gte(1e20)){
-        player.protons = player.protons.sub(1e20).div(calcDecaySpeed().pow(deltaTime)).add(1e20)
+        player.protons = player.protons.sub(1e20).div(calcDecaySpeed().pow(deltaTime).pow(calcTimeSpeed())).add(1e20)
     }
     if(player.neutrons.gte(1e20)){
-        player.neutrons = player.neutrons.sub(1e20).div(calcDecaySpeed().pow(deltaTime)).add(1e20)
+        player.neutrons = player.neutrons.sub(1e20).div(calcDecaySpeed().pow(deltaTime).pow(calcTimeSpeed())).add(1e20)
     }
     if(player.electrons.gte(1e20)){
-        player.electrons = player.electrons.sub(1e20).div(calcDecaySpeed().pow(deltaTime)).add(1e20)
+        player.electrons = player.electrons.sub(1e20).div(calcDecaySpeed().pow(deltaTime).pow(calcTimeSpeed())).add(1e20)
     }
-    player.decayEnergy = player.decayEnergy.add(calcDecayEnergyGain().mul(deltaTime));
 }
 
 const upgradeCosts = [

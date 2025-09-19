@@ -3,6 +3,7 @@ import { calcPointGain } from "./points";
 import { Purchasable } from "./purchasable";
 import { spacetimeMilestones } from "./spacetime";
 import { atomicChallenges } from "./atomic-challenges";
+import { calcTimeSpeed } from "./time";
 
 export const automationPointsUnlock = new Purchasable(false, 
     () => player.automationPointsUnlocked,
@@ -14,7 +15,7 @@ export const automationPointsUnlock = new Purchasable(false,
 );
 
 export function calcAutomaticPointGainPercent(){
-    if(spacetimeChallenges[0].isRunning || atomicChallenges[3].isRunning || atomicChallenges[7].isRunning) return new Decimal(1);
+    if(spacetimeChallenges[0].isRunning || atomicChallenges[3].isRunning) return new Decimal(1);
     let power = 0.6;
     if(spacetimeChallenges[0].completed) power += 0.1;
     let baseEffect = player.automationPoints.pow(power).div(4);
@@ -23,7 +24,7 @@ export function calcAutomaticPointGainPercent(){
 
 export function automaticPointGainTick(deltaTime){
     player.points = player.points.add(calcPointGain().mul(
-        calcAutomaticPointGainPercent()).mul(deltaTime));
+        calcAutomaticPointGainPercent()).mul(deltaTime).mul(calcTimeSpeed()));
 };
 
 export function automationPointsSacrifice(){
@@ -34,7 +35,7 @@ export function automationPointsSacrifice(){
 export function automaticAPGainTick(deltaTime){
     if(spacetimeMilestones[2].unlocked){
         player.automationPoints = player.automationPoints.add(
-            player.compressedPoints.div(10).mul(deltaTime)
+            player.compressedPoints.div(10).mul(deltaTime).mul(calcTimeSpeed())
         );
     }
 }

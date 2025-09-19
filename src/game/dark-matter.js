@@ -5,6 +5,7 @@ import { tearSpacetimeUpgrades } from "./tear-spacetime";
 import { spacetimeChallenges } from "./spacetime-challenges";
 import { calcWeakForceBoost } from "./atomic";
 import { atomicChallenges } from "./atomic-challenges";
+import { calcTimeSpeed } from "./time";
 
 export const darkMatterUnlockRequirements = [
     new Decimal("1e2500"),
@@ -16,7 +17,9 @@ export const darkMatterUnlockRequirements = [
 ];
 
 export function calcDarkMatterBoostExponent(){
-    return 120 + calcWeakForceBoost().toNumber();
+    let baseExponent = 120 + calcWeakForceBoost().toNumber();
+    if(atomicChallenges[8].isRunning) baseExponent = baseExponent**0.5;
+    return baseExponent;
 }
 
 export function calcDarkMatterBoost(){
@@ -30,7 +33,7 @@ export function calcDarkMatterGain(){
 export function darkMatterGainTick(deltaTime){
     if(atomicChallenges[2].isRunning) return;
     player.darkMatter = player.darkMatter.add(calcDarkMatterGain()
-        .mul(deltaTime));
+        .mul(deltaTime).mul(calcTimeSpeed()));
 }
 
 const darkGeneratorBaseCosts = [
@@ -88,8 +91,8 @@ export const darkGenerators = (function(){
             },
             (cost) => player.spacetimePoints.gte(cost), 
             new Effect(function(boughtAmount){
-                let effect = darkGeneratorMultiplierPerPurchases[idx]
-                    .pow(boughtAmount);
+                let effect = darkGeneratorMultiplierPerPurchases[idx].mul(atomicChallenges[9].effect)
+                    .pow(Math.min(boughtAmount, 100000)+Math.max(boughtAmount-100000, 0)*0.5);
                 if(idx != (darkGeneratorBaseCosts.length-1)){
                     effect = effect.mul(darkGenerators[Number(idx)+1].effect);
                 }
@@ -111,6 +114,9 @@ export const darkGenerators = (function(){
                     }
                     if(atomicChallenges[2].completed){
                         effect = effect.mul(atomicChallenges[2].effect);
+                    }
+                    if(atomicChallenges[8].completed){
+                        effect = effect.mul(atomicChallenges[8].effect);
                     }
                 }
                 return effect;

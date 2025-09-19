@@ -4,7 +4,8 @@ import { calcGravitationalWaveBoost, calcGravitationalWavesGained, calcParticleG
 import { decayEnergyUpgrades } from "./decay";
 import { Effect } from "./effect";
 import Decimal from "break_eternity.js";
-import {atomicChallenges} from "./atomic-challenges";
+import { atomicChallenges } from "./atomic-challenges";
+import { calcTimeSpeed } from "./time";
 
 export const quantumUnlock = new Purchasable(
     false, () => player.quantumUnlocked, (val) => { player.quantumUnlocked = val; },
@@ -43,7 +44,8 @@ export const nonRepeatableUpgradeCosts = [
     new Decimal(1e18),
     new Decimal(1e33),
     new Decimal(1e35),
-    new Decimal(1e45)
+    new Decimal(1e45),
+    new Decimal(1e108)
 ];
 
 export const nonRepeatableUpgradeDescriptions = [
@@ -53,11 +55,12 @@ export const nonRepeatableUpgradeDescriptions = [
     "Unlock Atomic Challenges and you can bulk buy quantum upgrades",
     "Uncap quantum upgrades (though they get more expensive)",
     "Passively gain 1% of SP gained on spacetime per second",
-    "Boost per gravitational wave 1.25x -> 1.3x"
+    "Boost per gravitational wave 1.25x -> 1.3x",
+    "Unlock dimensional vortexes, which increases dimension caps (in dimensional tab)"
 ];
 
 export const nonRepeatableUpgradeDepthReqs = [
-    2, 2, 3, 4, 6, 6, 7
+    2, 2, 3, 4, 6, 6, 7, 11
 ];
 
 export const upgradeEffects = [
@@ -72,8 +75,10 @@ export const upgradeEffects = [
         .mul(new Decimal(2).sqrt().pow(Math.max(boughtAmount-35, 0)))), "mult"),
     new Effect((boughtAmount) => player.quantumFoam.add(1).log(10).pow(0.4).div(2).add(1)
         .pow(Math.min(boughtAmount, 10)+Math.max(boughtAmount-10, 0)*0.75), "mult"),
-    new Effect((boughtAmount) => new Decimal((calcGravitationalWavesGained()+1)**0.5).add(1)
-        .pow((Math.min(boughtAmount, 10)+Math.max(boughtAmount-10, 0)*0.5)/2), "mult")
+    new Effect((boughtAmount) => new Decimal(
+        Math.min((calcGravitationalWavesGained()+1)**0.25, 3)).add(1)
+        .pow(Math.min(boughtAmount, 10))
+        .mul(new Decimal((calcGravitationalWavesGained()+1)**0.1).add(1).pow(Math.max(boughtAmount-10, 0)*0.5)), "mult")
 ];
 
 export const quantumUpgrades = (function(){
@@ -105,7 +110,8 @@ function calcTotalUpgradeCost(id, bulk){
     let cost = 0;
     let bought = quantumUpgrades[id].boughtAmount;
     for(let _ = 0; _ < bulk; _++){
-        cost += (Math.floor(bought / upgradeCaps[id])+1) * upgradeCosts[id];
+        let pastCap = Math.floor(bought / upgradeCaps[id]);
+        cost += Math.min((pastCap+1)**2, 2**pastCap) * upgradeCosts[id];
         bought++;
     }
     return cost;
@@ -133,7 +139,7 @@ export const quantumDepthUpgrade = new Purchasable(
     (cost) => player.quantumFoam.gte(cost), 
     new Effect((boughtAmount) => new Decimal(boughtAmount), "add"),
     (cost) => { player.quantumFoam = player.quantumFoam.sub(cost); },
-    () => 10, "Increase the maximum quantum depth"
+    null, "Increase the maximum quantum depth"
 );
 
 export const quarkPurchasable = new Purchasable(
@@ -182,10 +188,11 @@ export function calcQuantumFoamGain(){
     );
     baseGain = baseGain.mul(quantumUpgrades[3].effect).mul(calcGravitationalWaveBoost()).mul(decayEnergyUpgrades[0].effect);
     if(achievements[40].unlocked) baseGain = baseGain.mul(1.1);
+    if(achievements[53].unlocked) baseGain = baseGain.mul(1.5);
     if(atomicChallenges[4].completed) baseGain = baseGain.mul(atomicChallenges[4].effect);
     return baseGain;
 }
 
 export function quantumFoamGainTick(deltaTime){
-    player.quantumFoam = player.quantumFoam.add(calcQuantumFoamGain().mul(deltaTime));
+    player.quantumFoam = player.quantumFoam.add(calcQuantumFoamGain().mul(deltaTime).mul(calcTimeSpeed()));
 }

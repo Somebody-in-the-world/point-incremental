@@ -52,7 +52,6 @@
         padding: 10px;
         border: 2px solid;
         color: black;
-        white-space: nowrap;
     }
 
     .popup-achievement {
@@ -78,5 +77,6 @@
 
     .popups-leave-active .popup {
         position: absolute;
+        white-space: nowrap;
     }
 </style>

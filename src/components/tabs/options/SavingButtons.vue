@@ -18,7 +18,6 @@
             },
             importSave(){
                 if(!this.saveData) return;
-                console.log(this.saveData);
                 if(!window.confirm("Are you really sure you want to import the save? Your progress will be overwritten!")) return;
                 try { JSON.parse(atob(this.saveData)); }
                 catch(err) {

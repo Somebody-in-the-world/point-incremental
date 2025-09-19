@@ -7,11 +7,9 @@ import { calcDarkMatterBoost } from "./dark-matter";
 import { calcElectromagneticForceBoost } from "./atomic";
 import { calcQuantumNerf, quantumUpgrades } from "./quantum";
 import { atomicChallenges } from "./atomic-challenges";
-import { INFINITY } from "./constants";
 
 export function calcPointGain(){
     let basePoints = pointUpgrade.effect.mul(calcCompressedPointsBoost());
-    if(atomicChallenges[7].isRunning) return INFINITY;
     if(spacetimeUpgrades[0].boughtAmount) basePoints = basePoints.mul(spacetimeUpgrades[0].effect);
     if(spacetimeUpgrades[2].boughtAmount) basePoints = basePoints.mul(spacetimeUpgrades[2].effect);
     if(tearSpacetimeUpgrades[0].boughtAmount) basePoints = basePoints.mul(tearSpacetimeUpgrades[0].effect);
@@ -20,15 +18,16 @@ export function calcPointGain(){
     if(tearSpacetimeUpgrades[6].boughtAmount) basePoints = basePoints.mul(tearSpacetimeUpgrades[6].effect);
     if(achievements[8].unlocked) basePoints = basePoints.mul(10);
     if(achievements[30].unlocked) basePoints = basePoints.mul(1e100);
-    basePoints = basePoints.mul(calcDarkMatterBoost());
+    if(!atomicChallenges[8].isRunning) basePoints = basePoints.mul(calcDarkMatterBoost());
     basePoints = basePoints.mul(quantumUpgrades[0].effect);
     if(atomicChallenges[7].completed) basePoints = basePoints.mul(atomicChallenges[7].effect);
     
     if(atomicChallenges[3].isRunning) basePoints = pointUpgrade.effect;
-    basePoints = basePoints.div(player.antiPoints);
+    if(spacetimeChallenges[5].isRunning) basePoints = basePoints.div(player.antiPoints);
     if(spacetimeChallenges[2].isRunning) basePoints = basePoints.pow(0.65);
     if(spacetimeChallenges[2].completed) basePoints = basePoints.pow(1.05);
     if(atomicChallenges[5].isRunning) basePoints = basePoints.pow(0.2);
+    if(atomicChallenges[9].isRunning) basePoints = basePoints.pow(0.75-Math.min(player.records.timeInCurrentSpacetime, 1)*0.25);
     basePoints = basePoints.pow(calcElectromagneticForceBoost());
     basePoints = basePoints.pow(calcQuantumNerf(player.quantumDepth));
 

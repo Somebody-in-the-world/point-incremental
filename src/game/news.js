@@ -32,6 +32,11 @@ forever and forever and forever and forever and forever and forever and forever 
     "This message is (softcapped)",
     "<a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>https://www.youtube.com/watch?v=dQw4w9WgXcQ</a>",
     "guys im trying to think of news message but i just cant pls help me",
-    "What is the point if you have no points?"
+    "What is the point if you have no points?",
+    "The game is bad. Stop playing while you still can.",
+    "Me trying to not start inflation be like:",
+    "Did you know that if that you know that if you know that if only you know that only if you do know that only if you know?",
+    "Do you know whats better than an unfunny and unoriginal joke?",
+    '"This game is stoopid" - My friend'
 ]
 

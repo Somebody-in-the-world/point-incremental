@@ -99,7 +99,8 @@ function partialOrdinalNotation(mantissa, exponent){
     let exp = Math.log10(mantissa) + exponent;
     if(exponent >= 10){
         exp = Math.log10(exp);
-        ordinal = `ω^(${partialOrdinalNotation(10**(exp-Math.floor(exp)), Math.floor(exp))})`;
+        let mult = Math.floor(mantissa);
+        ordinal = `ω^(${partialOrdinalNotation(10**(exp%1), Math.floor(exp))})${mult>1?'*'+mult:''}`;
     } else if(exponent >= 1) {
         let expPow = Math.floor(exponent);
         let expMult = Math.floor(mantissa);
