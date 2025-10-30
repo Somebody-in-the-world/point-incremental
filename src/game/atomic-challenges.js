@@ -61,7 +61,7 @@ const challengeDescriptions = [
     "The first two quantum upgrades are disabled",
     "Points are capped at 1.8e308",
     "Dark matter boost dimensions instead of boosting points and dimensions directly produce points instead of dimensional power, dark matter boost exponent is also greatly reduced",
-    "Time is 1000x slower; the more time you spend in this spacetime, the less points you will gain"
+    "Spacetime point gain ^0.1"
 ];
 
 const challengeGoals = [
@@ -74,7 +74,7 @@ const challengeGoals = [
     new Decimal("1e50000"),
     new Decimal("1e13500"),
     new Decimal("1e40000"),
-    new Decimal("1e100000")
+    new Decimal("1e3500")
 ];
 
 const challengeRewards = [
@@ -86,8 +86,8 @@ const challengeRewards = [
     "Further reduce point upgrade cost multiplier increase",
     "Multiply decay energy gain",
     "Gain a multiplier to points",
-    "Dimensional power boosts dark generators",
-    "Increase dark generator per purchase multipliers"
+    "Dimensional power powers up dark matter boost exponent",
+    "Increase spacetime point gain (reward doesn't apply in this challenge)"
 ];
 
 const challengeEffects = [
@@ -99,8 +99,8 @@ const challengeEffects = [
     new Effect((completions) => new Decimal(0.1).mul(completions), "sub"),
     new Effect((completions) => new Decimal(4).pow(completions), "mult"),
     new Effect((completions) => new Decimal("1e2e5").pow(completions), "mult"),
-    new Effect((completions) => player.dimensionalPower.add(1).pow(0.0001*completions), "mult"),
-    new Effect((completions) => new Decimal(1).add(completions**0.5/10), "mult")
+    new Effect((completions) => player.dimensionalPower.add(1).log(10).add(1).log(10).mul(completions**0.5*0.5), "add"),
+    new Effect((completions) => new Decimal("1e2e4").pow(completions), "mult")
 ];
 
 const challengeCosts = [
@@ -108,7 +108,7 @@ const challengeCosts = [
 ]
 
 export const atomicChallengeRequirements = [
-    55, 70, 75, 90, 100, 115, 135, 200, 320, 380
+    55, 70, 75, 90, 100, 115, 135, 200, 320, 375
 ];
 
 export const atomicChallenges = (function(){
@@ -130,3 +130,12 @@ export function calcUnlockedAtomicChalls(){
     }
     return challs;
 }
+
+export function calcAtomicChallCompletions(){
+    let completions = 0;
+    for(const chall of atomicChallenges){
+        completions += chall.completions;
+    }
+    return completions;
+}
+

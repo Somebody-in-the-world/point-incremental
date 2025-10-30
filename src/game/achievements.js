@@ -5,7 +5,7 @@ import { calcTotalSpacetimeChallengesCompleted, spacetimeChallenges } from "./sp
 import { darkGenerators } from "./dark-matter";
 import { atomicMilestones } from "./atomic";
 import { nonRepeatableQuantumUpgrades } from "./quantum";
-import { calcUnlockedAtomicChalls } from "./atomic-challenges";
+import { calcUnlockedAtomicChalls, calcAtomicChallCompletions } from "./atomic-challenges";
 import { INFINITY } from "./constants";
 
 export class Achievement {
@@ -101,7 +101,9 @@ export const achievementsTitle = [
     "Even MORE challenges?",
     "Nice.",
     "You really thought there was a prestige layer?",
-    "What do they look like?"
+    "What do they look like?",
+    "Quadruple Vortex",
+    "The impossible challenge"
 ];
 
 export const achievementsRequirements = [
@@ -158,7 +160,9 @@ export const achievementsRequirements = [
     "Unlock 8 atomic challenges",
     "Get 1e69 quantum foam",
     "Get 1.8e308 particles",
-    "Create a dimensional vortex"
+    "Create a dimensional vortex",
+    "Create 4 dimensional vortexes",
+    "Complete all atomic challenges 5 times"
 ];
 
 export const achievementReqFuncs = [
@@ -202,7 +206,12 @@ export const achievementReqFuncs = [
     () => player.protons.gt(0) && player.neutrons.gt(0) && player.electrons.gt(0),
     () => player.points.gte("1e1e6"),
     () => player.spacetimePoints.gte("1e10000"),
-    () => atomicMilestones[9].unlocked,
+    function(){
+        for(let i = 0; i < 10; i++){
+            if(!player.atomicMilestones[i]) return false;
+        }
+        return true;
+    },
     () => player.quantumDepth > 0,
     () => player.particles.gte(1e10),
     () => player.quantumDepth >= 2,
@@ -219,7 +228,9 @@ export const achievementReqFuncs = [
     () => calcUnlockedAtomicChalls() >= 8,
     () => player.quantumFoam.gte(1e69),
     () => player.particles.gte(INFINITY),
-    () => player.dimensionalVortexes > 0
+    () => player.dimensionalVortexes > 0,
+    () => player.dimensionalVortexes >= 4,
+    () => calcAtomicChallCompletions() == 50
 ];
 
 export const achievementsRewards = [
@@ -245,7 +256,9 @@ export const achievementsRewards = [
     null, null, null, null, null, null, null,
     "Gain 3x decay energy",
     null, null, null, null,
-    "Gain 50% more quantum foam"
+    "Gain 50% more quantum foam",
+    "Gain 1.84e19x more particles",
+    "Congrats for beating the game!"
 ];
 
 export const achievements = (function(){

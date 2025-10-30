@@ -9,6 +9,7 @@ export function formatInt(number, decimals = 0){
 }
 
 export function format(number, precision = 2){
+    if(typeof number == "number") return formatInt(number);
     if(number.mag+""=="NaN" || number.mag==null) return "NaN";
     let formatted;
     if(number.layer == 0){
@@ -33,6 +34,10 @@ export function format(number, precision = 2){
         const exponent = Math.floor(number.mag);
         formatted = pickNotation(player.options.notation, mantissa, exponent);
         if(smallNumber) formatted = `1 / ${formatted}`;
+    } else if (number.layer < 5){
+        formatted = `e${format(new Decimal(10).tetrate(number.slog().sub(1)), precision)}`;
+    } else if (number.layer < 1e8){
+        formatted = `${format(new Decimal(10).tetrate(number.layer%1), precision)}F${format(new Decimal(number.layer), 0)}`
     }
 
     if(number.gte(INFINITY) && (!(player.spacetimeTore))) formatted = "Infinite";

@@ -2,7 +2,7 @@
     import { themeNames, themeValues, applyTheme } from "@/game/themes";
     
     export default {
-        name: "NotationPicker",
+        name: "ThemePicker",
         data(){
             return {
                 theme: "classic",

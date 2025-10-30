@@ -6,16 +6,19 @@ import GameUI from "./GameUI.vue";
 import "./game/events";
 import { gameLoop } from "./game/gameloop";
 import { format, formatInt } from "./game/format";
-import { loadGame, saveGame } from "./game/saving";
+import { loadGame, saveGame, resetGame } from "./game/saving";
 import { achievements } from "./game/achievements";
 import { applyTheme } from "./game/themes";
 import { fixAutobuyers } from "./game/autobuyers";
 import { setupHotkeys } from "./game/hotkeys";
+import { switchFont } from "./game/fonts";
+import { startOfflineProgress } from "./game/offline-progress";
 
 export function init(){
     window.Decimal = Decimal;
     window.achievements = achievements;
     loadGame();
+    if(player.points.gte("1e9e15")) resetGame();
     startSaving();
 
     const globalMixin = {
@@ -41,7 +44,11 @@ export function init(){
 
     fixAutobuyers();
     setupHotkeys();
+    if(player.options.offlineProgress.enabled){
+        startOfflineProgress((Date.now() - player.lastTick)/1000);
+    }
     startGameLoop();
+    switchFont();
     applyTheme();
     startUpdateUI();
 }

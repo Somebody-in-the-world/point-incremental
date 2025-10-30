@@ -16,7 +16,8 @@ const themeCSSVars = {
         "--ach-color": "#78e25a",
         "--ach-locked-color": "#cccccc",
         "--milestone-color": "#00ff00",
-        "--milestone-locked-color": "#ff8080"
+        "--milestone-locked-color": "#ff8080",
+        "--offline-progress-color": "#f0f0f0"
     },
     dark: {
         "--text-color": "#eeeeee",
@@ -35,7 +36,8 @@ const themeCSSVars = {
         "--ach-color": "#008000",
         "--ach-locked-color": "#808080",
         "--milestone-color": "#008000",
-        "--milestone-locked-color": "#a04040"
+        "--milestone-locked-color": "#a04040",
+        "--offline-progress-color": "#202020"
     },
     colorful: {
         "--text-color": "blue",
@@ -54,7 +56,8 @@ const themeCSSVars = {
         "--ach-color": "lightgreen",
         "--ach-locked-color": "darkred",
         "--milestone-color": "aqua",
-        "--milestone-locked-color": "brown"
+        "--milestone-locked-color": "brown",
+        "--offline-progress-color": "magenta"
     }
 }
 

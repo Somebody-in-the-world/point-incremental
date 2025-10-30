@@ -21,13 +21,14 @@ export function calcParticleGain(){
     if(!canAtomic()) return new Decimal(0);
     return new Decimal(4).pow(player.spacetimePoints.log(10).div(1000).sub(1))
         .mul(decayEnergyUpgrades[1].effect).mul(quantumUpgrades[2].effect)
-        .mul(atomicChallenges[0].effect).floor();
+        .mul(atomicChallenges[0].effect).mul(achievements[54].unlocked ? 1.84e19 : 1).floor();
 }
 
 export function calcNextParticleReq(){
     return new Decimal(10).pow(calcParticleGain().add(1)
         .div(quantumUpgrades[2].effect).div(decayEnergyUpgrades[1].effect)
-        .div(atomicChallenges[0].effect).log(4).add(1).mul(1000));
+        .div(atomicChallenges[0].effect).div(achievements[54].unlocked ? 1.84e19 : 1)
+        .log(4).add(1).mul(1000));
 }
 
 export function atomicPrestige(){

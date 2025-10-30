@@ -13,6 +13,7 @@
     import SubTabSwitch from "./components/tabs/SubTabSwitch.vue";
     import TabSwitch from "./components/tabs/TabSwitch.vue";
     import NewsTicker from "./components/NewsTicker.vue";
+    import OfflineProgressDisplay from "./components/OfflineProgressDisplay.vue";
     import PopupDisplay from "./components/PopupDisplay.vue";
     import { currentTab, currentSubTab, tabComponentNames, subTabComponentNames } from "./game/tabs.js";
     import { canSpacetime } from "./game/spacetime";
@@ -33,7 +34,8 @@
             AtomicButton,
             ParticlesDisplay,
             NewsTicker,
-            PopupDisplay
+            PopupDisplay,
+            OfflineProgressDisplay
         },
         data(){
             return {
@@ -69,6 +71,7 @@
 </script>
 
 <template>
+    <OfflineProgressDisplay />
     <PopupDisplay />
     <NewsTicker v-if="displayNews" />
     <div v-if="spacetimeTore">

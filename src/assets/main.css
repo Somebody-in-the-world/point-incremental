@@ -1,11 +1,12 @@
 * {
-    font-family: Monospace;
+    font-family: var(--font-family);
     box-sizing: border-box;
     border-color: var(--border-color);
 }
 
 :root {
     --body-padding: 4px;
+    --font-family: Monospace;
 }
 
 body {

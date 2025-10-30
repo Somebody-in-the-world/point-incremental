@@ -12,13 +12,18 @@ import { particleDecayTick } from "./decay";
 import { calcTimeSpeed } from "./time";
 import { INFINITY } from "./constants";
 import { atomicChallenges } from "./atomic-challenges";
+import { calcOfflineProgressSpeed, isRunningOfflineProgress, calcOfflineProgress } from "./offline-progress";
 
 let lastTick = performance.now();
 
 export function gameLoop(){
     const now = performance.now();
-    let deltaTime = (now - lastTick) / 1000;
 
+    calcOfflineProgress();
+    let deltaTime = (now - lastTick) / 1000;
+    player.lastTick = Date.now();
+
+    if(isRunningOfflineProgress()) deltaTime = calcOfflineProgressSpeed();
     automaticPointGainTick(deltaTime);
     if(player.points.gte(INFINITY) && (!player.spacetimeTore || atomicChallenges[7].isRunning)){
         player.points = INFINITY;

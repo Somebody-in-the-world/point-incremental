@@ -39,17 +39,15 @@ export function dimensionalPointsPrestige(){
     player.records.dimensionalAmount++;
 }
 
-export function calcDimensionCaps(){
-    return Math.round(1_000_000 * dimensionalVortex.effect.toNumber());
-}
-
 let displayedDimensionalVortexTip = false;
 
 export const dimensionalVortex = new Purchasable(true, () => player.dimensionalVortexes,
     (val) => {player.dimensionalVortexes = val;},
-    (boughtAmount) => new Decimal("1e2e7").mul(new Decimal("1e1e7").pow(3**boughtAmount-1)),
+    (boughtAmount) => boughtAmount >= 6 ? new Decimal("1e3e7").mul(new Decimal("1e1e7").pow(new Decimal(2).pow(boughtAmount-4))) :
+        new Decimal("1e2e7").mul(new Decimal("1e5e6").pow(
+        boughtAmount >= 4 ? (2**(boughtAmount-4)-1)*1.4 + 5 : boughtAmount)),
     (cost) => player.dimensionalPoints.gte(cost), 
-    new Effect((boughtAmount) => new Decimal(3**boughtAmount), "mult"),
+    new Effect((boughtAmount) => new Decimal(boughtAmount*(boughtAmount+2)+1), "mult"),
     (cost) => { player.dimensionalPoints = player.dimensionalPoints.sub(cost); displayedDimensionalVortexTip = false; },
     null, "", () => nonRepeatableQuantumUpgrades[7].boughtAmount
 );
@@ -130,12 +128,16 @@ export function bulkBuyDimension(idx){
     }
 }
 
-export function calcDimensionalPowerBoost(){
+export function calcBaseDimensionalPowerBoost(){
     let baseBoost = player.dimensionalPower.add(1).log(10).div(30);
     if(tearSpacetimeUpgrades[7].boughtAmount){
         baseBoost = baseBoost.mul(tearSpacetimeUpgrades[7].effect);
     }
     return baseBoost;
+}
+
+export function calcDimensionalPowerBoost(){
+    return calcBaseDimensionalPowerBoost().add(1).pow(dimensionalVortex.effect).sub(1);
 }
 
 export function calcChall2FreePointUpgrades(){
@@ -176,7 +178,7 @@ export const dimensions = (function(){
                     return mult;
                 }, "mult"),
                 (cost) => {player.dimensionalPoints = player.dimensionalPoints.sub(cost)},
-                () => idx == 7 ? Infinity : calcDimensionCaps()
+                () => idx == 7 ? Infinity : 1_000_000
             )
         );
     }

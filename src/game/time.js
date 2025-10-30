@@ -1,8 +1,5 @@
-import { atomicChallenges } from "./atomic-challenges";
-
 export function calcTimeSpeed(){
     let timeSpeed = dev.timeSpeed;
-    if(atomicChallenges[9].isRunning) timeSpeed = timeSpeed.div(1000);
     return timeSpeed;
 }
 

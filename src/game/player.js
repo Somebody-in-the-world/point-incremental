@@ -82,15 +82,20 @@ window.player = {
         fastestAtomic: 99999999
     },
     achievements: new Array(achievements.length).fill(false),
+    lastTick: Date.now(),
     options: {
         updateRate: 33,
         notation: "mixed scientific",
         saveInterval: 2000,
         theme: "dark",
+        font: "Monospace",
         topTabs: true,
         newsTicker: {
             on: true,
             speed: 10
+        },
+        offlineProgress: {
+            enabled: true
         },
         confirmations: {
             atomic: true

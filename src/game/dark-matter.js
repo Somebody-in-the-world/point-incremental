@@ -18,6 +18,9 @@ export const darkMatterUnlockRequirements = [
 
 export function calcDarkMatterBoostExponent(){
     let baseExponent = 120 + calcWeakForceBoost().toNumber();
+    if(atomicChallenges[8].completed){
+        baseExponent += atomicChallenges[8].effect.toNumber();
+    }
     if(atomicChallenges[8].isRunning) baseExponent = baseExponent**0.5;
     return baseExponent;
 }
@@ -91,7 +94,7 @@ export const darkGenerators = (function(){
             },
             (cost) => player.spacetimePoints.gte(cost), 
             new Effect(function(boughtAmount){
-                let effect = darkGeneratorMultiplierPerPurchases[idx].mul(atomicChallenges[9].effect)
+                let effect = darkGeneratorMultiplierPerPurchases[idx]
                     .pow(Math.min(boughtAmount, 100000)+Math.max(boughtAmount-100000, 0)*0.5);
                 if(idx != (darkGeneratorBaseCosts.length-1)){
                     effect = effect.mul(darkGenerators[Number(idx)+1].effect);
@@ -114,9 +117,6 @@ export const darkGenerators = (function(){
                     }
                     if(atomicChallenges[2].completed){
                         effect = effect.mul(atomicChallenges[2].effect);
-                    }
-                    if(atomicChallenges[8].completed){
-                        effect = effect.mul(atomicChallenges[8].effect);
                     }
                 }
                 return effect;

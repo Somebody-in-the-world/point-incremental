@@ -26,7 +26,6 @@
     News ticker: 
     <input type="checkbox" v-model="newsOn" @input="changeNewsOn(Boolean($event.target.checked))" />
     <div :hidden="!newsOn">
-        <br>
         News ticker speed: {{ newsSpeed*10 }}%
         <br>
         <input type="range" min="5" max="20"

@@ -103,7 +103,10 @@ export function calcSpacetimePointsGain(){
         new Decimal(10).pow(player.points.log(10).div(308).sub(1)) :
         new Decimal(1);
     baseGain = baseGain.mul(quantumUpgrades[1].effect);
-    return baseGain.mul(spacetimePointMultiplier.effect).floor();
+    baseGain = baseGain.mul(spacetimePointMultiplier.effect).floor();
+    if(atomicChallenges[9].isRunning) return baseGain.pow(0.1);
+    if(atomicChallenges[9].completed) baseGain = baseGain.mul(atomicChallenges[9].effect);
+    return baseGain;
 }
 
 export function spacetimePrestige(){

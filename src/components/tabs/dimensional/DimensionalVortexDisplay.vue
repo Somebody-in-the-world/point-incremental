@@ -1,5 +1,5 @@
 <script>
-    import { dimensionalVortex, calcDimensionCaps } from "@/game/dimensional";
+    import { dimensionalVortex } from "@/game/dimensional";
     import Purchasable from "@/components/reusable/Purchasable.vue";
 
     export default {
@@ -12,15 +12,16 @@
                 dimensionalVortex,
                 dimensionalVortexCost: new Decimal(),
                 dimensionalVortexAmount: 0,
-                dimensionalVortexEffect: 0
+                currentDimensionalVortexEffect: new Decimal(),
+                nextDimensionalVortexEffect: new Decimal()
             }
         },
         methods: {
             update(){
                 this.dimensionalVortexCost = dimensionalVortex.cost;
                 this.dimensionalVortexAmount = dimensionalVortex.boughtAmount;
-                this.dimensionalVortexEffect = dimensionalVortex.effectObject.formula(dimensionalVortex.boughtAmount+1).toNumber()*1_000_000
-                    - calcDimensionCaps();
+                this.currentDimensionalVortexEffect = dimensionalVortex.effect;
+                this.nextDimensionalVortexEffect = dimensionalVortex.effectObject.formula(dimensionalVortex.boughtAmount+1);
             }
         }
     };
@@ -30,7 +31,7 @@
     <Purchasable :purchasable="dimensionalVortex" id="dimensional-vortex-button">
         Create a dimensional vortex ({{ dimensionalVortexAmount }})
         <br>
-        Increase dimension caps by {{ formatInt(dimensionalVortexEffect) }}
+        Dimensional power effect ^{{ format(currentDimensionalVortexEffect) }} -&gt; ^{{ format(nextDimensionalVortexEffect) }}
         <br>
         Cost: {{ format(dimensionalVortexCost) }} DP
     </Purchasable>

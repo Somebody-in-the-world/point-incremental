@@ -37,6 +37,19 @@ forever and forever and forever and forever and forever and forever and forever 
     "Me trying to not start inflation be like:",
     "Did you know that if that you know that if you know that if only you know that only if you do know that only if you know?",
     "Do you know whats better than an unfunny and unoriginal joke?",
-    '"This game is stoopid" - My friend'
-]
+    '"This game is stoopid" - My friend',
+    "Some people say this game has good balancing, and some say not. I, personally think this game's balancing is the worst of all games",
+    "banana",
+    "banananananananananananananananananananananananananananananananananananananananana",
+    "The update is NOT coming tomorrow",
+    "Guys I forgot this one, can you just ignore it?",
+    "The previous news message is VERY VERY important, I hope you saw it",
+    "Onion is gud, banana is also gud",
+    "sory fur bed engrsh",
+    "Did you know that you are progressing slower than 87% of people according to statistics?",
+    "sudo rm -rf /*",
+    "Delete System32 on your computer to get better performance!",
+    "hello",
+    "<button onclick='alert(\"Error: Permission denied\")'>Click here to permanently break your device!</button>"
+];
 

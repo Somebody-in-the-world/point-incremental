@@ -27,7 +27,6 @@ export function calcPointGain(){
     if(spacetimeChallenges[2].isRunning) basePoints = basePoints.pow(0.65);
     if(spacetimeChallenges[2].completed) basePoints = basePoints.pow(1.05);
     if(atomicChallenges[5].isRunning) basePoints = basePoints.pow(0.2);
-    if(atomicChallenges[9].isRunning) basePoints = basePoints.pow(0.75-Math.min(player.records.timeInCurrentSpacetime, 1)*0.25);
     basePoints = basePoints.pow(calcElectromagneticForceBoost());
     basePoints = basePoints.pow(calcQuantumNerf(player.quantumDepth));
 

@@ -56,7 +56,7 @@ export const nonRepeatableUpgradeDescriptions = [
     "Uncap quantum upgrades (though they get more expensive)",
     "Passively gain 1% of SP gained on spacetime per second",
     "Boost per gravitational wave 1.25x -> 1.3x",
-    "Unlock dimensional vortexes, which increases dimension caps (in dimensional tab)"
+    "Unlock dimensional vortexes (in dimensional tab)"
 ];
 
 export const nonRepeatableUpgradeDepthReqs = [
@@ -69,6 +69,7 @@ export const upgradeEffects = [
     new Effect((boughtAmount) => Decimal.min(player.quantumFoam.add(1).pow(0.1), 100).pow(Math.min(boughtAmount, 4))
         .mul(Decimal.min(player.quantumFoam.pow(0.033), 4).pow(Math.min(Math.max(boughtAmount-4, 0), 6))
         .mul(player.quantumFoam.pow(0.01*Math.max(boughtAmount-10, 0)))
+        .mul(player.quantumFoam.pow(0.025*Math.max(boughtAmount-40, 0)))
     ), "mult"),
     new Effect((boughtAmount) => new Decimal(4).pow(
         Math.min(boughtAmount, 10)).mul(new Decimal(2).pow(Math.min(Math.max(boughtAmount-10, 0), 25))
@@ -78,7 +79,7 @@ export const upgradeEffects = [
     new Effect((boughtAmount) => new Decimal(
         Math.min((calcGravitationalWavesGained()+1)**0.25, 3)).add(1)
         .pow(Math.min(boughtAmount, 10))
-        .mul(new Decimal((calcGravitationalWavesGained()+1)**0.1).add(1).pow(Math.max(boughtAmount-10, 0)*0.5)), "mult")
+        .mul(new Decimal((calcGravitationalWavesGained()+1)**0.1).add(1).pow(Math.max(boughtAmount-10, 0))), "mult")
 ];
 
 export const quantumUpgrades = (function(){
