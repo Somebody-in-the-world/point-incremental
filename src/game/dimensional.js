@@ -45,7 +45,7 @@ export const dimensionalVortex = new Purchasable(true, () => player.dimensionalV
     (val) => {player.dimensionalVortexes = val;},
     (boughtAmount) => boughtAmount >= 6 ? new Decimal("1e3e7").mul(new Decimal("1e1e7").pow(new Decimal(2).pow(boughtAmount-4))) :
         new Decimal("1e2e7").mul(new Decimal("1e5e6").pow(
-        boughtAmount >= 4 ? (2**(boughtAmount-4)-1)*1.4 + 5 : boughtAmount)),
+        boughtAmount >= 4 ? (2**(boughtAmount-4)-1)*1.9 + 4.5 : boughtAmount)),
     (cost) => player.dimensionalPoints.gte(cost), 
     new Effect((boughtAmount) => new Decimal(boughtAmount*(boughtAmount+2)+1), "mult"),
     (cost) => { player.dimensionalPoints = player.dimensionalPoints.sub(cost); displayedDimensionalVortexTip = false; },
